@@ -25,9 +25,7 @@ jobs:
         with:
           node-version: '18'
       - name: Install npm Dependencies
-        run: |
-          npm install -g npm@latest
-          npm cache clean --force
+        run: npm install
       - name: Build Frontend Assets
         run: npm run build
       - name: Upload Artifact
