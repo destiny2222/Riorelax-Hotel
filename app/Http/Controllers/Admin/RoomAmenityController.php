@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\RoomAmenities;
+use App\Models\RoomListing;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class RoomAmenityController extends Controller
+{
+     public function index()
+    {
+        $amenities = RoomAmenities::orderBy('id', 'desc')->get();
+        return view('admin.amenties.index', compact('amenities'));
+    }
+
+    public function create()
+    {
+        $rooms = RoomListing::all();
+        return view('admin.amenties.create', compact('rooms'));
+    }
+
+    public function store(Request $request)
+    {
+         $validated = $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'amenities' => 'required|array|min:1',
+            'amenities.*.title' => 'required|string|max:255',
+            'amenities.*.icon' => 'required|string|max:100',
+        ]);
+
+        try {
+
+            foreach ($request->amenities as $amenity) {
+                RoomAmenities::create([
+                    'room_id' => $request['room_id'],
+                    'title'   => $amenity['title'],
+                    'icon'    => $amenity['icon'],
+                ]);
+            }
+            return redirect()->route('admin.amenities.index')
+                ->with('success', 'Room amenity created successfully');
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return back()->with('error', 'Failed to create room amenity');
+        }
+    }
+
+
+
+    public function edit($id)
+    {
+        $amenity = RoomAmenities::findOrFail($id);
+        $rooms = RoomListing::all();
+        return view('admin.amenties.edit', compact('amenity', 'rooms'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'icon' => 'required|string',
+            'room_id' => 'required|exists:rooms,id'
+        ]);
+
+        try {
+            $roomAmenity = RoomAmenities::findOrFail($id);
+            $roomAmenity->update($validated);
+            return redirect()->route('admin.amenities.index')
+                ->with('success', 'Room amenity updated successfully');
+        } catch (\Exception $exception) {
+           Log::error('Error deleting room amenity: ' . $exception->getMessage());
+           return back()->with('error', 'Failed to delete room amenity');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try{
+            $roomAmenity = RoomAmenities::findOrFail($id);
+            $roomAmenity->delete();
+            return redirect()->route('admin.amenities.index')->with('success', 'Room amenity deleted successfully');
+        }catch (\Exception $e) {
+            Log::error('Error deleting room amenity: ' . $e->getMessage());
+            return back()->with('error', 'Failed to delete room amenity');
+        }
+    }
+}
