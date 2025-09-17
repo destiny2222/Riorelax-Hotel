@@ -436,7 +436,7 @@
                                     </svg><span class="ms-1">English</span></a>
                                 <div class="dropdown-menu language-switcher-list"
                                     aria-labelledby="language-switcher-dropdown">
-                                    <li><a class="language-item" href="ar.html" target="_self"><svg
+                                    <li><a class="language-item" href="#" target="_self"><svg
                                                 xmlns="http://www.w3.org/2000/svg" width="20" height="15" fill="none"
                                                 class="page_speed_395945049 flag">
                                                 <mask id="flags_sa_a" width="20" height="15" x="0" y="0"
@@ -467,8 +467,8 @@
                                     aria-expanded="false"> USD </a>
                                 <div class="dropdown-menu currency-switcher-list"
                                     aria-labelledby="currency-switcher-dropdown">
-                                    <li><a class="currency-item" href="ar.html">EUR</a></li>
-                                    <li><a class="currency-item" href="ar.html">VND</a></li>
+                                    <li><a class="currency-item" href="#">EUR</a></li>
+                                    <li><a class="currency-item" href="#">VND</a></li>
                                 </div>
                             </div>
                             @guest
@@ -510,7 +510,7 @@
                                 clip-rule="evenodd"></path>
                         </g>
                     </svg><span class="ms-1">English</span></a></li>
-            <li><a class="language-item d-flex" href="ar.html" target="_self"><svg xmlns="http://www.w3.org/2000/svg"
+            <li><a class="language-item d-flex" href="#" target="_self"><svg xmlns="http://www.w3.org/2000/svg"
                         width="20" height="15" fill="none" class="page_speed_395945049 flag">
                         <mask id="flags_sa_a" width="20" height="15" x="0" y="0" maskunits="userSpaceOnUse">
                             <path fill="#fff" d="M0 0h20v15H0z"></path>
@@ -534,8 +534,8 @@
         </div>
         <div class="currency-switcher-mobile d-none">
             <li><a href="#" class="active currency-item">USD</a></li>
-            <li><a href="ar.html" class=" currency-item">EUR</a></li>
-            <li><a href="ar.html" class=" currency-item">VND</a></li>
+            <li><a href="#" class=" currency-item">EUR</a></li>
+            <li><a href="#" class=" currency-item">VND</a></li>
         </div>
         <div id="header-sticky" class="menu-area">
             <div class="container">
@@ -577,70 +577,14 @@
                     <div class="menu">
                         <div class="menu-title"><span>Menu</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
-                            <li class="nav-item"><a href="/" class="nav-link collapsed has-sub active"
-                                    target="_self" data-bs-toggle="collapse" data-bs-target="#menu-collapse-1"
-                                    aria-expanded="false" aria-controls="menu-collapse-1">Home</a></li>
-                            <div class="collapse" id="menu-collapse-1">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-                                    <li class="nav-item"><a href="/" class="nav-link collapsed active"
-                                            target="_self">Home Page 01</a></li>
-                                    <li class="nav-item"><a href="home-page-02.html" class="nav-link collapsed"
-                                            target="_self">Home Page 02</a></li>
-                                    <li class="nav-item"><a href="home-page-side-menu.html" class="nav-link collapsed"
-                                            target="_self">Home Page Side Menu</a></li>
-                                    <li class="nav-item"><a href="home-page-full-menu.html" class="nav-link collapsed"
-                                            target="_self">Home Page Full Menu</a></li>
-                                </ul>
-                            </div>
-                            <li class="nav-item"><a href="rooms.html" class="nav-link collapsed has-sub" target="_self"
-                                    data-bs-toggle="collapse" data-bs-target="#menu-collapse-6" aria-expanded="false"
-                                    aria-controls="menu-collapse-6">Our Rooms</a></li>
-                            <div class="collapse" id="menu-collapse-6">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-                                    <li class="nav-item"><a href="rooms.html" class="nav-link collapsed"
-                                            target="_self">Our Rooms</a></li>
-                                    <li class="nav-item"><a href="rooms/family-suite.html" class="nav-link collapsed"
-                                            target="_self">Room Details</a></li>
-                                </ul>
-                            </div>
-                            <li class="nav-item"><a href="/" class="nav-link collapsed has-sub active"
-                                    target="_self" data-bs-toggle="collapse" data-bs-target="#menu-collapse-9"
-                                    aria-expanded="false" aria-controls="menu-collapse-9">Pages</a></li>
-                            <div class="collapse" id="menu-collapse-9">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-                                    <li class="nav-item"><a href="galleries.html" class="nav-link collapsed"
-                                            target="_self">Gallery</a></li>
-                                    <li class="nav-item"><a href="faq.html" class="nav-link collapsed"
-                                            target="_self">FAQ</a></li>
-                                    <li class="nav-item"><a href="team.html" class="nav-link collapsed"
-                                            target="_self">Team</a></li>
-                                    <li class="nav-item"><a href="teams/vincent-cooper.html" class="nav-link collapsed"
-                                            target="_self">Team Details</a></li>
-                                    <li class="nav-item"><a href="services.html" class="nav-link collapsed"
-                                            target="_self">Services</a></li>
-                                    <li class="nav-item"><a href="services/privet-beach.html" class="nav-link collapsed"
-                                            target="_self">Service Details</a></li>
-                                    <li class="nav-item"><a href="/" class="nav-link collapsed active"
-                                            target="_self">Places</a></li>
-                                    <li class="nav-item"><a href="places/duplex-restaurant.html"
-                                            class="nav-link collapsed" target="_self">Place Details</a></li>
-                                    <li class="nav-item"><a href="about-us.html" class="nav-link collapsed"
-                                            target="_self">About Us</a></li>
-                                    <li class="nav-item"><a href="contact-us.html" class="nav-link collapsed"
-                                            target="_self">Contact Us</a></li>
-                                </ul>
-                            </div>
-                            <li class="nav-item"><a href="blog.html" class="nav-link collapsed has-sub" target="_self"
-                                    data-bs-toggle="collapse" data-bs-target="#menu-collapse-20" aria-expanded="false"
-                                    aria-controls="menu-collapse-20">Blog</a></li>
-                            <div class="collapse" id="menu-collapse-20">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-                                    <li class="nav-item"><a href="blog.html" class="nav-link collapsed"
-                                            target="_self">Blog</a></li>
-                                    <li class="nav-item"><a href="news/why-teamwork-really-makes-the-dream-work.html"
-                                            class="nav-link collapsed" target="_self">Blog Details</a></li>
-                                </ul>
-                            </div>
+                            <li class="nav-item"><a href="/" class="nav-link   active"
+                                    >Home</a></li>
+                            <li class="nav-item"><a href="/rooms" class="nav-link  ">Our Rooms</a></li>
+                           
+                            <li class="nav-item"><a href="/about" class="nav-link  active"
+                                   >About Us</a></li>
+                            <li class="nav-item"><a href="" class="nav-link " >Blog</a></li>
+                            
                         </ul>
                         <div class="menu-title mt-20"><span>Languages</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
@@ -663,7 +607,7 @@
                                                 clip-rule="evenodd"></path>
                                         </g>
                                     </svg><span class="ms-1">English</span></a></li>
-                            <li><a class="language-item d-flex" href="ar.html" target="_self"><svg
+                            <li><a class="language-item d-flex" href="#" target="_self"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="20" height="15" fill="none"
                                         class="page_speed_395945049 flag">
                                         <mask id="flags_sa_a" width="20" height="15" x="0" y="0"
@@ -689,14 +633,14 @@
                         </ul>
                         <div class="menu-title mt-20"><span>Currencies</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
-                            <li><a href="login.html" class="active currency-item">USD</a></li>
-                            <li><a href="ar.html" class=" currency-item">EUR</a></li>
-                            <li><a href="ar.html" class=" currency-item">VND</a></li>
+                            <li><a href="/login" class="active currency-item">USD</a></li>
+                            <li><a href="#" class=" currency-item">EUR</a></li>
+                            <li><a href="#" class=" currency-item">VND</a></li>
                         </ul>
                         <div class="menu-title mt-20"><span>Account</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Register</a></li>
                         </ul>
                     </div>
                 </div>
@@ -734,13 +678,13 @@
                             <div class="footer-link">
                                 <ul>
                                     <li><a target="_self" class="font-sm color-grey-200" href="/">Home</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="about-us.html">About
+                                    <li><a target="_self" class="font-sm color-grey-200" href="/about-">About
                                             Us</a></li>
                                     <li><a target="_self" class="font-sm color-grey-200"
-                                            href="services.html">Services</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="contact-us.html">Contact
+                                            href="#">Services</a></li>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="/#000contact">Contact
                                             Us</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="blog.html">Blog</a></li>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="#">Blog</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -752,13 +696,13 @@
                             </div>
                             <div class="footer-link">
                                 <ul>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="faq.html">FAQ</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="/">Support</a>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="#">FAQ</a></li>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="#">Support</a>
                                     </li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="privacy.html">Privacy</a>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
                                     </li>
                                     <li><a target="_self" class="font-sm color-grey-200"
-                                            href="term-and-conditions.html">Term &amp; Conditions</a></li>
+                                            href="#">Term &amp; Conditions</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -771,10 +715,9 @@
                             <div class="footer-link" dir="ltr">
                                 <div class="subricbe p-relative form-newsletter" data-animation="fadeInDown"
                                     data-delay=".4s">
-                                    <form method="POST" action="https://riorelax.archielite.com/newsletter/subscribe"
+                                    <form method="POST" action=""
                                         accept-charset="UTF-8" id="botble-newsletter-forms-fronts-newsletter-form"
-                                        class="subscribe-form dirty-check"><input name="_token" type="hidden"
-                                            value="v4oUUSUNdgT8gwEtRLCa4vZ88PEKlnQxClvBLrPK">
+                                        class="subscribe-form dirty-check">
                                         <div class="input-group mb-3"><input class="form-control"
                                                 placeholder="Enter Your Email" id="newsletter-email" required="required"
                                                 name="email" type="email"></div>

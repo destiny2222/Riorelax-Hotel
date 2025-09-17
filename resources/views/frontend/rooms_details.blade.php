@@ -139,7 +139,7 @@
                                         <div class="col-12">
                                             <div class="price">
                                                 <h2>{{ $roomListing->room_title }}</h2>
-                                                <span>${{ $roomListing->price }} <small>/ night</small></span>
+                                                <span>₦{{ $roomListing->price }} <small>/ night</small></span>
                                             </div>
                                         </div>
                                     </div>
@@ -181,43 +181,53 @@
                                     </div>
                                     <div class="room-block-content shadow-block mt-50">
                                         <div>
-                                            <div>
+                                            <div class="mb-20">
                                                 <h3 class="text-xl">Write a review</h3>
                                                 <form action="{{ route('dashboard.comment.store') }}" method="post" class="space-y-3 review-form">
                                                     @csrf
-                                                    <input type="hidden" name="room_id"  value="{{ $roomListing->id }}" />
-                                                    <input type="hidden" name="rating" value="1">
-                                                    <div class="text-start mb-20">
-                                                        {{-- <div class="br-wrapper br-theme-css-stars">
-                                                            <select name="star" id="select-star" style="display: none;">
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5" selected="">5</option>
-                                                            </select>
-                                                            <div class="br-widget">
-                                                                <a href="#" data-rating-value="1" data-rating-text="1" class="br-selected"></a>
-                                                                <a  href="#" data-rating-value="2" data-rating-text="2" class="br-selected"></a>
-                                                                <a href="#"  data-rating-value="3" data-rating-text="3" class="br-selected"></a>
-                                                                <a href="#" data-rating-value="4" data-rating-text="4" class="br-selected"></a>
-                                                                <a href="#" data-rating-value="5" data-rating-text="5"  class="br-selected br-current"></a>
-                                                                <div class="br-current-rating">5</div>
-                                                            </div> --}}
+                                                     <input type="hidden" name="room_id"  value="{{ $roomListing->id }}" />
+                                                        <input type="hidden" name="rating" value="1">
+                                                        <div class="text-start mb-20">
+                                                            {{-- <div class="br-wrapper br-theme-css-stars">
+                                                                <select name="star" id="select-star" style="display: none;">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5" selected="">5</option>
+                                                                </select>
+                                                                <div class="br-widget">
+                                                                    <a href="#" data-rating-value="1" data-rating-text="1" class="br-selected"></a>
+                                                                    <a  href="#" data-rating-value="2" data-rating-text="2" class="br-selected"></a>
+                                                                    <a href="#"  data-rating-value="3" data-rating-text="3" class="br-selected"></a>
+                                                                    <a href="#" data-rating-value="4" data-rating-text="4" class="br-selected"></a>
+                                                                    <a href="#" data-rating-value="5" data-rating-text="5"  class="br-selected br-current"></a>
+                                                                    <div class="br-current-rating">5</div>
+                                                                </div> --}}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <textarea placeholder="Enter your message" class="form-control" name="review" id="review" cols="30" rows="10" disabled=""></textarea>
-                                                    </div>
-                                                    <p class="text-danger">
-                                                        Please log in to write review!
-                                                    </p>
-                                                    <button type="submit" class="custom-submit-review-btn mb-20"
-                                                        disabled="">
-                                                        Submit review
-                                                    </button>
+                                                            @guest
+                                                            <textarea placeholder="Enter your message" class="form-control" name="comment" id="review" cols="30" disabled rows="10" ></textarea>
+                                                            <p class="text-danger">
+                                                                Please log in to write review!
+                                                            </p>
+                                                        @else
+                                                        <textarea placeholder="Enter your message" class="form-control" name="comment" id="review" cols="30"  rows="10" ></textarea>
+                                                    @endguest
+                                                </div>
+                                                    @guest
+                                                        <button type="submit" class="custom-submit-review-btn mb-20 mt-5"
+                                                            disabled="">
+                                                            Submit review
+                                                        </button>
+                                                        @else
+                                                        <button type="submit" class="custom-submit-review-btn mb-20 mt-5" >
+                                                            Submit review
+                                                        </button>
+                                                    @endguest
                                                 </form>
                                             </div>
-                                            <div class="pt-8 mt-8 border-top">
+                                            {{-- <div class="pt-8 mt-8 border-top">
                                                 <div class="d-flex justify-content-between mt-10 mb-20 reviews-block">
                                                     <h4 class="">
                                                         <span class="reviews-count">5 Review(s)</span>
@@ -227,63 +237,64 @@
                                                         <p class="">4.8 out of 5</p>
                                                         <div class="rating-wrap ms-1">
                                                             <div class="rating">
-                                                                <div class="review-rate page_speed_1653396412"></div>
+                                                                <div class="review-rate "></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="reviews-list mb-20 mt-10"
-                                                    data-url="https://riorelax.archielite.com/customer/ajax/review/pacific-room?">
+                                                <div class="reviews-list mb-20 mt-10"  data-url="">
+
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="content-box related-room">
                                         <h3>Related Rooms</h3>
                                         <div class="row">
-                                            <div class="col-lg-6 mb-20">
-                                                <div class="single-services shadow-block mb-30 ser-m">
-                                                    <div class="services-thumb hover-zoomin wow fadeInUp animated">
-                                                        <a href="">
-                                                            <img src="" alt="Luxury Hall Of Fame" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="services-content">
-                                                        <div class="day-book">
-                                                            <ul>
-                                                                <li>
-                                                                    <form action=""  method="POST">
-                                                                       <input type="hidden" name="room_id" value="1" />
-                                                                       <input type="hidden" name="start_date" value="10-09-2025" />
-                                                                       <input type="hidden"  name="end_date" value="11-09-2025" />
-                                                                       <input  type="hidden" name="adults" value="1" />
-                                                                       <input name="children"  type="hidden" value="0" />
-                                                                       <input name="rooms" type="hidden" value="1" />
-                                                                       <button  class="book-button-custom" type="submit" data-animation="fadeInRight" data-delay=".8s">
-                                                                            BOOK NOW FOR $189.00
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            </ul>
+                                            @foreach ($relatedRooms as $relatedRoom)
+                                                <div class="col-lg-6 mb-20">
+                                                    <div class="single-services shadow-block mb-30 ser-m">
+                                                        <div class="services-thumb hover-zoomin wow fadeInUp animated">
+                                                            <a href="{{ route('room.show', $relatedRoom->slug) }}">
+                                                                <img src="{{ $relatedRoom->room_image }}" alt="Luxury Hall Of Fame" />
+                                                            </a>
                                                         </div>
-                                                        <h4>
-                                                            <a href="">Luxury Hall Of Fame</a>
-                                                        </h4>
-                                                        <p class="room-item-custom-truncate"
-                                                            title="Our spacious room offers a cozy ambiance, modern amenities, and stunning city views.">
-                                                            Our spacious room offers a cozy ambiance, modern
-                                                            amenities, and stunning city views.
-                                                        </p>
-                                                        <div class="icon">
-                                                            <ul class="d-flex justify-content-evenly">
-                                                                <li>
-                                                                    <img src="" alt="Air conditioner" />
-                                                                </li>
-                                                            </ul>
+                                                        <div class="services-content">
+                                                            <div class="day-book">
+                                                                <ul>
+                                                                    <li>
+                                                                        {{-- <form action=""  method="POST">
+                                                                        <input type="hidden" name="room_id" value="1" />
+                                                                        <input type="hidden" name="start_date" value="10-09-2025" />
+                                                                        <input type="hidden"  name="end_date" value="11-09-2025" />
+                                                                        <input  type="hidden" name="adults" value="1" />
+                                                                        <input name="children"  type="hidden" value="0" />
+                                                                        <input name="rooms" type="hidden" value="1" /> --}}
+                                                                        <a href="{{ route('room.show', $relatedRoom->slug) }}"  class="book-button-custom" type="submit" data-animation="fadeInRight" data-delay=".8s">
+                                                                                BOOK NOW FOR ₦{{ $relatedRoom->price }}
+                                                                            </a>
+                                                                        {{-- </form> --}}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <h4>
+                                                                <a href="{{ route('room.show', $relatedRoom->slug) }}">{{ $relatedRoom->room_title }}</a>
+                                                            </h4>
+                                                            <p class="room-item-custom-truncate">
+                                                                {!! \Str::limit($relatedRoom->description, 100)  !!}
+                                                            </p>
+                                                            {{-- <div class="icon">
+                                                                <ul class="d-flex justify-content-evenly">
+                                                                    <li>
+                                                                        <img src="" alt="Air conditioner" />
+                                                                    </li>
+                                                                </ul>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endforeach
+                                            
                                         </div>
                                     </div>
                                 </div>

@@ -15,7 +15,7 @@ class CommentController extends Controller
         $validated = Validator::make($request->all(), [
             'comment' => 'required|string',
             'room_id' => 'required|exists:room_listings,id',
-            'star' => 'required|integer|min:1|max:5',
+            'rating' => 'required|integer|min:1|max:5',
         ]);
 
         if ($validated->fails()) {
@@ -27,7 +27,7 @@ class CommentController extends Controller
                 'user_id' => Auth::user()->id,
                 'room_listing_id' => $request->room_id,
                 'comment' => $request->comment,
-                'rating' => $request->star,
+                'rating' => $request->rating,
             ]);
 
             return back()->with('success', 'Review submitted successfully.');

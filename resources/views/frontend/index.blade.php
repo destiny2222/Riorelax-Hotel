@@ -13,9 +13,9 @@
                                 <p data-animation="fadeInUp" data-delay=".6s">Donec vitae libero non enim placerat
                                     eleifend aliquam erat volutpat. Curabitur diam ex, dapibus purus sapien, cursus
                                     sed nisl tristique, commodo gravida lectus non.</p>
-                                <div class="slider-btn mt-30 mb-105"><a href="contact-us.html"
+                                <div class="slider-btn mt-30 mb-105"><a href="/contact"
                                         class="btn ss-btn active mr-15" data-animation="fadeInLeft" data-delay=".4s">
-                                        Discover More </a><a href="https://www.youtube.com/watch?v=v2qeqkKgw7U"
+                                        Discover More </a><a href="#"
                                         data-animation="fadeInUp" data-delay=".8s" tabindex="0"
                                         class="video-i popup-video "><i class="fas fa-play"></i>
                                         Intro video </a></div>
@@ -33,9 +33,9 @@
                                 <p data-animation="fadeInUp" data-delay=".6s">Donec vitae libero non enim placerat
                                     eleifend aliquam erat volutpat. Curabitur diam ex, dapibus purus sapien, cursus
                                     sed nisl tristique, commodo gravida lectus non.</p>
-                                <div class="slider-btn mt-30 mb-105"><a href="contact-us.html"
+                                <div class="slider-btn mt-30 mb-105"><a href="/contact"
                                         class="btn ss-btn active mr-15" data-animation="fadeInLeft" data-delay=".4s">
-                                        Discover More </a><a href="https://www.youtube.com/watch?v=v2qeqkKgw7U"
+                                        Discover More </a><a href="#"
                                         data-animation="fadeInUp" data-delay=".8s" tabindex="0"
                                         class="video-i popup-video page_speed_143050126"><i class="fas fa-play"></i>
                                         Intro video </a></div>
@@ -289,18 +289,18 @@
                             <div class="day-book">
                                 <ul>
                                     <li>
-                                        <form action="" method="POST">
+                                        {{-- <form action="" method="POST">
                                             <input type="hidden" name="room_id" value="2">
                                             <input type="hidden" name="start_date" value="10-09-2025">
                                             <input type="hidden" name="end_date" value="11-09-2025">
                                             <input type="hidden" name="adults" value="1">
                                             <input name="children" type="hidden" value="0">
-                                            <input name="rooms" type="hidden" value="1">
-                                            <button class="book-button-custom" type="submit"
+                                            <input name="rooms" type="hidden" value="1"> --}}
+                                            <a href="{{ route('room.show', $roomListing->slug) }}" class="book-button-custom" type="submit"
                                                 data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR
-                                                ${{ $roomListing->price }}
-                                            </button>
-                                        </form>
+                                                ₦{{ $roomListing->price }}
+                                            </a>
+                                        {{-- </form> --}}
                                     </li>
                                 </ul>
                             </div>
@@ -387,7 +387,7 @@
                                 <li> Vestibulum blandit lorem quis</li>
                             </ul>
                         </div>
-                        <div class="pricing-btn"><a href="contact-us.html" class="btn ss-btn">Get Started<i
+                        <div class="pricing-btn"><a href="/contact" class="btn ss-btn">Get Started<i
                                     class="fal fa-angle-right"></i></a></div>
                     </div>
                 </div>
@@ -409,7 +409,7 @@
                                 <li> Vestibulum blandit lorem quis</li>
                             </ul>
                         </div>
-                        <div class="pricing-btn"><a href="contact-us.html" class="btn ss-btn">Get Started <i
+                        <div class="pricing-btn"><a href="/contact" class="btn ss-btn">Get Started <i
                                     class="fal fa-angle-right"></i></a></div>
                     </div>
                 </div>
@@ -516,9 +516,8 @@
                             <h5>Make Reservation</h5>
                             <h2>Book A Room</h2>
                         </div>
-                        <form action="https://riorelax.archielite.com/booking" method="post"
-                            class="contact-form mt-30 form-booking"><input type="hidden" name="_token"
-                                value="v4oUUSUNdgT8gwEtRLCa4vZ88PEKlnQxClvBLrPK" autocomplete="off">
+                        <form action="" method="post"
+                            class="contact-form mt-30 form-booking">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="contact-field p-relative c-name mb-20"><label
@@ -589,7 +588,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="s-video-wrap">
-                        <div class="s-video-content"><a href="https://www.youtube.com/watch?v=ldusxyoq0Y8"
+                        <div class="s-video-content"><a href="#"
                                 class="popup-video"><img src="/themes/images/play-button.png" alt="Button play"></a>
                         </div>
                     </div>
@@ -620,21 +619,21 @@
                         <div class="bsingle__post-thumb blog-active hover-zoomin wow fadeInUp animated">
                             <div class="slide-post"><a title="The litigants on the screen are not actors"
                                     class="blog-item-custom-truncate"
-                                    href="news/the-litigants-on-the-screen-are-not-actors.html"><img
+                                    href="#"><img
                                         src="/images/news/6-440x340.jpg"
                                         alt="The litigants on the screen are not actors"></a></div>
                         </div>
                         <div class="bsingle__content">
                             <div class="date-home"> Sep 29, 2024 </div>
                             <h2><a title="The litigants on the screen are not actors" class="blog-item-custom-truncate"
-                                    href="news/the-litigants-on-the-screen-are-not-actors.html">The litigants on the
+                                    href="#">The litigants on the
                                     screen are not actors</a></h2>
                             <p class="blog-item-custom-truncate"
                                 title="Take a behind-the-scenes look at the reality of courtroom dramas. Contrary to common assumptions, the litigants you see on the screen are not mere actors, but real people with compelling stories.">
                                 Take a behind-the-scenes look at the reality of courtroom dramas. Contrary to common
                                 assumptions, the litigants you see on the screen are not mere actors, but real
                                 people with compelling stories.</p>
-                            <div class="blog__btn"><a href="news/the-litigants-on-the-screen-are-not-actors.html">Read
+                            <div class="blog__btn"><a href="#">Read
                                     More</a></div>
                         </div>
                     </div>
@@ -644,21 +643,21 @@
                         <div class="bsingle__post-thumb blog-active hover-zoomin wow fadeInUp animated">
                             <div class="slide-post"><a title="The World Caters to Average People"
                                     class="blog-item-custom-truncate"
-                                    href="news/the-world-caters-to-average-people.html"><img
+                                    href="#"><img
                                         src="/images/news/5-440x340.jpg" alt="The World Caters to Average People"></a>
                             </div>
                         </div>
                         <div class="bsingle__content">
                             <div class="date-home"> Sep 29, 2024 </div>
                             <h2><a title="The World Caters to Average People" class="blog-item-custom-truncate"
-                                    href="news/the-world-caters-to-average-people.html">The World Caters to Average
+                                    href="#">The World Caters to Average
                                     People</a></h2>
                             <p class="blog-item-custom-truncate"
                                 title="Unveil the hidden truths behind success in a world that often values conformity. In a thought-provoking analysis, we examine why societal norms tend to cater to the average and breaking boundaries.">
                                 Unveil the hidden truths behind success in a world that often values conformity. In
                                 a thought-provoking analysis, we examine why societal norms tend to cater to the
                                 average and breaking boundaries.</p>
-                            <div class="blog__btn"><a href="news/the-world-caters-to-average-people.html">Read
+                            <div class="blog__btn"><a href="#">Read
                                     More</a></div>
                         </div>
                     </div>
@@ -668,21 +667,21 @@
                         <div class="bsingle__post-thumb blog-active hover-zoomin wow fadeInUp animated">
                             <div class="slide-post"><a title="Why Teamwork Really Makes The Dream Work"
                                     class="blog-item-custom-truncate"
-                                    href="news/why-teamwork-really-makes-the-dream-work.html"><img
+                                    href="#"><img
                                         src="/images/news/4-440x340.jpg"
                                         alt="Why Teamwork Really Makes The Dream Work"></a></div>
                         </div>
                         <div class="bsingle__content">
                             <div class="date-home"> Sep 29, 2024 </div>
                             <h2><a title="Why Teamwork Really Makes The Dream Work" class="blog-item-custom-truncate"
-                                    href="news/why-teamwork-really-makes-the-dream-work.html">Why Teamwork Really
+                                    href="#">Why Teamwork Really
                                     Makes The Dream Work</a></h2>
                             <p class="blog-item-custom-truncate"
                                 title="Unlock the power of collaboration and synergy in achieving your goals. In this exploration of the importance of teamwork, we delve into real-world examples and insights and how combining diverse skills.">
                                 Unlock the power of collaboration and synergy in achieving your goals. In this
                                 exploration of the importance of teamwork, we delve into real-world examples and
                                 insights and how combining diverse skills.</p>
-                            <div class="blog__btn"><a href="news/why-teamwork-really-makes-the-dream-work.html">Read
+                            <div class="blog__btn"><a href="#">Read
                                     More</a></div>
                         </div>
                     </div>
@@ -694,27 +693,27 @@
         <div class="container">
             <div class="row brand-active">
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="https://ersintat.com"><img src="/images/brands/logo-1.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-1.png"
                                 alt="Ersintat"></a></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="https://techradar.com"><img src="/images/brands/logo-2.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-2.png"
                                 alt="Techradar"></a></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="https://turbologo.com"><img src="/images/brands/logo-3.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-3.png"
                                 alt="Turbologo"></a></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="https://thepeer.com"><img src="/images/brands/logo-4.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-4.png"
                                 alt="Thepeer"></a></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="http://techi.com"><img src="/images/brands/logo-5.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-5.png"
                                 alt="Techi"></a></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="single-brand"><a href="https://grapk.com"><img src="/images/brands/logo-6.png"
+                    <div class="single-brand"><a href="#"><img src="/images/brands/logo-6.png"
                                 alt="Grapik"></a></div>
                 </div>
             </div>

@@ -28,7 +28,7 @@ class PageController extends Controller
     }
 
     public function roomDetails(RoomListing $roomListing){
-        $relatedRooms = RoomListing::where('room_type', $roomListing->category)->where('id', '!=', $roomListing->id)->get();
-        return view('frontend.rooms_details', compact('roomListing'));
+        $relatedRooms = RoomListing::latest()->take(4)->get();
+        return view('frontend.rooms_details', compact('roomListing', 'relatedRooms'));
     }
 }

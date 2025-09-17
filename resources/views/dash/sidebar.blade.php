@@ -32,12 +32,12 @@
         <li class="list-group-item">
             <a href="{{ route('dashboard.change.password') }}" class="d-inline-block w-100 collection-item ">Change password</a>
         </li>
-        <li class="list-group-item">
+        {{-- <li class="list-group-item">
             <a href="" class="d-inline-block w-100 collection-item ">My Bookings</a>
         </li>
         <li class="list-group-item">
             <a href="" class="d-inline-block w-100 collection-item ">My Reviews</a>
-        </li>
+        </li> --}}
         <li class="list-group-item">
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-inline-block w-100 collection-item">Logout</a>
         </li>

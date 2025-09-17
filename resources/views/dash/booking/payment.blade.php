@@ -303,13 +303,13 @@
                                         <p>Number of rooms: {{ $booking->rooms }}</p>
                                         <p>Number of adults: {{ $booking->adults }}</p>
                                         <p>Number of children: {{ $booking->children }}</p>
-                                        <p>Price: <span class="amount-text">${{ $booking->roomListing->price }}</span></p>
+                                        <p>Price: <span class="amount-text">₦{{ $booking->roomListing->price }}</span></p>
                                         {{-- <p>Discount: <span class="discount-text">$0.00</span></p> --}}
                                         {{-- <p>Tax: <span class="tax-text">$18.90</span></p> --}}
                                     </div>
                                 </div>
                                 <div class="text-center footer">
-                                    <p>Total: <span class="total-amount-text">${{ $booking->roomListing->price }}</span>
+                                    <p>Total: <span class="total-amount-text">₦{{ $booking->roomListing->price }}</span>
                                     </p>
                                 </div>
                             </aside>

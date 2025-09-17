@@ -45,17 +45,17 @@
                                         <div class="day-book">
                                             <ul>
                                                 <li>
-                                                    <form action="" method="POST">
+                                                    {{-- <form action="" method="POST">
                                                         <input type="hidden" name="room_id"  value="2">
                                                         <input type="hidden" name="start_date" value="10-09-2025">
                                                         <input type="hidden" name="end_date" value="11-09-2025">
                                                         <input type="hidden" name="adults"   value="1">
                                                         <input name="children" type="hidden" value="0">
-                                                        <input  name="rooms" type="hidden" value="1">
-                                                        <button  class="book-button-custom" type="submit"
-                                                            data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR ${{ $roomListing->price }}
-                                                        </button>
-                                                    </form>
+                                                        <input  name="rooms" type="hidden" value="1"> --}}
+                                                        <a href="{{ route('room.show', $roomListing->slug) }}"  class="book-button-custom" type="submit"
+                                                            data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR ₦{{ $roomListing->price }}
+                                                        </a>
+                                                    {{-- </form> --}}
                                                 </li>
                                             </ul>
                                         </div>

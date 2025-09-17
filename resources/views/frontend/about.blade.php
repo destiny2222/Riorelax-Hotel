@@ -28,7 +28,7 @@
 
 <section class="about-area about-p pt-90 pb-90 p-relative fix">
   <div class="animations-02">
-    <img src="/images/an-img-02.png" alt="Most Safe &amp; Rated Hotel In London." />
+    <img src="/images/backgrounds/an-img-02.png" alt="Most Safe &amp; Rated Hotel In London." />
   </div>
   <div class="container">
     <div class="row justify-content-center align-items-center">
@@ -87,7 +87,7 @@
 </section>
 <section id="skill" class="skill-area p-relative fix ">
   <div class="animations-01">
-    <img src="/images/an-img-05.png" alt="We Offer Wide Selection of Hotel" />
+    <img src="/images/backgrounds/an-img-05.png" alt="We Offer Wide Selection of Hotel" />
   </div>
   <div class="container">
     <div class="row justify-content-center align-items-center">
@@ -220,7 +220,7 @@
           <div class="bsingle__post-thumb blog-active hover-zoomin wow fadeInUp animated">
             <div class="slide-post">
               <a title="The World Caters to Average People" class="blog-item-custom-truncate"
-                href="news/the-world-caters-to-average-people.html"><img src="/images/5-440x340.jpg"
+                href="#"><img src="/images/5-440x340.jpg"
                   alt="The World Caters to Average People" /></a>
             </div>
           </div>
@@ -228,7 +228,7 @@
             <div class="date-home">Sep 29, 2024</div>
             <h2>
               <a title="The World Caters to Average People" class="blog-item-custom-truncate"
-                href="news/the-world-caters-to-average-people.html">The World Caters to Average People</a>
+                href="#">The World Caters to Average People</a>
             </h2>
             <p class="blog-item-custom-truncate"
               title="Unveil the hidden truths behind success in a world that often values conformity. In a thought-provoking analysis, we examine why societal norms tend to cater to the average and breaking boundaries.">
@@ -238,7 +238,7 @@
               breaking boundaries.
             </p>
             <div class="blog__btn">
-              <a href="news/the-world-caters-to-average-people.html">Read More</a>
+              <a href="#">Read More</a>
             </div>
           </div>
         </div>
@@ -248,7 +248,7 @@
           <div class="bsingle__post-thumb blog-active hover-zoomin wow fadeInUp animated">
             <div class="slide-post">
               <a title="Why Teamwork Really Makes The Dream Work" class="blog-item-custom-truncate"
-                href="news/why-teamwork-really-makes-the-dream-work.html"><img src="/images/4-440x340.jpg"
+                href="#"><img src="/images/4-440x340.jpg"
                   alt="Why Teamwork Really Makes The Dream Work" /></a>
             </div>
           </div>
@@ -256,7 +256,7 @@
             <div class="date-home">Sep 29, 2024</div>
             <h2>
               <a title="Why Teamwork Really Makes The Dream Work" class="blog-item-custom-truncate"
-                href="news/why-teamwork-really-makes-the-dream-work.html">Why Teamwork Really Makes The Dream Work</a>
+                href="#">Why Teamwork Really Makes The Dream Work</a>
             </h2>
             <p class="blog-item-custom-truncate"
               title="Unlock the power of collaboration and synergy in achieving your goals. In this exploration of the importance of teamwork, we delve into real-world examples and insights and how combining diverse skills.">
@@ -266,7 +266,7 @@
               how combining diverse skills.
             </p>
             <div class="blog__btn">
-              <a href="news/why-teamwork-really-makes-the-dream-work.html">Read More</a>
+              <a href="#">Read More</a>
             </div>
           </div>
         </div>

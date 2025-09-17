@@ -45,13 +45,12 @@ jobs:
         run: npm run build
 
       # 🚀 Deploy public/ to cPanel public_html via SFTP
-      - name: Deploy to cPanel via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: Deploy to cPanel via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}      # example: yourdomain.com
-          username: ${{ secrets.FTP_USERNAME }}  # cPanel username
-          password: ${{ secrets.FTP_PASSWORD }}  # cPanel password or FTP account password
-          port: 22
-          local_path: ./public/*
-          remote_path: /home/waseekxy/hotel.wasesupportservices.co.uk
-          sftp_only: true
+          server: ${{ secrets.FTP_SERVER }}      # example: ftp.wasesupportservices.co.uk
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: /hotel.wasesupportservices.co.uk/
+
