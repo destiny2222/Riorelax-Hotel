@@ -139,7 +139,7 @@
                                         <div class="col-12">
                                             <div class="price">
                                                 <h2>{{ $roomListing->room_title }}</h2>
-                                                <span>₦{{ $roomListing->price }} <small>/ night</small></span>
+                                                <span>₦{{ number_format($roomListing->price, 2) }} <small>/ night</small></span>
                                             </div>
                                         </div>
                                     </div>
@@ -271,7 +271,7 @@
                                                                         <input name="children"  type="hidden" value="0" />
                                                                         <input name="rooms" type="hidden" value="1" /> --}}
                                                                         <a href="{{ route('room.show', $relatedRoom->slug) }}"  class="book-button-custom" type="submit" data-animation="fadeInRight" data-delay=".8s">
-                                                                                BOOK NOW FOR ₦{{ $relatedRoom->price }}
+                                                                                BOOK NOW FOR ₦{{ number_format($relatedRoom->price, 2) }}
                                                                             </a>
                                                                         {{-- </form> --}}
                                                                     </li>

@@ -1,56 +1,103 @@
-name: Continuous Integration and Deployment
+# name: Continuous Integration and Deployment
+
+# on:
+#   push:
+#     branches: "main"
+
+# jobs:
+#   laravel-deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # Setup PHP
+#       - uses: shivammathur/setup-php@v2
+#         with:
+#           php-version: "8.2"
+
+#       # Checkout repo
+#       - uses: actions/checkout@v4
+
+#       # Copy environment file
+#       - name: Copy .env
+#         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+#       # Install PHP dependencies
+#       - name: Install Composer Dependencies
+#         run: |
+#           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+#       # Set permissions for Laravel
+#       - name: Set Directory Permissions
+#         run: chmod -R 777 storage bootstrap/cache
+
+#       # Setup Node.js
+#       - name: Install Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
+
+#       # Install frontend dependencies
+#       - name: Install npm Dependencies
+#         run: npm install
+
+#       # Build frontend assets (Vite or Mix)
+#       - name: Build Frontend Assets
+#         run: npm run build
+
+#       # 🚀 Deploy public/ to cPanel public_html via SFTP
+#       - name: Deploy to cPanel via FTPS
+#         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#         with:
+#           server: ${{ secrets.FTP_SERVER }}      # example: ftp.wasesupportservices.co.uk
+#           username: ${{ secrets.FTP_USERNAME }}
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           protocol: ftps
+#           server-dir: /hotel.wasesupportservices.co.uk
+
+name: Laravel CI/CD
 
 on:
   push:
-    branches: "main"
+    branches: ["main"]
 
 jobs:
   laravel-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Setup PHP
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-
       # Checkout repo
       - uses: actions/checkout@v4
 
-      # Copy environment file
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      # Install PHP dependencies
-      - name: Install Composer Dependencies
-        run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-      # Set permissions for Laravel
-      - name: Set Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
-
-      # Setup Node.js
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      # Install frontend dependencies
-      - name: Install npm Dependencies
-        run: npm install
-
-      # Build frontend assets (Vite or Mix)
-      - name: Build Frontend Assets
-        run: npm run build
-
-      # 🚀 Deploy public/ to cPanel public_html via SFTP
+      # 🚀 Deploy code (excluding vendor & node_modules)
       - name: Deploy to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}      # example: ftp.wasesupportservices.co.uk
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: /hotel.wasesupportservices.co.uk/
+          # server-dir: /hotel.wasesupportservices.co.uk
+          exclude: |
+            **/.git*
+            **/node_modules/**
+            **/vendor/**
+            **/tests/**
 
+      # 🛠️ Run Laravel setup on cPanel via SSH
+      - name: SSH into cPanel and setup Laravel
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }} # or use key
+          script: |
+            cd hotel.wasesupportservices.co.uk
+            composer install --ignore-platform-reqs --no-dev --optimize-autoloader
+            php artisan storage:link
+            php artisan key:generate
+            php artisan migrate --force
+            php artisan cache:clear
+            php artisan view:clear
+            php artisan route:clear
+            php artisan config:clear
+            php artisan optimize:clear

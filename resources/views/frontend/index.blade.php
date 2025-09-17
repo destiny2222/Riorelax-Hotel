@@ -298,7 +298,7 @@
                                             <input name="rooms" type="hidden" value="1"> --}}
                                             <a href="{{ route('room.show', $roomListing->slug) }}" class="book-button-custom" type="submit"
                                                 data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR
-                                                ₦{{ $roomListing->price }}
+                                                ₦{{ number_format($roomListing->price, 2) }}
                                             </a>
                                         {{-- </form> --}}
                                     </li>
@@ -376,7 +376,7 @@
                             <p>Perfect for early-stage startups</p>
                             <div class="month">Monthly</div>
                             <div class="price-count">
-                                <h2>$39.99</h2>
+                                <h2>₦39.99</h2>
                             </div>
                             <hr>
                         </div>
@@ -398,7 +398,7 @@
                             <p>Perfect for early-stage startups</p>
                             <div class="month">Monthly</div>
                             <div class="price-count">
-                                <h2>$59.99</h2>
+                                <h2>₦59.99</h2>
                             </div>
                             <hr>
                         </div>
