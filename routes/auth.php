@@ -8,14 +8,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('dashboard')->name('dashboard.')->middleware(['user.authenticated'])->group(function () {
-    Route::get('/overview', [HomeController::class, 'dashboard'])->name('home');
-    Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
-    Route::put('/profile/edit/{id}', [HomeController::class, 'editProfile'])->name('edit.profile'); 
-    Route::get('/change-password', [HomeController::class, 'changePasswordView'])->name('change.password');
-    Route::post('/change-password/post', [HomeController::class, 'changePassword'])->name('change-password-post');  
-    Route::put('/profile-picture-change/{id}', [HomeController::class, 'changeProfilePicture'])->name('profile-picture-change');             
-    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');     
+Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::middleware(['user.authenticated'])->group(function () {
+        Route::get('/overview', [HomeController::class, 'dashboard'])->name('home');
+        Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+        Route::put('/profile/edit/{id}', [HomeController::class, 'editProfile'])->name('edit.profile'); 
+        Route::get('/change-password', [HomeController::class, 'changePasswordView'])->name('change.password');
+        Route::post('/change-password/post', [HomeController::class, 'changePassword'])->name('change-password-post');  
+        Route::put('/profile-picture-change/{id}', [HomeController::class, 'changeProfilePicture'])->name('profile-picture-change');             
+        Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');  
+    });
+       
     
     // OTP  Routes
     Route::post('/send/otp', [BookingController::class, 'sendOtp'])->name('booking.send.otp');
@@ -39,3 +42,5 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['user.authenticated'
     Route::get('/payment/return', [BookingController::class, 'handlePaymentReturn'])->name('payment.return');
 
 });
+
+

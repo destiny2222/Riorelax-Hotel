@@ -27,6 +27,8 @@ class BookingController extends Controller
     }
 
     public function store(Request $request){
+        $isGuest = !Auth::check();
+        
         $validator = Validator::make($request->all(),[
             'room_listing_id' => 'required|exists:room_listings,id',
             'check_in' => 'required|date',
@@ -34,6 +36,8 @@ class BookingController extends Controller
             'adults' => 'required|integer|min:1',
             'rooms'=> 'required|integer|min:1',
             'children' => 'nullable|integer|min:0',
+            'name' => $isGuest ? 'required|string|max:255' : 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -43,9 +47,20 @@ class BookingController extends Controller
         try {
             $validatedData = $validator->validated();
             
+            $user = Auth::user();
+            if (!$user) {
+                $email = $validatedData['email'] ?? 'guest_' . time() . '@riorelax.com';
+                $user = User::firstOrCreate(
+                    ['email' => $email],
+                    ['first_name' => $validatedData['name'], 
+                    'last_name' => $validatedData['name'],
+                    'password' => bcrypt(Str::random(16))]
+                );
+            }
+
             // Store booking data and OTP in session
             $bookingData = $validatedData;
-            $bookingData['user_id'] = Auth::user()->id;
+            $bookingData['user_id'] = $user->id;
 
 
             // Convert date format from DD-MM-YYYY to YYYY-MM-DD
@@ -184,7 +199,11 @@ class BookingController extends Controller
 
     public function showPaymentForm()
     {
-        $booking = Booking::where('user_id', Auth::user()->id)->latest()->first();
+        $bookingId = session('booking_id');
+        if (!$bookingId) {
+            return redirect()->route('home')->with('error', 'No booking found. Please start a new booking.');
+        }
+        $booking = Booking::findOrFail($bookingId);
         return view('dash.booking.payment', compact('booking'));
     }
 
@@ -202,8 +221,10 @@ class BookingController extends Controller
             'postal_code' => 'required|string',
             'address' => 'required|string',
             'phone' => 'required|string',
-            'email' => 'required|string',
+            'email' => 'nullable|string',
             'arrival_time'=>'required|string',  
+            'first_name'=> 'required|string',
+            'last_name'=> 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -213,18 +234,30 @@ class BookingController extends Controller
         // Get validated data
         $validatedData = $validator->validated();
 
-        // Update user information
-        $user = User::findOrFail(Auth::user()->id);
-        $user->phone = $validatedData['phone'];
-        $user->city = $validatedData['city'];
-        $user->state = $validatedData['state'];
-        $user->country = $validatedData['country'];
-        $user->zip = $validatedData['postal_code'];
-        $user->address = $validatedData['address'];
-        $user->save();
+        
 
+
+
+        // Update user information
         $bookingId = $request->session()->get('booking_id');
         $booking = Booking::findOrFail($bookingId);
+        $user = $booking->user;
+        
+
+        // save the email if it does not exists in database, skip the email validation
+        if ($validatedData['email'] && !User::where('email', $validatedData['email'])->exists()) {
+            $user->phone = $validatedData['phone'];
+            $user->city = $validatedData['city'];
+            $user->state = $validatedData['state'];
+            $user->country = $validatedData['country'];
+            $user->zip = $validatedData['postal_code'];
+            $user->address = $validatedData['address'];
+            $user->email = $validatedData['email'];
+            $user->first_name = $validatedData['first_name'];
+            $user->last_name = $validatedData['last_name']; 
+            $user->save();
+        }
+
         $booking->arrival_time = $validatedData['arrival_time'];
         $booking->payment_type = $validatedData['payment_method'];
         $booking->save();
@@ -349,7 +382,7 @@ class BookingController extends Controller
        
                     $booking->save();
 
-                    $user = Auth::user();
+                    $user = $booking->user;
                     // ADD ONE TO USER WALLET IN VERY EACH BOOKING
                     $user->wallets = $user->wallets + 1;
                     $user->save();

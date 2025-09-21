@@ -1,52 +1,52 @@
-name: Laravel CI/CD
+# name: Laravel CI/CD
 
-on:
-  push:
-    branches: ["main"]
+# on:
+#   push:
+#     branches: ["main"]
 
-jobs:
-  laravel-deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   laravel-deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # Checkout repo
-      - uses: actions/checkout@v4
+#     steps:
+#       # Checkout repo
+#       - uses: actions/checkout@v4
 
-      # 🚀 Deploy code (excluding vendor & node_modules)
-      - name: Deploy to cPanel via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          # server-dir: /hotel.wasesupportservices.co.uk
-          exclude: |
-            **/.git*
-            **/node_modules/**
-            **/vendor/**
-            **/tests/**
-          dangerous-clean-slate: false     
-          timeout: 60000                   
-          log-level: verbose               
+#       # 🚀 Deploy code (excluding vendor & node_modules)
+#       - name: Deploy to cPanel via FTPS
+#         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#         with:
+#           server: ${{ secrets.FTP_SERVER }}
+#           username: ${{ secrets.FTP_USERNAME }}
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           protocol: ftps
+#           # server-dir: /hotel.wasesupportservices.co.uk
+#           exclude: |
+#             **/.git*
+#             **/node_modules/**
+#             **/vendor/**
+#             **/tests/**
+#           dangerous-clean-slate: false     
+#           timeout: 60000                   
+#           log-level: verbose               
 
 
-      # 🛠️ Run Laravel setup on cPanel via SSH
-      - name: SSH into cPanel and setup Laravel
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASS }} 
-          port: 22
-          script: |
-            cd hotel.wasesupportservices.co.uk
-            composer install --ignore-platform-reqs --no-dev --optimize-autoloader
-            php artisan storage:link
-            php artisan key:generate
-            php artisan migrate --force
-            php artisan cache:clear
-            php artisan view:clear
-            php artisan route:clear
-            php artisan config:clear
-            php artisan optimize:clear
+#       # 🛠️ Run Laravel setup on cPanel via SSH
+#       - name: SSH into cPanel and setup Laravel
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           password: ${{ secrets.SSH_PASS }} 
+#           port: 22
+#           script: |
+#             cd hotel.wasesupportservices.co.uk
+#             composer install --ignore-platform-reqs --no-dev --optimize-autoloader
+#             php artisan storage:link
+#             php artisan key:generate
+#             php artisan migrate --force
+#             php artisan cache:clear
+#             php artisan view:clear
+#             php artisan route:clear
+#             php artisan config:clear
+#             php artisan optimize:clear

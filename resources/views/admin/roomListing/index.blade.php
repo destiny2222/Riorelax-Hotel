@@ -56,7 +56,7 @@
                                         <a href="{{ route('admin.roomListing.edit', $roomListing->id) }}" class="btn btn-info btn-sm" title="Update">
                                             <i class="ti-pencil-alt text-white" aria-hidden="true"></i>
                                         </a>
-                                        <a href="{{ route('admin.roomListing.destroy', $roomListing->id) }}" onclick="return confirm('Are you sure ?')  event.preventDefault(); document.getElementById('delete-form-{{ $roomListing->id }}').submit();" class="btn btn-danger btn-sm" title="Delete ">
+                                        <a href="javascript:void()" onclick="return confirm('Are you sure ?')  event.preventDefault(); document.getElementById('delete-form-{{ $roomListing->id }}').submit();" class="btn btn-danger btn-sm" title="Delete ">
                                             <i  class="ti-trash"></i>
                                         </a>
                                         <form action="{{ route('admin.roomListing.destroy', $roomListing->id) }}" class="d-none" id="delete-form-{{ $roomListing->id }}" method="post">

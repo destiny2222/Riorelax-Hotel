@@ -23,32 +23,23 @@
                     </a>
                 </li>
 
-                {{-- <li class="">
-                    <a class="has-arrow material-ripple" href="#">
+                <li class="{{ Route::is('admin.scan.index') ? 'mm-active' : ''}}">
+                    <a class=" material-ripple" href="{{ route('admin.booking.scan') }}">
                         <i class='ti-bag'></i>
-                        Account
+                        Scan Code
                     </a>
-                    <ul class="nav-second-level ">
-                    </ul>
-                </li> --}}
-                <!-- end if -->
-                <!-- end foreach -->
-                <li class="{{ Route::is('admin.customer.index') ? 'mm-active' : ''}}">
-                    <a class="has-arrow material-ripple" href="#">
-                        <i class='typcn typcn-user'></i>
-                        Customer
-                    </a>
-                    <ul class="nav-second-level ">
-                        <!-- endforeach -->
-                        <li class="">
-                            <a href="{{ route('admin.customer.index') }}">Customer List  </a>
-                        </li>
-                        <!-- endforeach -->
-                    </ul>
                 </li>
                 <!-- end if -->
                 <!-- end foreach -->
-                <li class="{{ Route::is('admin.amenities.index') ? 'mm-active' : ''}}">
+                <li class="{{ Route::is('admin.customer.index') ? 'mm-active' : ''}}">
+                    <a class="material-ripple" href="{{ route('admin.customer.index') }}">
+                        <i class='fa fa-user'></i>
+                        Customer List
+                    </a>
+                </li>
+                <!-- end if -->
+                <!-- end foreach -->
+                {{-- <li class="{{ Route::is('admin.amenities.index') ? 'mm-active' : ''}}">
                     <a class="has-arrow material-ripple" href="#"><i class='ti-view-grid'></i>
                         Room Facilities<span class=""></span></a>
                     <ul class="nav-second-level ">
@@ -58,11 +49,11 @@
                         </li>
                         <!-- endforeach -->
                     </ul>
-                </li>
+                </li> --}}
                 <!-- end if -->
                 <!-- end foreach -->
                 <li class="{{ Route::is('admin.roomListing.index') ? 'mm-active' : ''}}">
-                    <a class="has-arrow material-ripple" href="#"><i class='typc typcn-spanner'></i>
+                    <a class="has-arrow material-ripple" href="#"><i class='fa fa-book'></i>
                         Room Setting<span class=""></span></a>
                     <ul class="nav-second-level ">
                         <li class="">

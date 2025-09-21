@@ -1,81 +1,96 @@
 @extends('layouts.master')
 @section('content')
-         <!-- start page title -->
-         <div class="row">
-            <div class="col-12">
-                <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 btn  waves-effect waves-light">
-                       Add New Amentias
-                    </h4>
-
-
+<div class="card">
+    <div class="card-header">
+        <h4>
+            Room Facilities List
+            <small class="float-right">
+                <button type="button" class="btn btn-primary btn-md"  data-target="#add0" data-toggle="modal">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Add Facility Type
+                </button>
+            </small>
+        </h4>
+    </div>
+    <div id="add0" class="modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong>Add Facility Type</strong>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <form action=""  method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="facility_name" class="col-sm-12">Facility Name <span class="text-danger">*</span></label>
+                                            <div class="col-sm-12">
+                                                <input name="" class="form-control" type="text"  placeholder="Facility Name" id="facility_name" value="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="facility_name" class="col-sm-12">Facility Name <span class="text-danger">*</span></label>
+                                            <div class="col-sm-12">
+                                                <input name="" class="form-control" type="text"  placeholder="Facility Name" id="facility_name" value="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button type="submit" class="btn btn-success w-md m-b-5">Add</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- end page title -->
-        
-        <div class="row">
-            <div class="col-12">
-                <!-- Amenities Table -->
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Room Amenities</h5>
-                        <a href="{{ route('admin.amenities.create') }}" type="button" class="btn btn-primary">
-                            <i class="fa fa-plus"></i> Add Amenity
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        @if($amenities->count() > 0)
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Room</th>
-                                            <th>Icon</th>
-                                            <th>Title</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($amenities as $amenity)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $amenity->room->name ?? 'N/A' }}</td>
-                                                <td>
-                                                    <i class="{{ $amenity->icon }} fs-4 text-primary"></i>
-                                                </td>
-                                                <td>{{ $amenity->title }}</td>
-                                                <td>
-                                                    <a href="{{ route('admin.amenities.edit', $amenity->id) }}"  class="btn btn-sm btn-warning me-1">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </a>
-                                                    
-                                                    <form action="{{ route('admin.amenities.destroy', $amenity->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this amenity?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="text-center py-4">
-                                <p class="text-muted">No amenities found.</p>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    <i class="fa fa-plus"></i> Add First Amenity
-                                </button>
-                            </div>
-                        @endif
+    </div>
+    <div id="edit" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong>Update</strong>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body editinfo">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!--  table area -->
+        <div class="col-sm-12">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="exdatatable_wrapper" class="dataTables_wrapper no-footer">
+                        <table width="100%" id="exdatatable" class="datatable table table-striped table-bordered table-hover dataTable no-footer">
+                            <thead>
+                                <tr>
+                                    <th >SL </th>
+                                    <th >Facility Name</th>
+                                    <th > Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td >1</td>
+                                    <td>Air conditioner</td>
+                                    <td class="center">
+                                        <a onclick="editinfo('5')" class="btn btn-info btn-sm" ><i class="ti-pencil-alt text-white" aria-hidden="true"></i></a>
+                                        <a href="" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm"><i class="ti-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->  
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-
-

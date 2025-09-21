@@ -69,8 +69,8 @@
                                             <div class="form-group mb-20">
                                                 <label for="txt-email">Email <span class="required"
                                                         aria-required="true">*</span></label>
-                                                <input type="email" name="email" id="txt-email" readonly  class="form-control @error('email') is-invalid @enderror" required=""
-                                                    value="{{ Auth::user()->email }}">
+                                                <input type="email" name="email" id="txt-email"   class="form-control "   value="">
+                                               
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -157,46 +157,6 @@
 
                                     <div class="form-group mb-20">
                                         <label for="requests">Payment method</label>
-                                        {{-- <ul class="list-group list_payment_method">
-                                        <li class="list-group-item payment-method-item">
-                                            <input class="magic-radio js_payment_method" id="payment-reservation"
-                                                name="payment_method" type="radio" value="reservation" checked
-                                                data-bs-toggle="collapse" data-bs-target="#collapse-reservation">
-                                            <label for="payment-reservation" class="form-label fw-medium">
-                                                Reservation (Half Payment)
-                                            </label>
-
-                                            <div id="collapse-reservation" class="collapse mt-1 show">
-                                                <p class="text-muted">Pay 50% now to reserve your room. The remaining balance is due upon check-in. Your reservation will be held for 6 hours.</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="list-group-item payment-method-item">
-                                            <input class="magic-radio js_payment_method" id="payment-full"
-                                                name="payment_method" type="radio" value="full"
-                                                data-bs-toggle="collapse" data-bs-target="#collapse-full">
-                                            <label for="payment-full" class="form-label fw-medium">
-                                                Full Payment
-                                            </label>
-
-                                            <div id="collapse-full" class="collapse mt-1">
-                                                <p class="text-muted">Pay the full amount now to confirm your booking.</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="list-group-item payment-method-item">
-                                            <input class="magic-radio js_payment_method" id="payment-no-payment"
-                                                name="payment_method" type="radio" value="no_payment"
-                                                data-bs-toggle="collapse" data-bs-target="#collapse-no-payment">
-                                            <label for="payment-no-payment" class="form-label fw-medium">
-                                                No Payment
-                                            </label>
-
-                                            <div id="collapse-no-payment" class="collapse mt-1">
-                                                <p class="text-muted">Reserve your room now and pay later. Your reservation will be held for 6 hours.</p>
-                                            </div>
-                                        </li>
-                                    </ul> --}}
                                         <ul class="list-group list_payment_method" id="paymentAccordion">
 
                                             <li class="list-group-item payment-method-item">
@@ -257,6 +217,14 @@
                                             <span></span>
                                         </label>
                                     </div>
+                                    @guest
+                                    <div class="alert alert-info">
+                                        <small>
+                                            <strong>Guest Booking:</strong> You're booking as a guest. We'll send your booking confirmation to the email or phone provided. 
+                                            You can <a href="{{ route('register') }}">create an account</a> later to manage your bookings.
+                                        </small>
+                                    </div>
+                                    @endguest
                                     <div class="form-group mb-0">
                                         <button type="submit" class="btn btn-filled payment-checkout-btn"
                                             data-processing-text="Processing. Please wait..."

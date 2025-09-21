@@ -59,11 +59,9 @@
                         style="visibility: visible; animation-name: fadeInDown;">
                         <h2> Get In Touch </h2>
                     </div>
-                    <form method="POST" action="" accept-charset="UTF-8" id="botble-contact-forms-fronts-contact-form"
+                    <form method="POST" action="{{ route('contact.store') }}" accept-charset="UTF-8" id="botble-contact-forms-fronts-contact-form"
                         class="contact-form dirty-check" novalidate="novalidate">
-                        <input class="form-control"
-                            data-counter="250" name="required_fields" type="hidden"><input class="form-control"
-                            data-counter="250" name="display_fields" type="hidden">
+                        @csrf
                         <div class="contact-form-row row">
                             <div class="contact-column-6 col-md-6 contact-field-name_wrapper">
                                 <div class="contact-form-group"><label class="form-label form-label required"
@@ -95,7 +93,7 @@
                         </div>
                         <div class="contact-form-group">
                             <label class="form-label form-label required" for="content"> Message </label>
-                            <textarea class="contact-form-input form-control " rows="3" placeholder="Your Message"  required="required" id="content" name="content" cols="50"
+                            <textarea class="contact-form-input form-control " rows="3" placeholder="Your Message"  required="required" id="content" name="message" cols="50"
                                 aria-required="true"></textarea>
                             </div>
                         <div class="contact-form-group">

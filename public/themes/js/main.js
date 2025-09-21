@@ -107,7 +107,7 @@
                                 settings: { dots: !1, arrows: !1 },
                             },
                         ],
-                        rtl: (typeof RiorelaxTheme !== 'undefined' && RiorelaxTheme.isRtl) ? RiorelaxTheme.isRtl() : false,
+                        rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                     });
             })(),
             $(".services-active").slick({
@@ -117,7 +117,7 @@
                 speed: 1e3,
                 slidesToShow: 3,
                 slidesToScroll: 1,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -149,7 +149,7 @@
                 speed: 1e3,
                 slidesToShow: 4,
                 slidesToScroll: 1,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -181,7 +181,7 @@
                 speed: 1e3,
                 slidesToShow: 3,
                 slidesToScroll: 1,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -213,7 +213,7 @@
                 speed: 1e3,
                 slidesToShow: 5,
                 slidesToScroll: 1,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -243,7 +243,7 @@
                 speed: 1e3,
                 slidesToShow: 4,
                 slidesToScroll: 2,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1500,
@@ -282,7 +282,7 @@
                 speed: 1e3,
                 slidesToShow: 3,
                 slidesToScroll: 2,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1024,
@@ -316,7 +316,7 @@
                 speed: 1e3,
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1024,
@@ -343,7 +343,7 @@
                 arrows: !1,
                 fade: !0,
                 asNavFor: ".slider-nav",
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
             }),
             $(".slider-nav").slick({
                 slidesToShow: 3,
@@ -358,7 +358,7 @@
                     '<button type="button" class="slick-prev"><i class="fas fa-arrow-left"></i></button>',
                 nextArrow:
                     '<button type="button" class="slick-next"><i class="fas fa-arrow-right"></i></button>',
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
             }),
             $(".home-blog-active").slick({
                 dots: !0,
@@ -371,7 +371,7 @@
                     '<button type="button" class="slick-prev"><i class="far fa-chevron-left"></i></button>',
                 nextArrow:
                     '<button type="button" class="slick-next"><i class="far fa-chevron-right"></i></button>',
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -403,7 +403,7 @@
                     '<button type="button" class="slick-prev"><i class="far fa-chevron-left"></i></button>',
                 nextArrow:
                     '<button type="button" class="slick-next"><i class="far fa-chevron-right"></i></button>',
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                 responsive: [
                     {
                         breakpoint: 1200,
@@ -436,14 +436,14 @@
                     '<button type="button" class="slick-prev"><i class="fas fa-arrow-left"></i></button>',
                 nextArrow:
                     '<button type="button" class="slick-next"><i class="fas fa-arrow-right"></i></button>',
-                rtl: RiorelaxTheme.isRtl(),
+                rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
             }),
             (function () {
                 var e = $(".room-details-slider");
                 if (e.length) {
                     var t = $(".room-details-slider-nav");
                     e.slick({
-                        rtl: RiorelaxTheme.isRtl(),
+                        rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                         slidesToShow: 1,
                         slidesToScroll: 1,
                         infinite: !0,
@@ -462,7 +462,7 @@
                             actualSize: !1,
                         }),
                         t.slick({
-                            rtl: RiorelaxTheme.isRtl(),
+                            rtl: (typeof RiorelaxTheme !== 'undefined' && typeof RiorelaxTheme.isRtl === 'function') ? RiorelaxTheme.isRtl() : false,
                             slidesToShow: 6,
                             slidesToScroll: 1,
                             asNavFor: ".room-details-slider",
@@ -567,45 +567,6 @@
                             .removeClass("active-tab animated fadeIn"),
                         $(t).fadeIn(300),
                         $(t).addClass("active-tab animated fadeIn");
-                }),
-            $(document).on(
-                "click",
-                '[data-bb-toggle="decrement-room"]',
-                function (e) {
-                    var t = $(e.currentTarget)
-                            .closest(".input-quantity")
-                            .find("input"),
-                        s = t.prop("name"),
-                        o = parseInt(t.prop("min")),
-                        i = parseInt(t.val());
-                    i > o &&
-                        (t.val(i - 1),
-                        $(
-                            '[data-bb-toggle="filter-'.concat(s, '-count"]')
-                        ).text(i - 1));
-                }
-            ),
-            $(document)
-                .on("click", '[data-bb-toggle="increment-room"]', function (e) {
-                    var t = $(e.currentTarget)
-                            .closest(".input-quantity")
-                            .find("input"),
-                        s = t.prop("name"),
-                        o = parseInt(t.prop("max")),
-                        i = parseInt(t.val());
-                    i < o &&
-                        (t.val(i + 1),
-                        $(
-                            '[data-bb-toggle="filter-'.concat(s, '-count"]')
-                        ).text(i + 1));
-                })
-                .on(
-                    "click",
-                    '[data-bb-toggle="toggle-guests-and-rooms"]',
-                    function (e) {
-                        var t = $(e.currentTarget);
-                        $(t.data("target")).toggle("fast");
-                    }
-                );
+                });
     });
 })();

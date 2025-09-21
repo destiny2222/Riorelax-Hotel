@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class RoomListing extends Model
 {
@@ -18,9 +20,21 @@ class RoomListing extends Model
         return 'slug';
     }
 
-    public function getSlugAttribute(): string
+    // public function getSlugAttribute(): string
+    // {
+    //     return Str::slug($this->room_title);
+    // }
+
+    public function bookings(){
+        return $this->hasMany(Booking::class);
+    }
+
+
+    public function getSlugOptions(): SlugOptions
     {
-        return Str::slug($this->room_title);
+        return SlugOptions::create()
+            ->generateSlugsFrom('room_title')
+            ->saveSlugsTo('slug');
     }
 
     protected $casts = [

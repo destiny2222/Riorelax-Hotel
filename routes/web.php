@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/check-availability', [PageController::class, 'checkAvailability'])->name('check-availability');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('rooms');
@@ -18,6 +19,9 @@ Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
+
+Route::post('booking', [PageController::class, 'bookingStore'])->name('booking');
+Route::post('contact/store', [PageController::class, 'contactStore'])->name('contact.store');
 
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');

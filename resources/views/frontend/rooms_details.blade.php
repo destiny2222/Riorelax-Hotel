@@ -30,7 +30,7 @@
             <div class="about-area5 about-p p-relative room-details">
                 <div class="container pt-60 pb-40">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-4 order-2">
+                        <div class="col-sm-12 col-md-12 col-lg-4 order-1 order-lg-2">
                             <aside class="sidebar services-sidebar">
                                 <div class="sidebar-widget categories">
                                     <div class="widget-content">
@@ -48,7 +48,7 @@
                                                                     Check In Date
                                                                 </label>
                                                                 <input type="text"  id="room-detail-booking-form-start-date"   class="departure-date date-picker" autocomplete="off"
-                                                                    data-date-format="dd-mm-yyyy" placeholder="10-09-2025"  data-locale="en"  name="check_in" />
+                                                                    data-date-format="dd-mm-yyyy" placeholder="select check in date"  data-locale="en"  name="check_in" />
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -57,7 +57,7 @@
                                                                     Check  Out Date
                                                                 </label>
                                                                 <input type="text" id="room-detail-booking-form-end-date" class="arrival-date date-picker" autocomplete="off"
-                                                                    data-date-format="dd-mm-yyyy" placeholder="11-09-2025" data-locale="en"  name="check_out" />
+                                                                    data-date-format="dd-mm-yyyy" placeholder="select check out date" data-locale="en"  name="check_out" />
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -98,6 +98,26 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @guest
+                                                        <div class="col-lg-12">
+                                                            <div class="contact-field p-relative c-name mb-20">
+                                                                <label for="name">
+                                                                    <i class="fal fa-user"></i>
+                                                                    Name
+                                                                </label>
+                                                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="contact-field p-relative c-name mb-20">
+                                                                <label for="email">
+                                                                    <i class="fal fa-envelope"></i>
+                                                                    Email (Optional)
+                                                                </label>
+                                                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email (optional)">
+                                                            </div>
+                                                        </div>
+                                                        @endguest
                                                         <div class="col-lg-12">
                                                             <div class="slider-btn mt-15">
                                                                 <button type="submit" class="btn ss-btn"  data-animation="fadeInRight" data-delay=".8s">
@@ -117,7 +137,7 @@
                                 </div>
                             </aside>
                         </div>
-                        <div class="col-lg-8 col-md-12 col-sm-12 order-1">
+                        <div class="col-lg-8 col-md-12 col-sm-12 order-2 order-lg-1">
                             <div class="service-detail">
                                 <div class="thumb">
                                     <div class="room-details-slider">
@@ -146,7 +166,7 @@
                                     <div class="ck-content">
                                         {!!  $roomListing->description !!}
                                     </div>
-                                    <div class="room-block-content shadow-block mt-50 amenities-list">
+                                    {{-- <div class="room-block-content shadow-block mt-50 amenities-list">
                                         <h3>Amenities</h3>
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-6 col-12 d-flex align-items-center mb-3">
@@ -154,7 +174,7 @@
                                                 <span class="ms-2">Air conditioner</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="room-block-content shadow-block">
                                         <div class="hotel-rules-box">
                                             <h3>Hotel Rules</h3>
@@ -181,29 +201,13 @@
                                     </div>
                                     <div class="room-block-content shadow-block mt-50">
                                         <div>
-                                            <div class="mb-20">
+                                            {{-- <div class="mb-20">
                                                 <h3 class="text-xl">Write a review</h3>
                                                 <form action="{{ route('dashboard.comment.store') }}" method="post" class="space-y-3 review-form">
                                                     @csrf
                                                      <input type="hidden" name="room_id"  value="{{ $roomListing->id }}" />
                                                         <input type="hidden" name="rating" value="1">
                                                         <div class="text-start mb-20">
-                                                            {{-- <div class="br-wrapper br-theme-css-stars">
-                                                                <select name="star" id="select-star" style="display: none;">
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5" selected="">5</option>
-                                                                </select>
-                                                                <div class="br-widget">
-                                                                    <a href="#" data-rating-value="1" data-rating-text="1" class="br-selected"></a>
-                                                                    <a  href="#" data-rating-value="2" data-rating-text="2" class="br-selected"></a>
-                                                                    <a href="#"  data-rating-value="3" data-rating-text="3" class="br-selected"></a>
-                                                                    <a href="#" data-rating-value="4" data-rating-text="4" class="br-selected"></a>
-                                                                    <a href="#" data-rating-value="5" data-rating-text="5"  class="br-selected br-current"></a>
-                                                                    <div class="br-current-rating">5</div>
-                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                             @guest
@@ -226,7 +230,7 @@
                                                         </button>
                                                     @endguest
                                                 </form>
-                                            </div>
+                                            </div> --}}
                                             {{-- <div class="pt-8 mt-8 border-top">
                                                 <div class="d-flex justify-content-between mt-10 mb-20 reviews-block">
                                                     <h4 class="">
@@ -322,6 +326,7 @@
             slidesToScroll: 1,
             asNavFor: '.room-details-slider',
             dots: false,
+            arrows: false,
             centerMode: false,
             focusOnSelect: true
         });

@@ -24,22 +24,28 @@ class RoomAmenityController extends Controller
 
     public function store(Request $request)
     {
-         $validated = $request->validate([
-            'room_id' => 'required|exists:rooms,id',
-            'amenities' => 'required|array|min:1',
-            'amenities.*.title' => 'required|string|max:255',
-            'amenities.*.icon' => 'required|string|max:100',
+        $request->validate([
+            'room_listing_id' => 'required|exists:rooms,id',
+            'icon' => 'required|image|mimes:png,jpg,jpeg',
+            'title' => 'required|string|max:255',
         ]);
 
-        try {
 
-            foreach ($request->amenities as $amenity) {
-                RoomAmenities::create([
-                    'room_id' => $request['room_id'],
-                    'title'   => $amenity['title'],
-                    'icon'    => $amenity['icon'],
-                ]);
+
+        try {
+            if ($request->hasFile('icon')) {
+                $icon = $request->file('icon');
+                $iconName = time() . '.' . $icon->getClientOriginalExtension();
+                $icon->move(public_path('uploads/amenities'), $iconName);
             }
+
+            RoomAmenities::create([
+                'room_listing_id' => $request->room_listing_id,
+                'icon' => $iconName,
+                'title' => $request->title,
+            ]);
+            
+
             return redirect()->route('admin.amenities.index')
                 ->with('success', 'Room amenity created successfully');
         } catch (\Exception $exception) {

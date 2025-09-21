@@ -22,4 +22,71 @@ class HomeController extends Controller
             'total_booking_amount' => $total_booking_amount
         ]);
     }
+
+
+    public function scanCode(){
+    // Only return the initial search step
+    return view('admin.booking.scan', ['booking' => null, 'step' => 'search']);
 }
+
+public function scanCodeResult(Request $request)
+{
+    $request->validate([
+        'phone' => 'required|string'
+    ]);
+
+    $phone = $request->phone;
+
+    // Search for the latest booking using user's phone
+    $booking = Booking::whereHas('user', function ($query) use ($phone) {
+            $query->where('phone', $phone);
+        })
+        ->with(['user', 'roomListing']) // Eager load relationships
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+    if ($booking) {
+        // Show QR code for scanning verification
+        return view('admin.booking.scan', ['booking' => $booking, 'step' => 'qr_display']);
+    } else {
+        return redirect()->back()->with('error', 'No booking found for phone number: ' . $phone);
+    }
+}
+
+public function verifyQRCode(Request $request)
+{
+    $qrData = $request->qr_data;
+    
+    // Find booking by QR data (assuming QR contains booking number)
+    $booking = Booking::where('booking_number', $qrData)
+        ->with(['user', 'roomListing'])
+        ->first();
+
+        // update the booking status to verified
+    $booking->assign = 1;
+    $booking->save();
+
+    if ($booking) {
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('admin.booking.verified', ['id' => $booking->id])
+        ]);
+    }
+
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Invalid QR code or booking not found'
+    ]);
+}
+
+// Show verified booking details
+public function showVerifiedBooking($id)
+{
+    $booking = Booking::with(['user', 'roomListing'])->findOrFail($id);
+    return view('admin.booking.scan', ['booking' => $booking, 'step' => 'verified']);
+}
+
+}
+
+

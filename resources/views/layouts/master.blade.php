@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title> Hotel - Home</title>
 
     <!-- Favicon and touch icons -->
@@ -121,7 +122,7 @@
     <script src="https://xainhotellatest.bdtask-demo.com/assets/js/print.js"></script>
 </head>
 
-<body class="fixed sidebar-mini">
+<div class="fixed sidebar-mini">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -304,5 +305,6 @@
         });
     </script>
     @include('partials.message')
+    @stack('scripts')
 </body>
 </html>

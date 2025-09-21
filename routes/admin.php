@@ -65,29 +65,17 @@ Route::prefix('admin')->name('admin.')->group(function (){
         // Route::post('/system/clear-logs', [SystemController::class, 'clearLogs'])->name('system.clear-logs');
         
 
-        // site management
-        // Route::resource('/rooms', RoomController::class);
-        // Route::resource('/blog', PostController::class);
-        // Route::resource('/tags', TagController::class);
-        // Route::resource('/gallery', GalleryController::class);
-        // Route::resource('/testimonial', TestimonialController::class);
-
-        // Route::get('/service', [ ServiceController::class, 'index'])->name('service.index');
-        // Route::get('/service/create', [ ServiceController::class, 'create'])->name('service.create');
-        // Route::post('/service/store', [ ServiceController::class, 'store'])->name('service.store');
-        // Route::get('/service/edit/{id}', [ ServiceController::class, 'edit'])->name('service.edit');
-        // Route::post('/service/update/{id}', [ ServiceController::class, 'update'])->name('service.update');
-        // Route::delete('/service/delete/{id}', [ ServiceController::class, 'destroy'])->name('service.destroy');
-
-
-
-        // Route::get('category', [ PostCategoryController::class, 'index'])->name('category.index');
-        // Route::get('category/create', [ PostCategoryController::class, 'create'])->name('category.create');
-        // Route::post('category/store', [ PostCategoryController::class, 'store'])->name('category.store');
-        // Route::get('category/edit/{id}', [ PostCategoryController::class, 'edit'])->name('category.edit');
-        // Route::put('category/update/{id}', [ PostCategoryController::class, 'update'])->name('category.update');
-        // Route::delete('category/delete/{id}', [ PostCategoryController::class, 'delete'])->name('category.destroy');
-
+        // Scan 
+        // Route::get('scan', [HomeController::class, 'scanCode'])->name('scan.index');
+        // Route::get('scan/result', [HomeController::class, 'scanCodeResult'])->name('scan.result.store');
+        Route::get('/booking/scan', [HomeController::class, 'scanCode'])->name('booking.scan');
+        Route::get('/booking/scan/result', [HomeController::class, 'scanCodeResult'])->name('scan.result.store');
+        // Step 3: Verify QR code (AJAX endpoint)
+        Route::post('/booking/verify-qr', [HomeController::class, 'verifyQRCode'])->name('booking.verify-qr');
+        
+        // Step 4: Show verified booking details
+        Route::get('/booking/verified/{id}', [HomeController::class, 'showVerifiedBooking'])->name('booking.verified');
+        
         // Amenities
         Route::get('amenities', [ RoomAmenityController::class, 'index'])->name('amenities.index');
         Route::get('amenities/create', [ RoomAmenityController::class, 'create'])->name('amenities.create');
