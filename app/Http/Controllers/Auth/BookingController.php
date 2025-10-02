@@ -13,6 +13,7 @@ use App\Mail\BookingConfirmation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -88,20 +89,19 @@ class BookingController extends Controller
     {
         try {
             // Generate OTP
-            $otp = '000000';  // Default for testing; use rand(100000, 999999) for production
-            // $otp = rand(100000, 999999);
+            // $otp = '000000';  // Default for testing; use rand(100000, 999999) for production
+            $otp = rand(100000, 999999);
 
             // Get user phone (from form/session)
-            // $phone = $request->phone ?? Auth::user()->phone;
+            $phone = $request->phone ?? Auth::user()->phone;
 
-            // if (!$phone) {
-            //     throw new \Exception('Phone number is required for OTP.');
-            //}
-
-            // $this->formatPhone($phone);  // Validate/format
+            if(!$phone){
+                return back()->with('error', 'Please enter your phone number.');
+            }
+            $this->formatPhone($phone); 
 
             // Send via Termii
-            // $this->sendOtpWithTermii($phone, $otp);
+            $this->sendOtpWithTermii($phone, $otp);
 
             // Store in session
             $request->session()->put('otp', $otp);
@@ -134,18 +134,13 @@ class BookingController extends Controller
             }
 
             // Generate new OTP
-            $otp = '000000'; // Default OTP for testing
-            // $otp = rand(100000, 999999);
+            $otp = rand(100000, 999999);
             
             // Send OTP to user email or phone number
             $user = Auth::user();
-            // $phone = $user->phone;
-            // $this->formatPhone($phone);
-            // $this->sendOtpWithBrevo($otp, $phone);
-            
-            // For testing, you can send OTP via email
-            // Mail::to($user->email)->send(new OtpMail($otp));
-
+            $phone = $user->phone;
+            $this->sendOtpWithTermii($otp, $phone);
+   
             // Store new OTP in session
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
@@ -414,19 +409,17 @@ class BookingController extends Controller
 
    
 
+
     /**
-     * Handle payment callback from OPay
+     * Handle payment callback from OPay (Webhook)
      */
-
-
-    /**
- * Handle payment callback from OPay (Webhook)
- */
 public function handlePaymentCallback(Request $request)
 {
     Log::info("OPay Webhook Received", ['body' => $request->all()]);
 
-    $payload = $this->oPayService->verifyCallback($request);
+    $signature = Str::after($request->header('Authorization', ''), 'Bearer ');
+
+    $payload = $this->oPayService->verifyCallback($request->all(), $signature);
 
     if (!$payload) {
         Log::error("OPay Webhook: Invalid signature");
@@ -611,47 +604,34 @@ private function confirmPaymentReturn($booking)
         return view('dash.booking.success');
     }
 
-    /**
-     * Show booking status
-     */
-    
-
-    // Keep your existing OTP methods
     
     /**
      * Send OTP via Termii SMS
      */
     private function sendOtpWithTermii(string $phone, string $otp)
     {
-        $client = new Client();
-
-        // Format phone if needed (your existing method handles +234...)
         $formattedPhone = $this->formatPhone($phone);
+        $message = "Your House7 booking OTP is: {$otp}. Valid for 10 minutes. Do not share.";
 
-        $message = "Your RioRelax booking OTP is: {$otp}. Valid for 10 minutes. Do not share.";
+        $payload = [
+            'to' => $formattedPhone,
+            'from' => config('services.termii.sender_id'),
+            'sms' => $message,
+            'api_key' => config('services.termii.api_key'),
+            'type' => 'plain',
+            'channel' => 'generic',
+        ];
 
-        $response = $client->post(config('services.termii.base_url') . '/api/sms/send', [
-            'headers' => [
-                'api-key' => config('services.termii.api_key'), 
-                'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'to' => $formattedPhone,
-                'from' => env('TERMII_SENDER_ID'),
-                'sms' => $message,
-                'type' => 'plain',
-                'channel' => 'dnd',  // Or 'generic' if DND not activated
-            ]
-        ]);
 
-        $result = json_decode((string) $response->getBody(), true);
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post(config('services.termii.base_url') . '/api/sms/send', $payload);
 
-        // Log for debugging
-        Log::info('Termii OTP Response', ['phone' => $formattedPhone, 'result' => $result]);
+        $result = $response->json();
 
-        
-        if (isset($result['request_id'])) {
-            return $result;  
+   
+        if ($response->successful() && isset($result['message_id'])) {
+            return $result;
         } else {
             Log::error('Termii OTP Error', ['error' => $result['message'] ?? 'Unknown error']);
             throw new \Exception('Failed to send OTP via Termii: ' . ($result['message'] ?? 'Unknown error'));
