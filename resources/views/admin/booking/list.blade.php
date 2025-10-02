@@ -6,12 +6,12 @@
             <div class="card-header">
                 <h4>
                     Booking List
-                    {{-- <small class="float-right">
-                        <a href="#" id="reservationbtn" class="btn btn-primary btn-md">
+                    <small class="float-right">
+                        <a href="{{ route('admin.bookings.create') }}" id="reservationbtn" class="btn btn-primary btn-md">
                             <i class="ti-plus" aria-hidden="true"></i>
-                            Room Booking
+                            Book Reservation
                         </a>
-                    </small> --}}
+                    </small>
                 </h4>
             </div>
             <div class="row">
@@ -96,17 +96,11 @@
         </div>
     </div>
 </div>
-<div id="edit" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <strong>Cancel Reservation</strong>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#bookingdetails').DataTable();
+    });
+</script>
+@endpush

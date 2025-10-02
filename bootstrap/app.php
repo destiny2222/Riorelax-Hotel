@@ -18,9 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.logged_in'=> AdminLog::class,
             'admin.logged_out'=> AdminLogged::class,
             'user.authenticated'=> Authenticate::class,
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            // '/dashboard/payment/*',
+            'dashboard/payment/callback',
             // 'api/webhook/payment'
 			// 'http://example.com/foo/bar',
 			// 'http://example.com/foo/*',

@@ -34,16 +34,16 @@
             --primary-font: 'Roboto', sans-serif;
         }
     </style>
-    <title>Hotel Riorelax</title>
+    <title>{{ config('app.name' )  }} </title>
     <link rel="canonical" href="/">
     <meta name="robots" content="index, follow">
-    <meta property="og:site_name" content="Hotel Riorelax">
+    <meta property="og:site_name" content={{ config('app.name') }}>
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Hotel Riorelax">
+    <meta property="og:title" content={{ config('app.name') }}>
     <meta property="og:description" content="">
-    <meta property="og:url" content="https://riorelax.archielite.com">
-    <meta property="og:image" content="https://riorelax.archielite.com/storage/general/logo.png">
-    <meta name="twitter:title" content="Hotel Riorelax">
+    <meta property="og:url" content="{{ route('home') }}">
+    <meta property="og:image" content="{{ route('home') }}/storage/general/logo.png">
+    <meta name="twitter:title" content={{ config('app.name') }}>
     <meta name="twitter:description" content="">
     <link rel="icon" type="image/x-icon" href="storage/general/favicon.png">
     <style>
@@ -404,10 +404,14 @@
                     <div class="col-lg-6 col-md-6 d-none d-lg-block header-top-left">
                         <div class="header-cta">
                             <ul>
-                                <li class="opening_hours"><i class="far fa-clock"></i><span>Mon - Fri: 9:00 - 19:00/
-                                        Closed on Weekends</span></li>
-                                <li><i class="far fa-mobile"></i><strong><a href="tel:+908 987 877 09">+908 987 877
-                                            09</a></strong></li>
+                                <li class="opening_hours">
+                                    <i class="far fa-clock"></i>
+                                    <span>Open 24/7 - Check-in: 1:00 PM | Check-out: 11:00 AM</span>
+                                </li>
+                                <li>
+                                    <i class="far fa-mobile"></i>
+                                    <strong><a href="tel:+2347055353419">08180000104</a></strong>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -466,7 +470,7 @@
                                 <i class="fa fa-list"></i>
                             </button>
                         </div>
-                        <div class="d-none d-lg-block col-xl-2 col-lg-2"><a href="/contact"  class="top-btn mt-10 mb-10">Reservation</a></div>
+                        <div class="d-none d-lg-block col-xl-2 col-lg-2"><a href="#booking-form"  class="top-btn mt-10 mb-10">Reservation</a></div>
                     </div>
                 </div>
             </div>
@@ -505,12 +509,11 @@
                             <div class="f-widget-title mb-30"><img src="" alt=""></div>
                             <div class="f-contact">
                                 <ul>
-                                    <li><i class="icon fal fa-phone"></i><span>1800-121-3637</span></li>
+                                    <li><i class="icon fal fa-phone"></i><span>08180000104</span></li>
                                     <li><i class="icon fal fa-envelope"></i><span><a href="#"
-                                                class="__cf_email__">Email</a></span>
+                                                class="__cf_email__">Email</a>  info@house7.com.ng</span>
                                     </li>
-                                    <li><i class="icon fal fa-map-marker-check"></i><span>1247/Plot No. 39, 15th
-                                            Phase,<br>LHB Colony, Kanpur</span></li>
+                                    <li><i class="icon fal fa-map-marker-check"></i><span>7, Commercial Avenue, off Ikpokpan Road, GRA, Benin City</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -580,7 +583,7 @@
         <div class="copyright-wrap">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6"> ©2024 Archi Elite JSC. All right reserved. </div>
+                    <div class="col-lg-6 col-md-6"> ©{{ date('Y') }} {{ config('app.name') }}. All right reserved. </div>
                     <div class="col-lg-6 col-md-6 text-end text-xl-right">
                         <div class="footer-social"><a target="_blank" href="https://www.facebook.com/"
                                 title="Facebook"><i class="fab fa-facebook-f"></i></a><a target="_blank"

@@ -62,6 +62,9 @@
                         <li class="">
                             <a href="{{ route('admin.booking.index') }}">Booking List </a>
                         </li>
+                        <li class="">
+                            <a href="{{ route('admin.bookings.create') }}">Book Reservation</a>
+                        </li>
                     </ul>
                 </li>
                 <!-- end if -->

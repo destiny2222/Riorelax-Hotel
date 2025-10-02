@@ -68,7 +68,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-20">
                                                 <label for="txt-email">Email <span class="required"
-                                                        aria-required="true">*</span></label>
+                                                        aria-required="true"></span></label>
                                                 <input type="email" name="email" id="txt-email"   class="form-control "   value="">
                                                
                                             </div>
@@ -76,7 +76,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-20">
                                                 <label for="txt-phone">Phone <span class="required"
-                                                        aria-required="true">*</span></label>
+                                                        aria-required="true"></span></label>
                                                 <input type="text" name="phone" id="txt-phone" class="form-control"
                                                     required="" value="" aria-required="true">
                                             </div>
@@ -156,66 +156,36 @@
                                     </div>
 
                                     <div class="form-group mb-20">
-                                        <label for="requests">Payment method</label>
-                                        <ul class="list-group list_payment_method" id="paymentAccordion">
-
+                                        <label for="requests">Payment Plan</label>
+                                        <ul class="list-group list_payment_method" id="paymentPlanAccordion">
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_method" id="payment-reservation"
-                                                    name="payment_method" type="radio" value="reservation" 
-                                                    data-bs-toggle="collapse" data-bs-target="#collapse-reservation">
+                                                <input class="magic-radio js_payment_plan" id="payment-reservation" name="payment_plan" type="radio" value="reservation" data-bs-toggle="collapse" data-bs-target="#collapse-reservation" checked>
                                                 <label for="payment-reservation" class="form-label fw-medium">
-                                                    Reservation (Half Payment)
+                                                    Pay 50% Now (Reservation)
                                                 </label>
-
-                                                <div id="collapse-reservation" class="collapse mt-1 show"
-                                                    data-bs-parent="#paymentAccordion">
-                                                    <p class="text-muted">Pay 50% now to reserve your room. The remaining
-                                                        balance is due upon check-in. Your reservation will be held for 6
-                                                        hours.</p>
+                                                <div id="collapse-reservation" class="collapse mt-1 show" data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted">Secure your booking by paying half now. The rest is due at check-in. We'll hold your room for 6 hours.</p>
                                                 </div>
                                             </li>
-
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_method" id="payment-full"
-                                                    name="payment_method" type="radio" value="full"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapse-full">
+                                                <input class="magic-radio js_payment_plan" id="payment-full" name="payment_plan" type="radio" value="full" data-bs-toggle="collapse" data-bs-target="#collapse-full">
                                                 <label for="payment-full" class="form-label fw-medium">
-                                                    Full Payment
+                                                    Pay in Full
                                                 </label>
-
-                                                <div id="collapse-full" class="collapse mt-1"
-                                                    data-bs-parent="#paymentAccordion">
-                                                    <p class="text-muted">Pay the full amount now to confirm your booking.
-                                                    </p>
+                                                <div id="collapse-full" class="collapse mt-1" data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted">Complete your payment now to fully confirm your booking.</p>
                                                 </div>
                                             </li>
-
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_method" id="payment-no-payment"
-                                                    name="payment_method" type="radio" value="no_payment"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapse-no-payment">
+                                                <input class="magic-radio js_payment_plan" id="payment-no-payment" name="payment_plan" type="radio" value="no_payment" data-bs-toggle="collapse" data-bs-target="#collapse-no-payment">
                                                 <label for="payment-no-payment" class="form-label fw-medium">
-                                                    No Payment
+                                                    Pay at Hotel
                                                 </label>
-
-                                                <div id="collapse-no-payment" class="collapse mt-1"
-                                                    data-bs-parent="#paymentAccordion">
-                                                    <p class="text-muted">Reserve your room now and pay later. Your
-                                                        reservation will be held for 6 hours.</p>
+                                                <div id="collapse-no-payment" class="collapse mt-1" data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted">Reserve now and pay when you arrive. We'll hold your room for 6 hours.</p>
                                                 </div>
                                             </li>
-
                                         </ul>
-
-                                    </div>
-
-                                    <div class="form-group mb-20 custom-checkbox d-block">
-                                        <label for="terms_conditions" class="w-100">
-                                            <input type="checkbox" id="terms_conditions" name="terms_conditions"
-                                                value="1">
-                                            Terms &amp; conditions *
-                                            <span></span>
-                                        </label>
                                     </div>
                                     @guest
                                     <div class="alert alert-info">
@@ -232,27 +202,6 @@
                                     </div>
                                 </div>
                             </form>
-
-                            <div class="widget-content mb-50 hotel-rules shadow-block">
-                                <h3 class="mb-20">Hotel rules</h3>
-                                <ul>
-                                    <li>No smoking, parties or events.</li>
-                                    <li>Check-in time from 2 PM, check-out by 10 AM.</li>
-                                    <li>Time to time car parking</li>
-                                    <li>Download Our minimal app</li>
-                                    <li>Browse regular our website</li>
-                                </ul>
-                            </div>
-
-                            <div class="widget-content mb-50 shadow-block">
-                                <h3 class="mb-20">Cancellation</h3>
-                                <p>We’re pleased to offer a full refund of the booking amount for cancellations made
-                                    <strong>14 days or more</strong> before the scheduled check-in date. This generous
-                                    window provides you with the flexibility to adjust your plans without any financial
-                                    repercussions.
-                                </p>
-                                <p></p>
-                            </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-4 sidebar">
                             <aside>

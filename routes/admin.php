@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\AdminBookingController;
 
 Route::prefix('admin')->name('admin.')->group(function (){ 
 
@@ -43,6 +44,11 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::get('/booking/{id}/show', [BookingController::class, 'show'])->name('booking.show');
     Route::put('/booking/{id}/update', [BookingController::class, 'update'])->name('booking.update');
     Route::delete('/booking/{id}/delete', [BookingController::class,'destroy'])->name('booking.delete');
+
+    Route::middleware(['role:super-admin'])->group(function () {
+        Route::get('/bookings/create', [AdminBookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings', [AdminBookingController::class, 'store'])->name('bookings.store');
+    });
 
     // user customer 
     Route::get('/customer', [CustomerController::class,'index'])->name('customer.index');

@@ -16,8 +16,7 @@
     <!-- jquery-ui css -->
     <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"
         type="text/css" />
-    <link href="/assets/plugins/bootstrap/css/datatables.min.css"
-        rel="stylesheet" type="text/css" />
+    <link href="/assets/plugins/bootstrap/css/datatables.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/bootstrap4-toggle/css/bootstrap4-toggle.min.css"
         rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -176,8 +175,7 @@
         <!--/.wrapper-->
     </div>
     <!-- jquery-ui -->
-    <script src="https://xainhotellatest.bdtask-demo.com/assets/plugins/bootstrap/js/datatables.min.js"
-        type="text/javascript"></script>
+    <script src="/assets/js/datatables.min.js" type="text/javascript"></script>
     <script src="https://xainhotellatest.bdtask-demo.com/assets/plugins/jquery-ui-1.12.1/jquery-ui.min.js"
         type="text/javascript"></script>
 

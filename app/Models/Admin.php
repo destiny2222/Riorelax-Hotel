@@ -46,4 +46,9 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'admin_role');
+    }
 }

@@ -20,7 +20,8 @@ class PageController extends Controller
 {
     public function index(){
         $roomListings = RoomListing::orderBy('id', 'desc')->get();
-        return view('frontend.index', compact('roomListings'));
+        $latestRoom = RoomListing::orderBy('id', 'desc')->first();
+        return view('frontend.index', compact('roomListings', 'latestRoom'));
     }
 
 
@@ -39,7 +40,8 @@ class PageController extends Controller
 
     public function roomDetails(RoomListing $roomListing){
         $relatedRooms = RoomListing::latest()->take(4)->get();
-        return view('frontend.rooms_details', compact('roomListing', 'relatedRooms'));
+        $availabilityData = session('availability_data');
+        return view('frontend.rooms_details', compact('roomListing', 'relatedRooms', 'availabilityData'));
     }
 
 
@@ -48,6 +50,9 @@ class PageController extends Controller
         $request->validate([
             'start_date' => 'required|date',
             'end_date'   => 'required|date|after:start_date',
+            'adults'     => 'sometimes|integer|min:1',
+            'children'   => 'sometimes|integer|min:0',
+            'rooms'      => 'sometimes|integer|min:1',
         ]);
 
         // Convert input dates from d-m-Y to Y-m-d for DB comparison
@@ -60,90 +65,22 @@ class PageController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->with('success', 'Rooms are available for the selected dates.');
+            return back()->with('error', 'Rooms are not available for the selected dates. Please choose different dates');
         }
 
-        return redirect()->route('rooms');
+        $availabilityData = $request->only(['start_date', 'end_date', 'adults', 'children', 'rooms']);
+        session(['availability_data' => $availabilityData]);
+
+        return redirect()->route('rooms')->with('success', 'Rooms are available for the selected dates.');
     }
 
-
-    public function bookingStore(Request $request)
-    {
-        $isGuest = !Auth::check();
-
-        $validator = Validator::make($request->all(), [
-            'room_listing_id' => 'required|exists:room_listings,id',
-            'check_in'        => 'required|date',
-            'check_out'       => 'required|date|after:check_in',
-            'adults'          => 'required|integer|min:1',
-            'rooms'           => 'required|integer|min:1',
-            'children'        => 'nullable|integer|min:0',
-            'name'            => $isGuest ? 'required|string|max:255' : 'nullable|string|max:255',
-            'email'           => 'nullable|email|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->with('error', $validator->errors()->first());
-        }
-
-        try {
-            $validatedData = $validator->validated();
-
-            // Convert dates into Y-m-d format
-            $checkIn  = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['check_in'])->format('Y-m-d');
-            $checkOut = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['check_out'])->format('Y-m-d');
-
-            // 🔍 Check if a booking already exists for this room and exact dates
-            $exists = Booking::where('room_listing_id', $validatedData['room_listing_id'])
-                ->where('check_in', $checkIn)
-                ->where('check_out', $checkOut)
-                ->exists();
-
-            if ($exists) {
-                return back()->with('error', 'Rooms are available for the selected dates.');
-            }
-
-            // Get or create user
-            $user = Auth::user();
-            if (!$user) {
-                $email = $validatedData['email'] ?? 'guest_' . time() . '@riorelax.com';
-                $user = User::firstOrCreate(
-                    ['email' => $email],
-                    [
-                        'first_name' => $validatedData['name'],
-                        'last_name'  => $validatedData['name'],
-                        'password'   => bcrypt(Str::random(16)),
-                    ]
-                );
-            }
-
-            // Store booking data
-            $bookingData = $validatedData;
-            $bookingData['user_id']   = $user->id;
-            $bookingData['check_in']  = $checkIn;
-            $bookingData['check_out'] = $checkOut;
-
-            $booking = new Booking();
-            $booking->fill($bookingData);
-            $booking->save();
-
-            // Save booking ID in session for payment
-            $request->session()->put('booking_id', $booking->id);
-
-            return redirect()->route('dashboard.booking.payment.form');
-
-        } catch (\Exception $exception) {
-            Log::error('Error storing booking data: ' . $exception->getMessage());
-            return back()->with('error', 'An error occurred while storing your booking data. Please try again later.');
-        }
-    }
 
 
     public function contactStore(Request $request){
         try {
             $data = ContactStore::create($request->all());
         // send mail to 
-        Mail::to('info@yourdomain.com')->send(new ContactMail($data));
+        Mail::to('info@house7.com.ng')->send(new ContactMail($data));
         return back()->with('success', 'Thank you for contacting us. We will get back to you soon.');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());

@@ -37,7 +37,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="index.htm">Home</a>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         Login
@@ -58,7 +58,7 @@
                 <div class="row flex-row-reverse justify-content-center align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="booking-img">
-                            <img src="/booking-img.png" alt="Login" />
+                            <img src="/images/about-img-03.jpg" alt="Login" />
                         </div>
                     </div>
                     <div class="col-xxl-5 col-xl-12 col-lg-12">

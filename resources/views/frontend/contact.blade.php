@@ -30,25 +30,19 @@
                         data-delay=".2s" style="visibility: visible; animation-name: fadeInUp;">
                         <div class="float-start f-cta-icon"><i class="far fa-map"></i></div>
                         <h5>Office Address</h5>
-                        <p> 380 St Kilda Road, Melbourne <br>VIC 3004, Australia </p>
-                    </div>
-                    <div class="single-cta pb-30 mb-30 wow fadeInUp  animated" data-animation="fadeInDown animated"
-                        data-delay=".2s" style="visibility: visible; animation-name: fadeInUp;">
-                        <div class="float-start f-cta-icon"><i class="far fa-clock"></i></div>
-                        <h5>Working Hours</h5>
-                        <p> Monday to Friday 09:00 to 18:30 <br>Saturday 15:30 </p>
+                        <p> 7, Commercial Avenue, off Ikpokpan Road, GRA, Benin City </p>
                     </div>
                     <div class="single-cta pb-30 mb-30 wow fadeInUp  animated" data-animation="fadeInDown animated"
                         data-delay=".2s" style="visibility: visible; animation-name: fadeInUp;">
                         <div class="float-start f-cta-icon"><i class="fa fa-phone"></i></div>
-                        <h5>(+1) 123 456 78</h5>
+                        <h5>08180000104</h5>
                         <p> 24/7 Customer Service And Returns Support. </p>
                     </div>
                     <div class="single-cta wow fadeInUp  animated" data-animation="fadeInDown animated" data-delay=".2s"
                         style="visibility: visible; animation-name: fadeInUp;">
                         <div class="float-start f-cta-icon"><i class="far fa-envelope-open"></i></div>
                         <h5>Message Us</h5>
-                        <p> support@example.com <br>info@example.com </p>
+                        <p> info@house7.com.ng </p>
                     </div>
                 </div>
             </div>

@@ -59,7 +59,7 @@
                     <div class="row flex-row-reverse justify-content-center align-items-center">
                         <div class="col-lg-6 col-md-6">
                             <div class="booking-img">
-                                <img src="/booking-img.png" alt="Register" />
+                                <img src="/images/about-img-03.jpg" alt="Register" />
                             </div>
                         </div>
                         <div class="col-xxl-5 col-xl-12 col-lg-12">
