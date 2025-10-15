@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\BladeEditorController;
 
 Route::prefix('admin')->name('admin.')->group(function (){ 
 
@@ -48,6 +49,11 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::middleware(['role:super-admin'])->group(function () {
         Route::get('/bookings/create', [AdminBookingController::class, 'create'])->name('bookings.create');
         Route::post('/bookings', [AdminBookingController::class, 'store'])->name('bookings.store');
+
+        // Blade Editor Routes
+        Route::get('/blade-editor', [BladeEditorController::class, 'index'])->name('blade.editor.index');
+        Route::get('/blade-editor/show', [BladeEditorController::class, 'show'])->name('blade.editor.show');
+        Route::post('/blade-editor/update', [BladeEditorController::class, 'update'])->name('blade.editor.update');
     });
 
     // user customer 

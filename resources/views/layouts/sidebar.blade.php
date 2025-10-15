@@ -68,6 +68,13 @@
                     </ul>
                 </li>
                 <!-- end if -->
+                @if(auth()->user()->hasRole('super-admin'))
+                <li class="{{ Route::is('admin.blade.editor.index') ? 'mm-active' : ''}}">
+                    <a href="{{ route('admin.blade.editor.index') }}"><i class="ti-pencil"></i>
+                        Blade Editor
+                    </a>
+                </li>
+                @endif
                 <li class=""><a href="#"><i class="ti-settings"></i>Settings</a></li>
             </ul>
         </nav>
