@@ -36,12 +36,12 @@
                             <i class="fal fa-check-circle"></i>
                         </div>
                         <h3 class="success-title">Booking Successful!</h3>
-                        <p class="success-subtitle">Your booking has been confirmed. A confirmation email with your QR code has been sent to your email address.</p>
+                        <p class="success-subtitle">Your booking has been confirmed</p>
                     </div>
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <img src="{{ session('qrcode') }}" alt="QR Code">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

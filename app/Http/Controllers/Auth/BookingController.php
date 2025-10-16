@@ -37,7 +37,7 @@ class BookingController extends Controller
             'adults' => 'required|integer|min:1',
             'rooms'=> 'required|integer|min:1',
             'children' => 'nullable|integer|min:0',
-            'name' => $isGuest ? 'required|string|max:255' : 'nullable|string|max:255',
+            'name' => $isGuest ? 'nullable|string|max:255' : 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
         ]);
 
@@ -53,8 +53,8 @@ class BookingController extends Controller
                 $email = $validatedData['email'] ?? 'guest_' . time() . '@riorelax.com';
                 $user = User::firstOrCreate(
                     ['email' => $email],
-                    ['first_name' => $validatedData['name'], 
-                    'last_name' => $validatedData['name'],
+                    ['first_name' => $validatedData['name'] ?? '', 
+                    'last_name' => $validatedData['name'] ?? '',
                     'password' => bcrypt(Str::random(16))]
                 );
             }
@@ -88,11 +88,8 @@ class BookingController extends Controller
     private function generateOTP(Request $request)
     {
         try {
-            // Generate OTP
-            // $otp = '000000';  // Default for testing; use rand(100000, 999999) for production
             $otp = rand(100000, 999999);
-
-            // Get user phone (from form/session)
+            // $otp = '000000';
             $phone = $request->phone ?? Auth::user()->phone;
 
             if(!$phone){
@@ -106,6 +103,7 @@ class BookingController extends Controller
             // Store in session
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
+            $request->session()->put('phone_for_otp', $phone); 
 
             return redirect()->route('dashboard.booking.otp.form')->with('success', 'OTP sent to your phone. Please verify.');
         } catch (\Exception $e) {
@@ -123,32 +121,33 @@ class BookingController extends Controller
     public function resendOtp(Request $request)
     {
         try {
-            // Check if user can request resend (optional: add rate limiting)
             $lastOtpTime = session('otp_generated_at');
-            if ($lastOtpTime && now()->diffInSeconds($lastOtpTime) < 60) {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'Please wait before requesting a new OTP.',
-                    'remaining_time' => 60 - now()->diffInSeconds($lastOtpTime)
-                ], 429);
+            if ($lastOtpTime && abs(now()->diffInSeconds($lastOtpTime)) < 60) {
+                $remainingTime = 60 - abs(now()->diffInSeconds($lastOtpTime));
+                return back()->with('error', "Please wait {$remainingTime} seconds before requesting a new OTP.");
             }
 
-            // Generate new OTP
             $otp = rand(100000, 999999);
             
-            // Send OTP to user email or phone number
-            $user = Auth::user();
-            $phone = $user->phone;
-            $this->sendOtpWithTermii($otp, $phone);
-   
-            // Store new OTP in session
+            $phone = $request->phone ?? (Auth::check() ? Auth::user()->phone : session('phone_for_otp'));
+
+            if(!$phone){
+                Log::warning('Resend OTP failed: Phone number not found in request, authenticated user, or session.');
+                return back()->with('error', 'Phone number not found. Please provide a phone number.');
+            }
+            
+            
+            $this->sendOtpWithTermii($phone, $otp);
+            Log::info('Attempting to resend OTP for phone: ' . $phone);
+            Log::info('OTP: ' . $otp);
+            
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
 
-            return response()->json(['success' => true, 'message' => 'A new OTP has been sent.']);
+            return back()->with('success', 'A new OTP has been sent to your phone.');
         } catch (\Exception $e) {
             Log::error('Error resending OTP: ' . $e->getMessage());
-            return response()->json(['success' => false, 'error' => 'Failed to resend OTP. Please try again.'], 500);
+            return back()->with('error', 'Failed to resend OTP. Please try again.');
         }
     }
 
@@ -160,8 +159,9 @@ class BookingController extends Controller
             return redirect()->route('home')->with('error', 'No booking found. Please start a new booking.');
         }
 
+        
+
         $otp = session()->has('otp');
-        // Check if OTP exists in session
         if (!$otp) {
             return redirect()->route('dashboard.booking.payment.form')->with('error', 'OTP not generated. Please try again.');
         }
@@ -172,6 +172,7 @@ class BookingController extends Controller
 
     public function verifyOtp(Request $request)
     {
+        
         $request->validate([
             'otp' => 'required|numeric|digits:6',
         ]);
@@ -183,7 +184,6 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'OTP not found. Please generate a new OTP.');
         }
 
-        // Check if OTP is expired (10 minutes)
         if ($otpGeneratedAt && now()->diffInMinutes($otpGeneratedAt) > 10) {
             $request->session()->forget(['otp', 'otp_generated_at']);
             return redirect()->back()->with('error', 'OTP has expired. Please generate a new OTP.');
@@ -193,11 +193,9 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
         }
 
-        // Mark OTP as verified
         $request->session()->put('otp_verified', true);
         $request->session()->forget(['otp', 'otp_generated_at']);
 
-        // Get payment details from session
         $paymentDetails = $request->session()->get('payment_details');
         
         if (!$paymentDetails) {
@@ -208,6 +206,21 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($paymentDetails['booking_id']);
         $amount = $paymentDetails['amount'];
         $paymentType = $paymentDetails['payment_type'];
+
+        if ($paymentType === 'no_payment') {
+            $booking->payment_status = 0; // "Pay at Hotel" status
+            $booking->booking_number = 'BK' . date('YmdHis') . $booking->id;
+            $booking->expires_at = now()->addHours(6);
+            $booking->payment_type = "no payment";
+            $booking->paid_amount = 0;
+            $qrCodeUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . urlencode('Booking ID: ' . $booking->id);
+            $booking->qrcode = $qrCodeUrl;
+            $booking->save();
+
+            $request->session()->forget('payment_details');
+
+            return redirect()->route('dashboard.booking.success')->with('success', 'Booking successful! Payment will be collected at check-in.');
+        }
 
         // Process OPay payment
         $result = $this->processOPayPayment($booking, $amount, $request);
@@ -276,19 +289,26 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($bookingId);
         $user = $booking->user;
         
-        if ($validatedData['email'] && !User::where('email', $validatedData['email'])->exists()) {
-            $user->phone = $validatedData['phone'];
-            $user->city = $validatedData['city'];
-            $user->state = $validatedData['state'];
-            $user->country = $validatedData['country'];
-            $user->zip = $validatedData['postal_code'];
-            $user->address = $validatedData['address'];
-            $user->email = $validatedData['email'];
-            $user->first_name = $validatedData['first_name'];
-            $user->last_name = $validatedData['last_name']; 
-            $user->save();
+        // Always update user information associated with the booking
+        $user->phone = $validatedData['phone'];
+        $user->city = $validatedData['city'];
+        $user->state = $validatedData['state'];
+        $user->country = $validatedData['country'];
+        $user->zip = $validatedData['postal_code'];
+        $user->address = $validatedData['address'];
+        $user->first_name = $validatedData['first_name'];
+        $user->last_name = $validatedData['last_name']; 
+        
+        // Only update email if it's provided and not already taken by another user
+        if ($validatedData['email'] && (!Auth::check() || Auth::user()->email !== $validatedData['email'])) {
+            if (!User::where('email', $validatedData['email'])->exists()) {
+                $user->email = $validatedData['email'];
+            } else {
+                // Log or handle the case where the email is taken
+                Log::warning('Attempted to update user email to an already existing email: ' . $validatedData['email']);
+            }
         }
-
+        $user->save();
 
         $booking->arrival_time = $validatedData['arrival_time'];
         $booking->payment_type = $validatedData['payment_plan'];
@@ -325,14 +345,16 @@ class BookingController extends Controller
             return $this->generateOTP($request);
             
         } elseif ($paymentMethod === 'no_payment') {
-            $booking->payment_status = 0; // Partial payment
-            $booking->booking_number = 'BK' . date('YmdHis') . $booking->id;
-            $booking->expires_at = now()->addHours(6);
-            $booking->paid_amount  = $request->amount;
-            $booking->save();
+            // Store payment details in session for later use
+            $request->session()->put('payment_details', [
+                'booking_id' => $booking->id,
+                'amount' => 0,
+                'payment_type' => 'no_payment'
+            ]);
+            
+            // Generate OTP and redirect to OTP verification
+            return $this->generateOTP($request);
         }
-
-        return redirect()->route('dashboard.booking.success')->with('success', 'Booking successful! Payment will be collected at check-in.');
     }
 
 
@@ -373,10 +395,7 @@ class BookingController extends Controller
                 ]
             ];
 
-            Log::info('OPay Payment URLs', [
-            'returnUrl' => $paymentData['returnUrl'],
-            'callbackUrl' => $paymentData['callbackUrl'],
-        ]);
+        
 
 
             $result = $this->oPayService->createOrder($paymentData);
@@ -384,14 +403,6 @@ class BookingController extends Controller
             // Store payment reference in booking
             $booking->payment_reference = $reference;
             $booking->save();
-
-            // Log the payment creation
-            Log::info('OPay payment created', [
-                'reference' => $reference,
-                'booking_id' => $booking->id,
-                'amount' => $amount,
-                'result' => $result
-            ]);
 
 
             return $result;
@@ -415,7 +426,6 @@ class BookingController extends Controller
      */
 public function handlePaymentCallback(Request $request)
 {
-    Log::info("OPay Webhook Received", ['body' => $request->all()]);
 
     $signature = Str::after($request->header('Authorization', ''), 'Bearer ');
 
@@ -441,15 +451,9 @@ public function handlePaymentCallback(Request $request)
         return response()->json(['error' => 'Booking not found'], 404);
     }
 
-    Log::info("OPay Webhook: Processing payment", [
-        'booking_id' => $booking->id,
-        'reference' => $reference,
-        'status' => $status,
-        'orderNo' => $orderNo,
-    ]);
+   
 
     if ($status === 'SUCCESS') {
-        // Use the helper method to confirm payment
         $this->confirmPayment($booking);
         
         Log::info("OPay Webhook: Payment confirmed successfully", ['booking_id' => $booking->id]);
@@ -457,17 +461,13 @@ public function handlePaymentCallback(Request $request)
     }
 
     if ($status === 'FAILED') {
-        $booking->payment_status = 2; // Failed status
+        $booking->payment_status = 2; 
         $booking->save();
         Log::info("OPay Webhook: Payment failed", ['booking_id' => $booking->id]);
         return response()->json(['status' => 'failed'], 200);
     }
 
-    // For any other status (PENDING, INITIAL, etc.)
-    Log::info("OPay Webhook: Payment status not final", [
-        'booking_id' => $booking->id,
-        'status' => $status
-    ]);
+    
     return response()->json(['status' => 'acknowledged'], 200);
 }
 
@@ -532,26 +532,15 @@ public function handlePaymentReturn(Request $request)
         return redirect()->route('home')->with('error', 'Booking not found.');
     }
 
-    Log::info("OPay Return - User redirected back", [
-        'booking_id' => $booking->id,
-        'reference' => $booking->payment_reference,
-        'current_payment_status' => $booking->payment_status,
-    ]);
-
-    // Refresh booking to get latest status from database
     $booking->refresh();
     
     // Check if webhook already confirmed the payment
     if ($booking->payment_status == 1) {
-        // Payment already confirmed by webhook
         $this->confirmPaymentReturn($booking);
         $request->session()->forget(['booking_id', 'availability_data', 'payment_details']);
         return redirect()->route('home')
             ->with('success', 'Payment successful! Your booking is confirmed.');
     }
-
-    // Payment not yet confirmed - webhook might still be processing
-    // Show a "processing" page or message
     $request->session()->forget(['booking_id', 'availability_data', 'payment_details']);
     
     return redirect()->route('home')
@@ -590,7 +579,6 @@ private function confirmPaymentReturn($booking)
     $user->wallets = $user->wallets + 1;
     $user->save();
 
-    Log::info("Payment confirmed for booking {$booking->id}");
 }
 
 

@@ -25,7 +25,7 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
 
     Route::get('/booking/otp', [BookingController::class, 'showOtpForm'])->name('booking.otp.form');
     Route::post('/booking/otp/verify', [BookingController::class, 'verifyOtp'])->name('booking.otp.verify');
-    Route::post('booking/otp/resend', [BookingController::class, 'resendOtp'])->name('booking.otp.resend');
+    Route::get('booking/otp/resend', [BookingController::class, 'resendOtp'])->name('booking.otp.resend');
     Route::get('/booking/otp-form', [BookingController::class, 'showOtpForm'])->name('booking.otp.form');
 
 
@@ -42,5 +42,3 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/payment/return', [BookingController::class, 'handlePaymentReturn'])->name('payment.return');
 
 });
-
-

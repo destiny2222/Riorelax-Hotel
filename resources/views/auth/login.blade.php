@@ -114,13 +114,13 @@
                                                         class="checkmark"></span></label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-6 mt-15">
+                                        {{-- <div class="col-lg-6 col-6 mt-15">
                                             <div class="form-group mb-25 text-end">
-                                                <a class="font-xs color-grey-500" href="">
+                                                <a class="font-xs color-grey-500" href="#">
                                                     Forgot password?
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="form-field-wrapper">
                                         <button type="submit" class="submit btn btn-md btn-black">

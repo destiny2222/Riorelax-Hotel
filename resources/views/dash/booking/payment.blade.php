@@ -69,8 +69,9 @@
                                             <div class="form-group mb-20">
                                                 <label for="txt-email">Email <span class="required"
                                                         aria-required="true"></span></label>
-                                                <input type="email" name="email" id="txt-email"   class="form-control "   value="">
-                                               
+                                                <input type="email" name="email" id="txt-email" class="form-control "
+                                                    value="">
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -118,7 +119,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-20">
                                                 <label for="txt-zip">Postal / Zip code</label>
-                                                <input type="text" name="postal_code" id="txt-zip" class="form-control"  value="">
+                                                <input type="text" name="postal_code" id="txt-zip"
+                                                    class="form-control" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -159,41 +161,67 @@
                                         <label for="requests">Payment Plan</label>
                                         <ul class="list-group list_payment_method" id="paymentPlanAccordion">
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_plan" id="payment-reservation" name="payment_plan" type="radio" value="reservation" data-bs-toggle="collapse" data-bs-target="#collapse-reservation" checked>
+                                                <input class="magic-radio js_payment_plan" id="payment-reservation"
+                                                    name="payment_plan" type="radio" value="reservation"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse-reservation"
+                                                    checked>
                                                 <label for="payment-reservation" class="form-label fw-medium">
                                                     Pay 50% Now (Reservation)
                                                 </label>
-                                                <div id="collapse-reservation" class="collapse mt-1 show" data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted">Secure your booking by paying half now. The rest is due at check-in. We'll hold your room for 6 hours.</p>
+                                                <div id="collapse-reservation" class="collapse mt-1 show"
+                                                    data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted mb-2">
+                                                        Confirm your booking by paying 50% of the total amount. This payment
+                                                        is non-refundable and must be made at least 5–6 hours before
+                                                        check-in (2 PM).
+                                                    </p>
+
+                                                    <p class="fw-semibold mb-1">Unconfirmed Reservation</p>
+                                                    <p class="text-muted">
+                                                        If no payment has been made, your booking remains unconfirmed. The
+                                                        room may be reassigned, and you’ll need to visit in person within 48
+                                                        hours to complete your payment and secure your reservation.
+                                                    </p>
                                                 </div>
                                             </li>
+
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_plan" id="payment-full" name="payment_plan" type="radio" value="full" data-bs-toggle="collapse" data-bs-target="#collapse-full">
+                                                <input class="magic-radio js_payment_plan" id="payment-full"
+                                                    name="payment_plan" type="radio" value="full"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse-full">
                                                 <label for="payment-full" class="form-label fw-medium">
                                                     Pay in Full
                                                 </label>
-                                                <div id="collapse-full" class="collapse mt-1" data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted">Complete your payment now to fully confirm your booking.</p>
+                                                <div id="collapse-full" class="collapse mt-1"
+                                                    data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted">Complete your payment now to fully confirm your
+                                                        booking.</p>
                                                 </div>
                                             </li>
                                             <li class="list-group-item payment-method-item">
-                                                <input class="magic-radio js_payment_plan" id="payment-no-payment" name="payment_plan" type="radio" value="no_payment" data-bs-toggle="collapse" data-bs-target="#collapse-no-payment">
+                                                <input class="magic-radio js_payment_plan" id="payment-no-payment"
+                                                    name="payment_plan" type="radio" value="no_payment"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse-no-payment">
                                                 <label for="payment-no-payment" class="form-label fw-medium">
                                                     Pay at Hotel
                                                 </label>
-                                                <div id="collapse-no-payment" class="collapse mt-1" data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted">Reserve now and pay when you arrive. We'll hold your room for 6 hours.</p>
+                                                <div id="collapse-no-payment" class="collapse mt-1"
+                                                    data-bs-parent="#paymentPlanAccordion">
+                                                    <p class="text-muted">Reserve now and pay when you arrive. We'll hold
+                                                        your room for 6 hours.</p>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                     @guest
-                                    <div class="alert alert-info">
-                                        <small>
-                                            <strong>Guest Booking:</strong> You're booking as a guest. We'll send your booking confirmation to the email or phone provided. 
-                                            You can <a href="{{ route('register') }}">create an account</a> later to manage your bookings.
-                                        </small>
-                                    </div>
+                                        <div class="alert alert-info">
+                                            <small>
+                                                <strong>Guest Booking:</strong> You're booking as a guest. We'll send your
+                                                booking confirmation to the email or phone provided.
+                                                You can <a href="{{ route('register') }}">create an account</a> later to manage
+                                                your bookings.
+                                            </small>
+                                        </div>
                                     @endguest
                                     <div class="form-group mb-0">
                                         <button type="submit" class="btn btn-filled payment-checkout-btn"
@@ -206,7 +234,8 @@
                         <div class="col-sm-12 col-md-12 col-lg-4 sidebar">
                             <aside>
                                 <div class="wrap">
-                                    <img src="{{ $booking->roomListing->room_image }}" alt="{{ $booking->roomListing->room_title }}">
+                                    <img src="{{ $booking->roomListing->room_image }}"
+                                        alt="{{ $booking->roomListing->room_title }}">
 
                                     <div class="room-information">
                                         <span>{{ $booking->roomListing->room_title }}</span>

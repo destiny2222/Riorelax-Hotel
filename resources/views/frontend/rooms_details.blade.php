@@ -120,7 +120,7 @@
                                                         </div>
                                                     </div>
                                                     @guest
-                                                    <div class="col-lg-12">
+                                                    {{-- <div class="col-lg-12">
                                                         <div class="contact-field p-relative c-name mb-20">
                                                             <label for="name">
                                                                 <i class="fal fa-user"></i>
@@ -141,7 +141,7 @@
                                                                 class="form-control"
                                                                 placeholder="Enter your email (optional)">
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     @endguest
                                                     <div class="col-lg-12">
                                                         <div class="slider-btn mt-15">
@@ -159,7 +159,7 @@
                             </div>
                             <div class="service-detail-contact wow fadeup-animation" data-wow-delay="1.1s">
                                 <h3 class="h3-title">If You Need Any Help Contact Us</h3>
-                                <a href="tel:+2347055353419" title="Call now">+234 705 535 3419</a>
+                                <a href="tel:+2348180000104" title="Call now">+2348180000104</a>
                             </div>
                         </aside>
                     </div>
@@ -218,7 +218,7 @@
                                                     aria-labelledby="headingCheckin"
                                                     data-bs-parent="#hotelPolicyAccordion">
                                                     <div class="accordion-body">
-                                                        From <strong>2:00 PM</strong> to <strong>12:00 AM</strong><br>
+                                                        <strong>2:00 PM</strong> to <strong>12:00 AM</strong><br>
                                                         Guests are required to show a photo ID and credit card at
                                                         check-in.<br>
                                                         You need to let the property know what time you'll be arriving
@@ -228,7 +228,7 @@
                                             </div>
 
                                             <!-- Check-out -->
-                                            <div class="accordion-item">
+                                            {{-- <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingCheckout">
                                                     <button class="accordion-button collapsed" type="button"
                                                         data-bs-toggle="collapse" data-bs-target="#collapseCheckout"
@@ -243,7 +243,7 @@
                                                         From <strong>8:00 AM</strong> to <strong>12:00 PM</strong>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- Cancellation -->
                                             <div class="accordion-item">
@@ -260,7 +260,7 @@
                                                     <div class="accordion-body">
                                                         Cancellation and prepayment policies vary according to
                                                         accommodation type.
-                                                        <a href="#">Enter your stay dates</a> and check the conditions
+                                                        <a href="/faq">Enter your stay dates</a> and check the conditions
                                                         of your selected option.
                                                     </div>
                                                 </div>
@@ -282,18 +282,6 @@
                                                         <h6>Child policies</h6>
                                                         <p>Children of all ages are welcome.<br>Children 4 and above
                                                             will be charged as adults at this property.</p>
-
-                                                        <h6>Crib and extra bed policies</h6>
-                                                        <ul class="list-group mb-2">
-                                                            <li class="list-group-item d-flex justify-content-between">
-                                                                <span>0 - 2 years</span>
-                                                                <span><i class="bi bi-basket2 me-2"></i> Crib upon
-                                                                    request - <strong>Free</strong></span>
-                                                            </li>
-                                                        </ul>
-                                                        <p>The number of cribs allowed depends on the option you choose.
-                                                            There are no extra beds available at this property.
-                                                            All cribs are subject to availability.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,7 +314,7 @@
                                                     aria-labelledby="headingPets"
                                                     data-bs-parent="#hotelPolicyAccordion">
                                                     <div class="accordion-body">
-                                                        ✅ Pets are allowed. No extra charges.
+                                                        Pets are allowed. No extra charges.
                                                     </div>
                                                 </div>
                                             </div>

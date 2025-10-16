@@ -53,14 +53,6 @@
                         </div>
                     @endif
 
-                    <!-- Loading overlay for resend OTP -->
-                    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
-                        <div class="loading-spinner">
-                            <i class="fal fa-spinner fa-spin"></i>
-                            <p>Sending OTP...</p>
-                        </div>
-                    </div>
-
                     <form method="POST" action="{{ route('dashboard.booking.otp.verify') }}" class="otp-form" id="otpForm">
                         @csrf
                         <div class="otp-input-container mb-30">
@@ -89,7 +81,7 @@
 
                         <div class="otp-help-text text-center">
                             <p class="mb-2">Didn't receive the code?</p>
-                            <a href="#" class="otp-resend-link" id="resendLink" onclick="resendOTP(event)">
+                            <a href="{{ route('dashboard.booking.otp.resend') }}" class="otp-resend-link" id="resendLink">
                                 <i class="fal fa-redo me-1"></i>
                                 <span id="resendText">Resend Code</span>
                             </a>
@@ -106,63 +98,6 @@
 <script>
 let countdownTimer;
 let timeLeft = 60; // 60 seconds countdown
-let isResending = false;
-
-function resendOTP(event) {
-    event.preventDefault();
-    
-    if (isResending) return;
-    
-    const resendLink = document.getElementById('resendLink');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    const resendText = document.getElementById('resendText');
-    
-    isResending = true;
-    loadingOverlay.style.display = 'flex';
-    resendLink.classList.add('disabled');
-    
-    // Create form data for CSRF token
-    const formData = new FormData();
-    formData.append('_token', '{{ csrf_token() }}');
-    
-    fetch('{{ route("dashboard.booking.otp.resend") }}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        loadingOverlay.style.display = 'none';
-        
-        if (data.success || data.message) {
-            // Show success message
-            showAlert('success', data.message || 'OTP sent successfully!');
-            
-            // Clear the current OTP input
-            document.getElementById('otp').value = '';
-            document.getElementById('otp').focus();
-            
-            // Start countdown
-            startCountdown();
-        } else {
-            throw new Error(data.error || 'Failed to send OTP');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        loadingOverlay.style.display = 'none';
-        showAlert('danger', 'Failed to resend OTP. Please try again.');
-        isResending = false;
-        resendLink.classList.remove('disabled');
-    });
-}
 
 function startCountdown() {
     const resendLink = document.getElementById('resendLink');
@@ -170,9 +105,11 @@ function startCountdown() {
     const countdownTime = document.getElementById('countdownTime');
     const resendText = document.getElementById('resendText');
     
-    timeLeft = 60;
+    // Prevent clicking the link during countdown
+    resendLink.style.pointerEvents = 'none';
+    resendLink.style.opacity = '0.6';
+    
     countdown.style.display = 'block';
-    resendLink.classList.add('disabled');
     resendText.textContent = 'Code Sent';
     
     countdownTimer = setInterval(() => {
@@ -182,9 +119,9 @@ function startCountdown() {
         if (timeLeft < 0) {
             clearInterval(countdownTimer);
             countdown.style.display = 'none';
-            resendLink.classList.remove('disabled');
+            resendLink.style.pointerEvents = 'auto';
+            resendLink.style.opacity = '1';
             resendText.textContent = 'Resend Code';
-            isResending = false;
         }
     }, 1000);
 }
@@ -212,7 +149,7 @@ function showAlert(type, message) {
     // Auto-remove alert after 5 seconds
     setTimeout(() => {
         alertDiv.remove();
-    }, 5000);
+    }, 2000);
 }
 
 // Auto-format OTP input
@@ -254,6 +191,11 @@ document.getElementById('otpForm').addEventListener('submit', function(e) {
 // Auto-focus on page load
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('otp').focus();
+
+    // If a success message is present (from a redirect), start the countdown
+    @if(session('success'))
+        startCountdown();
+    @endif
 });
 </script>
 

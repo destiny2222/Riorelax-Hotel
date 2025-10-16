@@ -68,7 +68,7 @@
                     </ul>
                 </li>
                 <!-- end if -->
-                @if(auth()->user()->hasRole('super-admin'))
+                @if(auth()->check() && auth()->user()->hasRole('super-admin'))
                 <li class="{{ Route::is('admin.blade.editor.index') ? 'mm-active' : ''}}">
                     <a href="{{ route('admin.blade.editor.index') }}"><i class="ti-pencil"></i>
                         Blade Editor
