@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\BladeEditorController;
+use App\Http\Controllers\Admin\AdminController; // Add this line
 
 Route::prefix('admin')->name('admin.')->group(function (){ 
 
@@ -110,6 +111,12 @@ Route::prefix('admin')->name('admin.')->group(function (){
         // Route::put('/profile/{id}/update', [HomeController::class, 'update'])->name('update.profile');
         // change password
         // Route::post('/change-password/update', [HomeController::class, 'updatePassword'])->name('change.password.update');
+
+        // Admin Profile and Password
+        Route::get('/profile/edit', [AdminController::class, 'showProfileForm'])->name('profile.edit');
+        Route::post('/profile/update', [AdminController::class, 'updateProfile'])->name('profile.update');
+        Route::get('/password/change', [AdminController::class, 'showChangePasswordForm'])->name('password.form');
+        Route::post('/password/change', [AdminController::class, 'changePassword'])->name('password.change');
 
     });
     

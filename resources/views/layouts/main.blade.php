@@ -394,11 +394,11 @@
                             <ul>
                                 <li class="opening_hours">
                                     <i class="far fa-clock"></i>
-                                    <span>Open 24/7 - Check-in: 1:00 PM | Check-out: 11:00 AM</span>
+                                    <span>Open 24/7 - Check-in: 2:00 PM | Check-out: 12:00 AM</span>
                                 </li>
                                 <li>
                                     <i class="far fa-mobile"></i>
-                                    <strong><a href="tel:+2347055353419">+2347055353419</a></strong>
+                                    <strong><a href="tel:+2348180000104">+2348180000104</a></strong>
                                 </li>
                             </ul>
                         </div>
@@ -508,8 +508,7 @@
                                     alt=""></div>
                             <div class="f-contact">
                                 <ul>
-                                    <li><i class="icon fal fa-phone"></i><span><a href="tel:+234 705 535 3419">+234
-                                                705 535 3419</a></span></li>
+                                    <li><i class="icon fal fa-phone"></i><span><a href="tel:2348180000104">+2348180000104</a></span></li>
                                     <li><i class="icon fal fa-envelope"></i><span><a href="#"
                                                 class="__cf_email__">Email</a> info@house7.com.ng</span>
                                     </li>
@@ -544,7 +543,7 @@
                                 <ul>
                                     <li><a target="_self" class="font-sm color-grey-200" href="/faq">FAQ</a></li>
                                     <li><a target="_self" class="font-sm color-grey-200"
-                                            href="tel:+234 705 535 3419">Support</a>
+                                            href="tel:2348180000104">Support</a>
                                     </li>
                                     {{-- <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
                                     </li>

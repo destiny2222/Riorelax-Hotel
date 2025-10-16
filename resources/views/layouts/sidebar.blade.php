@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 @endif
-                <li class=""><a href="#"><i class="ti-settings"></i>Settings</a></li>
+                <li class=""><a href="{{ route('admin.profile.edit') }}"><i class="ti-settings"></i>Settings</a></li>
             </ul>
         </nav>
     </div><!-- sidebar-body -->
