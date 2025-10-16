@@ -1,20 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="/">
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="dns-prefetch" href="//www.w3.org">
-    <link rel="dns-prefetch" href="//www.facebook.com">
-    <link rel="dns-prefetch" href="//www.instagram.com">
-    <link rel="dns-prefetch" href="//www.twitter.com">
-    <link rel="dns-prefetch" href="//www.youtube.com">
-    <link rel="dns-prefetch" href="//ersintat.com">
-    <link rel="dns-prefetch" href="//techradar.com">
-    <link rel="dns-prefetch" href="//turbologo.com">
-    <link rel="dns-prefetch" href="//thepeer.com">
-    <link rel="dns-prefetch" href="//techi.com">
-    <link rel="dns-prefetch" href="//grapk.com">
     <link rel="dns-prefetch" href="">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +22,7 @@
             --primary-font: 'Roboto', sans-serif;
         }
     </style>
-    <title>{{ config('app.name' )  }} </title>
+    <title>{{ config('app.name') }} </title>
     <link rel="canonical" href="/">
     <meta name="robots" content="index, follow">
     <meta property="og:site_name" content={{ config('app.name') }}>
@@ -42,7 +30,7 @@
     <meta property="og:title" content={{ config('app.name') }}>
     <meta property="og:description" content="">
     <meta property="og:url" content="{{ route('home') }}">
-    <meta property="og:image" content="{{ route('home') }}/storage/general/logo.png">
+    <meta property="og:image" content="http://house7.com.ng/images/logo.PNG">
     <meta name="twitter:title" content={{ config('app.name') }}>
     <meta name="twitter:description" content="">
     <link rel="icon" type="image/x-icon" href="storage/general/favicon.png">
@@ -322,7 +310,7 @@
     <link media="all" type="text/css" rel="stylesheet" href="/themes/plugins/datepicker/bootstrap-datepicker.css">
     <script defer src="/themes/plugins/jquery.min.js"></script>
     {{-- <link media="all"   type="text/css" href="/themes/plugins/lightgallery/css/lightgallery.min.css" /> --}}
-    
+
     <style>
         .page_speed_395945049 {
             height: 16px;
@@ -410,7 +398,7 @@
                                 </li>
                                 <li>
                                     <i class="far fa-mobile"></i>
-                                    <strong><a href="tel:+2347055353419">08180000104</a></strong>
+                                    <strong><a href="tel:+2347055353419">+2347055353419</a></strong>
                                 </li>
                             </ul>
                         </div>
@@ -422,17 +410,25 @@
                                     <i class="fa fa-sign-in-alt"></i>
                                     <span class="text-white customer-name-header ms-1">Login</span>
                                 </a>
-                                @else
+                            @else
                                 <a href="{{ route('dashboard.home') }}">
-                                    <img src="{{ asset('images/profile/'.Auth::user()->profile_image ) }}" class="rounded-circle ms-3 text-white customer-avatar-header" title="" width="16" alt="">
-                                    <span class="customer-name text-white ms-1 customer-name-header">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+                                    <img src="{{ asset('images/profile/' . Auth::user()->profile_image) }}"
+                                        class="rounded-circle ms-3 text-white customer-avatar-header" title=""
+                                        width="16" alt="">
+                                    <span
+                                        class="customer-name text-white ms-1 customer-name-header">{{ Auth::user()->first_name }}
+                                        {{ Auth::user()->last_name }}</span>
                                 </a>
                             @endguest
                             <span class="social-links">
-                                <a target="_blank" href="https://www.facebook.com/"  title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a target="_blank"  href="https://www.instagram.com/" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a target="_blank"  href="https://www.twitter.com/" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a target="_blank" href="https://www.youtube.com/" title="YouTube"><i class="fab fa-youtube"></i></a>
+                                <a target="_blank" href="https://www.facebook.com/" title="Facebook"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a target="_blank" href="https://www.instagram.com/" title="Instagram"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a target="_blank" href="https://www.twitter.com/" title="Twitter"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a target="_blank" href="https://www.youtube.com/" title="YouTube"><i
+                                        class="fab fa-youtube"></i></a>
                             </span>
                         </div>
                     </div>
@@ -444,20 +440,21 @@
                 <div class="second-menu">
                     <div class="row align-items-center">
                         <div class="col-8 col-md-4 col-lg-2 col-xl-2">
-                            <div class="logo"><a href="/"><img src="storage/general/logo.png" alt=""></a></div>
+                            <div class="logo"><a href="/"><img src="{{ asset('images/logo.PNG') }}"
+                                        alt=""></a></div>
                         </div>
                         <div class="col-4 col-md-8 col-lg-8 col-xl-8">
                             <div class="main-menu text-center">
                                 <nav id="mobile-menu">
                                     <ul class="main-menu">
                                         <li class="">
-                                            <a class="active" href="/" > Home </a>
+                                            <a class="active" href="/"> Home </a>
                                         </li>
                                         <li class="">
-                                            <a class="" href="/rooms" > Our Rooms </a>
+                                            <a class="" href="/rooms"> Our Rooms </a>
                                         </li>
                                         <li class="">
-                                            <a class="active" href="/about" > About Us </a>
+                                            <a class="active" href="/about"> About Us </a>
                                         </li>
                                         {{-- <li class="has-sub ">
                                             <a class="" href="#" > Blog </a>
@@ -465,12 +462,15 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <button class="navbar-toggler text-white float-end d-lg-none btn btn-toggle-menu-mobile" type="button" data-bs-toggle="collapse" data-bs-target="#menu-mobile-nav"
-                                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler text-white float-end d-lg-none btn btn-toggle-menu-mobile"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#menu-mobile-nav"
+                                aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                                aria-label="Toggle navigation">
                                 <i class="fa fa-list"></i>
                             </button>
                         </div>
-                        <div class="d-none d-lg-block col-xl-2 col-lg-2"><a href="#booking-form"  class="top-btn mt-10 mb-10">Reservation</a></div>
+                        <div class="d-none d-lg-block col-xl-2 col-lg-2"><a href="#booking-form"
+                                class="top-btn mt-10 mb-10">Reservation</a></div>
                     </div>
                 </div>
             </div>
@@ -479,13 +479,11 @@
                     <div class="menu">
                         <div class="menu-title"><span>Menu</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
-                            <li class="nav-item"><a href="/" class="nav-link   active"
-                                    >Home</a></li>
+                            <li class="nav-item"><a href="/" class="nav-link   active">Home</a></li>
                             <li class="nav-item"><a href="/rooms" class="nav-link  ">Our Rooms</a></li>
-                           
-                            <li class="nav-item"><a href="/about" class="nav-link  active"
-                                   >About Us</a></li>
-                            
+
+                            <li class="nav-item"><a href="/about" class="nav-link  active">About Us</a></li>
+
                         </ul>
                         <div class="menu-title mt-20"><span>Account</span></div>
                         <ul class="navbar-nav mb-2 mb-lg-0 me-3 ms-3">
@@ -500,20 +498,23 @@
 
     @yield('content')
 
-<footer class="footer-bg footer-p">
+    <footer class="footer-bg footer-p">
         <div class="footer-top pt-90 pb-40 ">
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-xl-4 col-lg-4 col-sm-6">
                         <div class="footer-widget mb-30">
-                            <div class="f-widget-title mb-30"><img src="" alt=""></div>
+                            <div class="f-widget-title mb-30"><img src="{{ asset('images/logo.PNG') }}"
+                                    alt=""></div>
                             <div class="f-contact">
                                 <ul>
-                                    <li><i class="icon fal fa-phone"></i><span>08180000104</span></li>
+                                    <li><i class="icon fal fa-phone"></i><span><a href="tel:+234 705 535 3419">+234
+                                                705 535 3419</a></span></li>
                                     <li><i class="icon fal fa-envelope"></i><span><a href="#"
-                                                class="__cf_email__">Email</a>  info@house7.com.ng</span>
+                                                class="__cf_email__">Email</a> info@house7.com.ng</span>
                                     </li>
-                                    <li><i class="icon fal fa-map-marker-check"></i><span>7, Commercial Avenue, off Ikpokpan Road, GRA, Benin City</span></li>
+                                    <li><i class="icon fal fa-map-marker-check"></i><span>7, Commercial Avenue, off
+                                            Ikpokpan Road, GRA, Benin City</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -541,18 +542,19 @@
                             </div>
                             <div class="footer-link">
                                 <ul>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="#">FAQ</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="#">Support</a>
+                                    <li><a target="_self" class="font-sm color-grey-200" href="/faq">FAQ</a></li>
+                                    <li><a target="_self" class="font-sm color-grey-200"
+                                            href="tel:+234 705 535 3419">Support</a>
                                     </li>
-                                    <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
+                                    {{-- <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
                                     </li>
                                     <li><a target="_self" class="font-sm color-grey-200"
-                                            href="#">Term &amp; Conditions</a></li>
+                                            href="#">Term &amp; Conditions</a></li> --}}
                                 </ul>
                             </div>
                         </div>
                     </div>
-                     {{--  <div class="col-xl-4 col-lg-4 col-sm-6">
+                    {{--  <div class="col-xl-4 col-lg-4 col-sm-6">
                       <div class="footer-widget mb-30">
                             <div class="f-widget-title">
                                 <h2>Subscribe To Our Newsletter</h2>
@@ -576,21 +578,21 @@
                                 </div>
                             </div>
                         </div> 
-                    </div>--}}
+                    </div> --}}
                 </div>
             </div>
         </div>
         <div class="copyright-wrap">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6"> ©{{ date('Y') }} {{ config('app.name') }}. All right reserved. </div>
+                    <div class="col-lg-6 col-md-6"> © {{ date('Y') }} {{ config('app.name') }}. All right
+                        reserved. </div>
                     <div class="col-lg-6 col-md-6 text-end text-xl-right">
-                        <div class="footer-social"><a target="_blank" href="https://www.facebook.com/"
-                                title="Facebook"><i class="fab fa-facebook-f"></i></a><a target="_blank"
-                                href="https://www.instagram.com/" title="Instagram"><i
-                                    class="fab fa-instagram"></i></a><a target="_blank" href="https://www.twitter.com/"
-                                title="Twitter"><i class="fab fa-twitter"></i></a><a target="_blank"
-                                href="https://www.youtube.com/" title="YouTube"><i class="fab fa-youtube"></i></a></div>
+                        <div class="footer-social">
+                            <a target="_blank" href="https://www.facebook.com/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a target="_blank"  href="https://www.instagram.com/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a target="_blank"  href="https://www.twitter.com/" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>

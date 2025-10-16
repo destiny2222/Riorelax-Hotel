@@ -35,7 +35,7 @@
                     <div class="single-cta pb-30 mb-30 wow fadeInUp  animated" data-animation="fadeInDown animated"
                         data-delay=".2s" style="visibility: visible; animation-name: fadeInUp;">
                         <div class="float-start f-cta-icon"><i class="fa fa-phone"></i></div>
-                        <h5>08180000104</h5>
+                        <h5>+234 705 535 3419</h5>
                         <p> 24/7 Customer Service And Returns Support. </p>
                     </div>
                     <div class="single-cta wow fadeInUp  animated" data-animation="fadeInDown animated" data-delay=".2s"

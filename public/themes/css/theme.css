@@ -1070,7 +1070,7 @@ label {
 }
 
 .slider-bg.slider-bg-02 {
-    background-image: url('../../images/banners/slider-2.jpg');
+    background-image: url('../../images/skills-img.jpg');
 }
 
 .slider-bg .image-layer {
@@ -7499,7 +7499,7 @@ button.remove-coupon-code i {
     width: 150px;
 }
 .services-content {
-    padding: 30px 40px 55px;
+    padding: 30px 20px 55px;
 }
 .services-content small {
     display: block;

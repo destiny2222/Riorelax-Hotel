@@ -10,6 +10,7 @@ Route::get('/check-availability', [PageController::class, 'checkAvailability'])-
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('rooms');
+Route::get('faq', [PageController::class, 'faq'])->name('faq.page');
 Route::get('/room/{roomListing}', [PageController::class, 'roomDetails'])->name('room.show');
 // Route::get('/service', [PageController::class, 'service'])->name('service');
 // Route::get('/team', [PageController::class, 'team'])->name('team');

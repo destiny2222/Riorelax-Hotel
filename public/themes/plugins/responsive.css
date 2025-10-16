@@ -230,7 +230,7 @@
         margin-left: 0;
     }
     .single-services .day-book li {
-        width: 48%;
+        /* width: 48%; */
     }
     .header-social a {
         font-size: 16px;
@@ -630,7 +630,7 @@
         display: none;
     }
     .single-services .day-book li {
-        width: 49%;
+        /* width: 49%; */
     }
     .single-services .icon li {
         margin-right: 25px;
@@ -1302,7 +1302,7 @@
         width: 100%;
     }
     .single-services .day-book li {
-        width: 49%;
+        /* width: 49%; */
     }
     .feature-img {
         margin-left: 0;

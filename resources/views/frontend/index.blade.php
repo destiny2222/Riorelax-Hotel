@@ -41,7 +41,7 @@
                                     comfort, and hospitality to make your stay unforgettable.
                                 </p>
                                 <div class="slider-btn mt-30 mb-105">
-                                    <a href="#booking-form" class="btn ss-btn active mr-15" data-animation="fadeInLeft" data-delay=".4s">
+                                    <a href="#about" class="btn ss-btn active mr-15" data-animation="fadeInLeft" data-delay=".4s">
                                         Discover More
                                     </a>
                                     {{-- <a href="#booking-form" data-animation="fadeInUp" data-delay=".8s" tabindex="0" class="video-i popup-video ">
@@ -121,7 +121,7 @@
             </form>
         </div>
     </div>
-    <section class="about-area about-p pt-90 pb-90 p-relative fix">
+    <section class="about-area about-p pt-90 pb-90 p-relative fix" id="about">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-6 col-md-12 col-sm-12">
@@ -216,7 +216,7 @@
                         <div class="services-08-content">
                             <h3>Government & Security Proximity</h3>
                             <p>
-                                Located just 300 meters from the Police Headquarters and within close reach of the Government House, DSS, and the 44 Brigade Headquarters of the Nigerian Army
+                                Located just 300 meters from the Police Headquarters and within close reach to the Government House, DSS, and the 44 Brigade Headquarters of the Nigerian Army
                             </p>
                         </div>
                     </div>

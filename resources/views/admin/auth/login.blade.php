@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Log In</title>
     <!-- Favicon and touch icons -->
-    <link rel="shortcut icon" href="/assets/img/icons/2025-02-16/F.png" type="image/x-icon">
+    <link rel="shortcut icon" href="" type="image/x-icon">
     <!-- Start Global Mandatory Style -->
     <!-- Bootstrap -->
     <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -19,15 +19,9 @@
 
 <body class="bg-white body-bg">
     <main class="register-content">
-        <div class="bg-img-hero position-fixed top-0 right-0 left-0">
-            <figure class="position-absolute right-0 bottom-0 left-0 m-0">
-                <img src="/assets/img/fig.svg" alt="Image Description">
-            </figure>
-        </div>
+        
         <div class=" container py-5 py-sm-7">
-            <a class="d-flex justify-content-center mb-5 news365-logo" href="">
-                <img class="z-index-3" src="/assets/img/2025-02-16/h1.png" alt="Image Description">
-            </a>
+          
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-5">
                     <div class="">
@@ -63,7 +57,7 @@
                                     <img id="Imageid" src="/assets/img/captcha/1757620244.6212.jpg" style="width: 343; height: 64; border: 0;" alt=" "></label>
                                     <input type="captcha" placeholder="Captcha" name="captcha" id="captcha" class="form-control fs-16px" autocomplete="off">
                                 </div> --}}
-                                <a href="forgot-password"><p class="text-right">Forgot Password</p></a>
+                                {{-- <a href="forgot-password"><p class="text-right">Forgot Password</p></a> --}}
                                 <button type="submit" class="btn btn-lg btn-block btn-success">Log In</button>
                             </form>
                            </div>
