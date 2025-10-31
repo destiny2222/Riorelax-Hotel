@@ -64,14 +64,14 @@
                         <div class="contact-field p-relative c-name">
                             <label for="availability-form-start-date"><i class="fal fa-badge-check"></i>Check In Date</label>
                             <input id="availability-form-start-date" autocomplete="off" type="text"  class="departure-date date-picker" data-date-format="dd-mm-yyyy"
-                                placeholder="select check in date" data-locale="en" value="" name="start_date">
+                                placeholder="select check in date" data-locale="en" value="" name="check_in_date">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6 mb-30">
                         <div class="contact-field p-relative c-name">
                             <label for="availability-form-end-date"><i class="fal fa-times-octagon"></i>Check Out Date</label>
                             <input type="text" id="availability-form-end-date" autocomplete="off" class="arrival-date date-picker"
-                                data-date-format="dd-mm-yyyy" placeholder="select check out date" data-locale="en"  value="" name="end_date">
+                                data-date-format="dd-mm-yyyy" placeholder="select check out date" data-locale="en"  value="" name="check_out_date">
                         </div>
                     </div>
                     <div class="col-lg-5 col-md-6 mb-30">
@@ -308,6 +308,13 @@
                             <h4><a
                                     href="{{ route('room.show', $roomListing->slug) }}">{{ $roomListing->room_title }}</a>
                             </h4>
+                            <div class="mb-2 ">
+                                @if ($roomListing->availability_status == 'available')
+                                    <p class="availability-span"> Available </p>
+                                @else
+                                    <p class="availability-span"> {{ $roomListing->availability_status }} </p>
+                                @endif
+                            </div>
                             <p class="room-item-custom-truncate">
                                 {!! \Str::limit($roomListing->description, 100) !!}
                             </p>

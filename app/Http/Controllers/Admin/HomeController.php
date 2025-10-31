@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
@@ -49,7 +50,8 @@ public function scanCodeResult(Request $request)
         // Show QR code for scanning verification
         return view('admin.booking.scan', ['booking' => $booking, 'step' => 'qr_display']);
     } else {
-        return redirect()->back()->with('error', 'No booking found for phone number: ' . $phone);
+        Alert::error('Error', 'No booking found for phone number: ' . $phone);
+        return redirect()->back();
     }
 }
 

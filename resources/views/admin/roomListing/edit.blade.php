@@ -35,6 +35,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="room_ava">Availability Status</label>
+                            <select name="availability_status" id="" class="form-control">
+                                <option value="available" {{ $roomListing->availability_status == 'available' ? 'selected' : ''}}>Available</option>
+                                <option value="occupied" {{ $roomListing->availability_status == 'occupied' ? 'selected' : '' }}>Occupied</option>
+                                <option value="under maintenance" {{ $roomListing->availability_status == 'under maintenance' ? 'selected' : '' }}>Under Maintenance</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
                             <label for="room_image" class="col-sm-12">Image <span class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="file" accept="image/*" name="room_image" id="room_image" onchange="loadFile(event)">
@@ -59,7 +67,7 @@
                             </div>
                         </div>
                         <div class="form-group text-right">
-                            <button type="submit" class="btn btn-success w-md m-b-5">Update</button>
+                            <button type="submit" class="btn btn-success w-md m-b-5 w-100">Update</button>
                         </div>
                     </form>
                 </div>

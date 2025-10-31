@@ -16,36 +16,43 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $superAdmin = Admin::updateOrCreate(
-            ['email' => 'superadmin@example.com'],
+            ['email' => 'superadmin@gmail.com'],
             [
                 'name' => 'Super Admin',
                 'phone' => '1234567890',
                 'password' => Hash::make('password'),
             ]
         );
-        $superAdminRole = Role::where('name', 'super-admin')->first();
-        $superAdmin->roles()->sync([$superAdminRole->id]);
+        $superAdminRole = Role::where('name', 'Super Admin')->first();
+        if ($superAdminRole) {
+            $superAdmin->roles()->sync([$superAdminRole->id]);
+        }
 
-        $supportAdmin = Admin::updateOrCreate(
-            ['email' => 'support@example.com'],
+
+        $supervisorAdmin = Admin::updateOrCreate(
+            ['email' => 'supervisor@gmail.com'],
             [
-                'name' => 'Support Admin',
+                'name' => 'Supervisor',
                 'phone' => '1234567891',
                 'password' => Hash::make('password'),
             ]
         );
-        $supportAdminRole = Role::where('name', 'support-admin')->first();
-        $supportAdmin->roles()->sync([$supportAdminRole->id]);
+        $supervisorRole = Role::where('name', 'Supervisor')->first();
+        if ($supervisorRole) {
+            $supervisorAdmin->roles()->sync([$supervisorRole->id]);
+        }
 
-        $financialAdmin = Admin::updateOrCreate(
-            ['email' => 'financial@example.com'],
+        $frontDeskAdmin = Admin::updateOrCreate(
+            ['email' => 'frontdesk@gmail.com'],
             [
-                'name' => 'Financial Admin',
+                'name' => 'Front Desk',
                 'phone' => '1234567892',
                 'password' => Hash::make('password'),
             ]
         );
-        $financialAdminRole = Role::where('name', 'financial-admin')->first();
-        $financialAdmin->roles()->sync([$financialAdminRole->id]);
+        $frontDeskRole = Role::where('name', 'Front Desk')->first();
+        if ($frontDeskRole) {
+            $frontDeskAdmin->roles()->sync([$frontDeskRole->id]);
+        }
     }
 }

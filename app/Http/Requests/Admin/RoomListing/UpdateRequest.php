@@ -27,6 +27,7 @@ class UpdateRequest extends FormRequest
             'room_image' => ['nullable', 'image'],
             'room_images' => ['nullable', 'array'],
             'room_images.*' => ['image'],
+            'availability_status'=>['nullable'],
             'price' => ['required', 'numeric'],
             'description' => ['required', 'string'],
         ];

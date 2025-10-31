@@ -29,6 +29,7 @@
                                     <th>Price</th>
                                     <th>Image</th>
                                     <th>Images</th>
+                                    <th>Availability</th>
                                     <th>Description</th>
                                     <th>Action</th>
 
@@ -50,6 +51,13 @@
                                             @endforeach
                                        </div>
 
+                                    </td>
+                                    <td>
+                                        @if($roomListing->availability_status == 'available')
+                                            <span class="badge bg-success p-2 text-white" style="font-size: 15px;">{{ $roomListing->availability_status }}</span>
+                                        @else
+                                            <span class="badge bg-info p-2 text-white" style="font-size: 15px;">{{ $roomListing->availability_status }}</span>
+                                        @endif
                                     </td>
                                     <td>{!! $roomListing->description !!} </td>
                                     <td class="center">

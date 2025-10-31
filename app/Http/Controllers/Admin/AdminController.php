@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -25,13 +26,15 @@ class AdminController extends Controller
         $admin = Admin::find(Auth::guard('admin')->id());
 
         if (!Hash::check($request->current_password, $admin->password)) {
+            Alert::error('Error', 'Current password is not correct');
             return back()->withErrors(['current_password' => 'Current password is not correct']);
         }
 
         $admin->password = Hash::make($request->new_password);
         $admin->save();
 
-        return back()->with('success', 'Password changed successfully.');
+        Alert::success('Success', 'Password changed successfully.');
+        return back();
     }
 
     public function showProfileForm()
@@ -53,6 +56,7 @@ class AdminController extends Controller
         $admin->email = $request->email;
         $admin->save();
 
-        return back()->with('success', 'Profile updated successfully.');
+        Alert::success('Success', 'Profile updated successfully.');
+        return back();
     }
 }

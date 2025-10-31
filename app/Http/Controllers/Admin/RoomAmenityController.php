@@ -7,6 +7,7 @@ use App\Models\RoomAmenities;
 use App\Models\RoomListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RoomAmenityController extends Controller
 {
@@ -44,13 +45,13 @@ class RoomAmenityController extends Controller
                 'icon' => $iconName,
                 'title' => $request->title,
             ]);
-            
 
-            return redirect()->route('admin.amenities.index')
-                ->with('success', 'Room amenity created successfully');
+            Alert::success('Success', 'Room amenity created successfully');
+            return redirect()->route('admin.amenities.index');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            return back()->with('error', 'Failed to create room amenity');
+            Alert::error('Error', 'Failed to create room amenity');
+            return back();
         }
     }
 
@@ -74,11 +75,12 @@ class RoomAmenityController extends Controller
         try {
             $roomAmenity = RoomAmenities::findOrFail($id);
             $roomAmenity->update($validated);
-            return redirect()->route('admin.amenities.index')
-                ->with('success', 'Room amenity updated successfully');
+            Alert::success('Success', 'Room amenity updated successfully');
+            return redirect()->route('admin.amenities.index');
         } catch (\Exception $exception) {
            Log::error('Error deleting room amenity: ' . $exception->getMessage());
-           return back()->with('error', 'Failed to delete room amenity');
+           Alert::error('Error', 'Failed to delete room amenity');
+           return back();
         }
     }
 
@@ -87,10 +89,12 @@ class RoomAmenityController extends Controller
         try{
             $roomAmenity = RoomAmenities::findOrFail($id);
             $roomAmenity->delete();
-            return redirect()->route('admin.amenities.index')->with('success', 'Room amenity deleted successfully');
+            Alert::success('Success', 'Room amenity deleted successfully');
+            return redirect()->route('admin.amenities.index');
         }catch (\Exception $e) {
             Log::error('Error deleting room amenity: ' . $e->getMessage());
-            return back()->with('error', 'Failed to delete room amenity');
+            Alert::error('Error', 'Failed to delete room amenity');
+            return back();
         }
     }
 }

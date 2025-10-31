@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BookingController extends Controller
 {
@@ -32,8 +33,8 @@ class BookingController extends Controller
         
         $validator = Validator::make($request->all(),[
             'room_listing_id' => 'required|exists:room_listings,id',
-            'check_in' => 'required|date',
-            'check_out' => 'required|date|after:check_in',
+            'check_in_date' => 'required|date',
+            'check_out_date' => 'required|date|after:check_in_date',
             'adults' => 'required|integer|min:1',
             'rooms'=> 'required|integer|min:1',
             'children' => 'nullable|integer|min:0',
@@ -42,7 +43,8 @@ class BookingController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->with('error', $validator->errors()->first());
+            Alert::error('Validation Error', $validator->errors()->first());
+            return back()->withInput();
         }
 
         try {
@@ -65,23 +67,36 @@ class BookingController extends Controller
 
 
             // Convert date format from DD-MM-YYYY to YYYY-MM-DD
-            if (isset($bookingData['check_in'])) {
-                $bookingData['check_in'] = \Carbon\Carbon::createFromFormat('d-m-Y', $bookingData['check_in'])->format('Y-m-d');
+            if (isset($bookingData['check_in_date'])) {
+                $bookingData['check_in_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $bookingData['check_in_date'])->format('Y-m-d');
             }
-            if (isset($bookingData['check_out'])) {
-                $bookingData['check_out'] = \Carbon\Carbon::createFromFormat('d-m-Y', $bookingData['check_out'])->format('Y-m-d');
+            if (isset($bookingData['check_out_date'])) {
+                $bookingData['check_out_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $bookingData['check_out_date'])->format('Y-m-d');
             }
+            
             // Create the booking
             $booking = new Booking();
             $booking->fill($bookingData);
             $booking->save();
-;
+
+            // Calculate and apply discount
+            $totals = $booking->calculateBookingTotals();
+            if ($totals) {
+                $booking->subtotal = $totals['subtotal'];
+                $booking->room_days = $totals['room_days'];
+                $booking->discount_percentage = $totals['discount_percentage'];
+                $booking->discount_amount = $totals['discount_amount'];
+                $booking->total_amount = $totals['total_amount'];
+                $booking->save();
+            }
+
             // Store booking ID in session for payment
             $request->session()->put('booking_id', $booking->id);
             return redirect()->route('dashboard.booking.payment.form');
         } catch (\Exception $exception) {
             Log::error('Error storing booking data: ' . $exception->getMessage());
-            return back()->with('error', 'An error occurred while storing your booking data. Please try again later.');
+            Alert::error('Error', 'An error occurred while storing your booking data. Please try again later.');
+            return back()->withInput();
         }
     }
 
@@ -89,26 +104,25 @@ class BookingController extends Controller
     {
         try {
             $otp = rand(100000, 999999);
-            // $otp = '000000';
+            // $otp = '000000'; 
             $phone = $request->phone ?? Auth::user()->phone;
 
             if(!$phone){
-                return back()->with('error', 'Please enter your phone number.');
+                Alert::error('Error', 'Please enter your phone number.');
+                return back()->withInput();
             }
             $this->formatPhone($phone); 
-
-            // Send via Termii
             $this->sendOtpWithTermii($phone, $otp);
-
-            // Store in session
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
             $request->session()->put('phone_for_otp', $phone); 
 
-            return redirect()->route('dashboard.booking.otp.form')->with('success', 'OTP sent to your phone. Please verify.');
+            Alert::success('Success', 'OTP sent to your phone. Please verify.');
+            return redirect()->route('dashboard.booking.otp.form');
         } catch (\Exception $e) {
             Log::error('Error sending OTP via Termii: ' . $e->getMessage());
-            return back()->with('error', 'Failed to send OTP. Please check your phone number and try again.');
+            Alert::error('Error', 'Failed to send OTP. Please check your phone number and try again.');
+            return back()->withInput();
         }
     }
 
@@ -124,7 +138,8 @@ class BookingController extends Controller
             $lastOtpTime = session('otp_generated_at');
             if ($lastOtpTime && abs(now()->diffInSeconds($lastOtpTime)) < 60) {
                 $remainingTime = 60 - abs(now()->diffInSeconds($lastOtpTime));
-                return back()->with('error', "Please wait {$remainingTime} seconds before requesting a new OTP.");
+                Alert::error('Error', "Please wait {$remainingTime} seconds before requesting a new OTP.");
+                return back()->withInput();
             }
 
             $otp = rand(100000, 999999);
@@ -132,22 +147,20 @@ class BookingController extends Controller
             $phone = $request->phone ?? (Auth::check() ? Auth::user()->phone : session('phone_for_otp'));
 
             if(!$phone){
-                Log::warning('Resend OTP failed: Phone number not found in request, authenticated user, or session.');
-                return back()->with('error', 'Phone number not found. Please provide a phone number.');
+                Alert::error('Error', 'Phone number not found. Please provide a phone number.');
+                return back()->withInput();
             }
-            
-            
+             
             $this->sendOtpWithTermii($phone, $otp);
-            Log::info('Attempting to resend OTP for phone: ' . $phone);
-            Log::info('OTP: ' . $otp);
             
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
-
-            return back()->with('success', 'A new OTP has been sent to your phone.');
+            Alert::success('Success', 'A new OTP has been sent to your phone.');
+            return back();
         } catch (\Exception $e) {
             Log::error('Error resending OTP: ' . $e->getMessage());
-            return back()->with('error', 'Failed to resend OTP. Please try again.');
+            Alert::error('Error', 'Failed to resend OTP. Please try again.');
+            return back()->withInput();
         }
     }
 
@@ -218,8 +231,8 @@ class BookingController extends Controller
             $booking->save();
 
             $request->session()->forget('payment_details');
-
-            return redirect()->route('dashboard.booking.success')->with('success', 'Booking successful! Payment will be collected at check-in.');
+            Alert::success('Success', 'Booking successful! Payment will be collected at check-in.');
+            return redirect()->route('dashboard.booking.success');
         }
 
         // Process OPay payment
@@ -234,11 +247,13 @@ class BookingController extends Controller
             if ($cashierUrl) {
                 return redirect()->away($cashierUrl);
             } else {
-                return back()->with('error', 'Payment URL not received from payment gateway.');
+                Alert::error('Error', 'Payment URL not received from payment gateway.');
+                return back();
             }
         } else {
             $errorMessage = $result['message'] ?? 'An unknown error occurred with the payment gateway.';
-            return back()->with('error', 'Payment failed: ' . $errorMessage);
+            Alert::error('Payment Failed', 'Payment failed: ' . $errorMessage);
+            return back();
         }
     }
 
@@ -246,10 +261,14 @@ class BookingController extends Controller
     {
         $bookingId = session('booking_id');
         if (!$bookingId) {
-            return redirect()->route('home')->with('error', 'No booking found. Please start a new booking.');
+            Alert::error('Error', 'No booking found. Please start a new booking.');
+            return redirect()->route('home');
         }
-        $booking = Booking::findOrFail($bookingId);
-        return view('dash.booking.payment', compact('booking'));
+        $booking = Booking::with('user')->findOrFail($bookingId);
+        $walletPoints = $booking->user->wallet_points ?? 0;
+        $discountCode = $booking->user->discountCode ?? null;
+        
+        return view('dash.booking.payment', compact('booking', 'walletPoints', 'discountCode'));
     }
 
     /**
@@ -259,7 +278,6 @@ class BookingController extends Controller
     {
        $validator = Validator::make($request->all(),[
             'payment_plan' => 'required|string|in:reservation,full,no_payment',
-            // 'payment_method' => 'required_if:payment_plan,reservation,full|string|in:card,bank_transfer,ussd,bank_account',
             'city'=>'required|string',
             'state' => 'required|string',
             'country' => 'required|string',
@@ -270,6 +288,9 @@ class BookingController extends Controller
             'arrival_time'=>'required|string',  
             'first_name'=> 'required|string',
             'last_name'=> 'required|string',
+            'use_wallet_points' => 'nullable|boolean',
+            'wallet_points_to_use' => 'nullable|numeric|min:0',
+            'discount_code' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -304,7 +325,6 @@ class BookingController extends Controller
             if (!User::where('email', $validatedData['email'])->exists()) {
                 $user->email = $validatedData['email'];
             } else {
-                // Log or handle the case where the email is taken
                 Log::warning('Attempted to update user email to an already existing email: ' . $validatedData['email']);
             }
         }
@@ -313,12 +333,59 @@ class BookingController extends Controller
         $booking->arrival_time = $validatedData['arrival_time'];
         $booking->payment_type = $validatedData['payment_plan'];
         
+        // Handle discount code
+        $discountCodeAmount = 0;
+        if (isset($validatedData['discount_code']) && $validatedData['discount_code']) {
+            $discountCode = \App\Models\DiscountCode::where('code', $validatedData['discount_code'])
+                ->where('user_id', $user->id)
+                ->where('is_active', true)
+                ->first();
+
+            if ($discountCode) {
+                if ($discountCode->canBeUsed()) {
+                    // Apply 60% discount
+                    $discountCodeAmount = ($booking->total_amount * 60) / 100;
+                    $booking->discount_code_used = $discountCode->code;
+                    $booking->discount_code_amount = $discountCodeAmount;
+                    $booking->total_amount -= $discountCodeAmount;
+                    $booking->save();
+
+                    // Mark code as used
+                    $discountCode->markAsUsed();
+                } else {
+                    Alert::warning('Discount Code', 'This discount code can only be used once per week.');
+                }
+            } else {
+                Alert::warning('Invalid Code', 'The discount code is invalid or not applicable to your account.');
+            }
+        }
+        
+        // Handle wallet points usage
+        $walletPointsUsed = 0;
+        if (isset($validatedData['use_wallet_points']) && $validatedData['use_wallet_points']) {
+            $walletPointsToUse = min($validatedData['wallet_points_to_use'] ?? 0, $user->wallet_points, $booking->total_amount);
+            
+            if ($walletPointsToUse > 0) {
+                // Deduct wallet points from user
+                $user->wallet_points -= $walletPointsToUse;
+                $user->save();
+                
+                // Record wallet points used in booking
+                $booking->wallet_points_used = $walletPointsToUse;
+                $booking->total_amount -= $walletPointsToUse;
+                $booking->save();
+                
+                $walletPointsUsed = $walletPointsToUse;
+            }
+        }
 
         
 
         // Handle different payment methods
         if ($paymentMethod === 'reservation') {
-            $amount = (int)(($booking->roomListing->price / 2) * 100); 
+            // 50% of total amount (after discount code and wallet points)
+            $amountAfterDiscounts = $booking->total_amount;
+            $amount = (int)(($amountAfterDiscounts / 2) * 100); 
            
             
             // Store payment details in session for later use
@@ -331,7 +398,9 @@ class BookingController extends Controller
             // Generate OTP and redirect to OTP verification
             return $this->generateOTP($request);
         } elseif ($paymentMethod === 'full') {
-            $amount = (int)($booking->roomListing->price * 100); 
+            // Full amount (after discount code and wallet points)
+            $amountAfterDiscounts = $booking->total_amount;
+            $amount = (int)($amountAfterDiscounts * 100); 
             
 
             // Store payment details in session for later use
@@ -381,8 +450,7 @@ class BookingController extends Controller
                 'displayName' => config('app.name'),
                 'customerVisitSource' => 'WEB',
                 'evokeOpay' => true,
-                'expireAt' => 300, // 5 minutes
-                // 'payMethod' => 'BankCard', 
+                'expireAt' => 300,
                 'userInfo' => [
                     'userEmail' => $booking->user->email,
                     'userId' => (string)$booking->user->id,
@@ -400,7 +468,6 @@ class BookingController extends Controller
 
             $result = $this->oPayService->createOrder($paymentData);
             session()->put('payment_reference', $result);
-            // Store payment reference in booking
             $booking->payment_reference = $reference;
             $booking->save();
 
@@ -455,15 +522,12 @@ public function handlePaymentCallback(Request $request)
 
     if ($status === 'SUCCESS') {
         $this->confirmPayment($booking);
-        
-        Log::info("OPay Webhook: Payment confirmed successfully", ['booking_id' => $booking->id]);
         return response()->json(['status' => 'success'], 200);
     }
 
     if ($status === 'FAILED') {
         $booking->payment_status = 2; 
         $booking->save();
-        Log::info("OPay Webhook: Payment failed", ['booking_id' => $booking->id]);
         return response()->json(['status' => 'failed'], 200);
     }
 
@@ -504,10 +568,10 @@ private function confirmPayment($booking)
 
     $booking->save();
     
-    // Add wallet point to user
-    $user = $booking->user;
-    $user->wallets = $user->wallets + 1;
-    $user->save();
+    // Credit wallet points if not already credited
+    if (!$booking->wallet_points_credited) {
+        $booking->creditWalletPoints();
+    }
 
     Log::info("Payment confirmed for booking {$booking->id}");
 }
@@ -542,9 +606,8 @@ public function handlePaymentReturn(Request $request)
             ->with('success', 'Payment successful! Your booking is confirmed.');
     }
     $request->session()->forget(['booking_id', 'availability_data', 'payment_details']);
-    
-    return redirect()->route('home')
-        ->with('info', 'Your payment is being processed. You will receive a confirmation email within a few minutes. Please check your email.');
+    Alert::info('Info', 'Your payment is being processed. You will receive a confirmation email within a few minutes. Please check your email.');
+    return redirect()->route('home');
 }
 
 /**
@@ -574,10 +637,10 @@ private function confirmPaymentReturn($booking)
 
     $booking->save();
     
-    // Add wallet point to user
-    $user = $booking->user;
-    $user->wallets = $user->wallets + 1;
-    $user->save();
+    // Credit wallet points if not already credited
+    if (!$booking->wallet_points_credited) {
+        $booking->creditWalletPoints();
+    }
 
 }
 

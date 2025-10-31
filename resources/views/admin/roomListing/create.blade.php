@@ -34,13 +34,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="room_ava">Availability Status</label>
+                            <select name="availability_status" id="" class="form-control">
+                                <option value="available">Available</option>
+                                <option value="occupied">Occupied</option>
+                                <option value="under maintenance">Under Maintenance</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
                             <label for="room_image" class="col-sm-12">Image <span class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="file" accept="image/*" name="room_image" id="room_image" onchange="loadFile(event)" required>
                                 <a class="cattooltipsimg" data-toggle="tooltip" data-placement="top" title="Use only .jpg,.jpeg,.gif and .png Images">
                                     <i class="fa fa-question-circle" aria-hidden="true"></i>
                                 </a>
-                                {{-- <small id="fileHelp" class="text-muted">
+                                {{-- <small id="fileHelp" class="text-muted"> 	Can update room status (e.g., available, occupied, under maintenance).
                                     <img src="https://xainhotellatest.bdtask-demo.com/assets/img/room-setting/room_images.png" id="output" class="img-thumbnail height_150_width_200px jsclrimg" required/>
                                 </small>
                                 <input type="hidden" name="old_image" value=""> --}}
@@ -52,6 +60,7 @@
                                 <input name="room_images[]" type="file" multiple class="form-control" id="room_images" required>
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label for="roomdescription" class="col-sm-12">Room Description  <span class="text-danger">*</span></label>
                             <div class="col-sm-12">

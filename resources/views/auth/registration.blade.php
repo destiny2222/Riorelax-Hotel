@@ -69,7 +69,7 @@
                                 @endforeach
                             @endif  
                             <div class="form-border-box">
-                                <form class="form-horizontal" role="form" method="POST"  action="{{ route('register.post') }}">
+                                <form class="form-horizontal validate" role="form" method="POST"  action="{{ route('register.post') }}">
                                     @csrf
                                     <h1 class="normal mb-20">Register</h1>
                                     <div class="form-field-wrapper form-group">
@@ -97,10 +97,16 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="input-md form-full-width contact-field p-relative c-name mb-20">
                                                 <label class="custom-authentication-label"
-                                                    for="email"><span>Email</span></label><input
-                                                    class="custom-authentication-input" type="email" id="email"
-                                                    name="email" placeholder="Enter your email" required=""
-                                                    value="" />
+                                                    for="email"><span>Email</span></label>
+                                                <input class="custom-authentication-input @error('email') is-invalid @enderror" 
+                                                    type="email" id="email" name="email" 
+                                                    placeholder="Enter your email" required
+                                                    value="{{ old('email') }}"
+                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                                    title="Please enter a valid email address" />
+                                                @error('email')
+                                                    <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

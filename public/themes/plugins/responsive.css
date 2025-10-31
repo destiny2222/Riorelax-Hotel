@@ -1987,8 +1987,8 @@
         background-repeat: no-repeat;
     }
     .row {
-        margin-right: 0;
-        margin-left: 0;
+        /* margin-right: 0;
+        margin-left: 0; */
     }
     .portfolio .col3 .grid-item, .portfolio .col2 .grid-item {
         width: 100%;
@@ -2051,8 +2051,8 @@
         height: auto;
     }
     .row {
-        margin-right: 0;
-        margin-left: 0;
+        /* margin-right: 0;
+        margin-left: 0; */
     }
     .header-btn.second-header-btn {
         display: none;

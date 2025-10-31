@@ -244,52 +244,6 @@
     <script src="https://xainhotellatest.bdtask-demo.com/assets/js/pusher.min.js" type="text/javascript"></script>
     <script src="https://xainhotellatest.bdtask-demo.com/assets/mousetrap-master/mousetrap.min.js" type="text/javascript">
     </script>
-
-    {{-- <script src="https://xainhotellatest.bdtask-demo.com/ordermanage/order/showljslang" type="text/javascript"></script>
-    <script src="https://xainhotellatest.bdtask-demo.com/application/modules/ordermanage/assets/js/print.js"
-        type="text/javascript"></script>
-    <a id="dayClose" hidden></a>
-    <script src="https://xainhotellatest.bdtask-demo.com/application/modules/day_closing/assets/js/cashregister.js"
-        type="text/javascript"></script>
-    <!-- Include module Script -->
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/accounts/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/customer/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/dashboard/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/hrm/assets/js/script.js type="text/javascript">
-    </script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/payment_setting/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/purchase/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/reports/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/room_facilities/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/room_reservation/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/room_setting/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/tax_management/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/units/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/duty_roster/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/pool_booking/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/transport_facility/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/hall_room/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/car_parking/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/ordermanage/assets/js/script.js
-        type="text/javascript"></script>
-    <script src=https://xainhotellatest.bdtask-demo.com/application/modules/house_keeping/assets/js/script.js
-        type="text/javascript"></script> --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
@@ -303,6 +257,7 @@
         });
     </script>
     @include('partials.message')
+    @include('sweetalert::alert')
     @stack('scripts')
 </body>
 </html>

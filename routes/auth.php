@@ -16,7 +16,9 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/change-password', [HomeController::class, 'changePasswordView'])->name('change.password');
         Route::post('/change-password/post', [HomeController::class, 'changePassword'])->name('change-password-post');  
         Route::put('/profile-picture-change/{id}', [HomeController::class, 'changeProfilePicture'])->name('profile-picture-change');             
-        Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');  
+        Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+        Route::get('/booking-history', [HomeController::class, 'bookingHistory'])->name('booking.history');
+        Route::get('/bookings/export', [HomeController::class, 'exportBookings'])->name('bookings.export');
     });
        
     

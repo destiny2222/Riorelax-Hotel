@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminBookingController extends Controller
 {
@@ -46,7 +47,8 @@ class AdminBookingController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->with('error', $validator->errors()->first());
+            Alert::error('Error', $validator->errors()->first());
+            return back();
         }
 
         try {
@@ -103,11 +105,13 @@ class AdminBookingController extends Controller
             $booking = new Booking();
             $booking->fill($bookingData);
             $booking->save();
-
-            return redirect()->route('admin.booking.index')->with('success', 'Booking created successfully.');
+            
+            Alert::success('Success', 'Booking created successfully.');
+            return redirect()->route('admin.booking.index');
         } catch (\Exception $exception) {
             Log::error('Error creating booking: ' . $exception->getMessage());
-            return back()->with('error', 'An error occurred while creating the booking. Please try again.');
+            Alert::error('Error', 'An error occurred while creating the booking. Please try again.');
+            return back();
         }
     }
 }

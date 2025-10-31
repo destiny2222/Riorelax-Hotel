@@ -1,4 +1,4 @@
-﻿@import url(../../../css2);
+@import url(../../../css2);
 body {
     color: #777;
     font-family: var(--primary-font), sans-serif;
@@ -1541,8 +1541,8 @@ section:hover .section-title h2:before {
 }
 .about-content3 li:before {
     color: var(--primary-color);
-    content: "";
-    font-family: Font Awesome\5 Pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     margin-inline-end: 10px;
 }
 .video-position {
@@ -2956,8 +2956,8 @@ div.single-cta:last-child {
 }
 .coupon-accordion h3:before {
     color: #6f7172;
-    content: "";
-    font-family: Font Awesome\5 Free;
+    content: "?";
+    font-family: "Font Awesome 5 Free";
     font-weight: 600;
     left: 15px;
     position: absolute;
@@ -3081,8 +3081,8 @@ p.checkout-coupon input[type="text"] {
 }
 .country-select:before {
     color: #6f7172;
-    content: "";
-    font-family: Font Awesome\5 Free;
+    content: "?";
+    font-family: "Font Awesome 5 Free";
     font-weight: 600;
     inset-inline-end: 15px;
     position: absolute;
@@ -3429,9 +3429,9 @@ p.checkout-coupon input[type="text"] {
     border: 2px solid;
     border-radius: 50%;
     color: var(--primary-color);
-    content: "";
+    content: "?";
     float: left;
-    font-family: Font Awesome\5 Pro;
+    font-family: "Font Awesome 5 Pro";
     font-size: 12px;
     height: 25px;
     line-height: 22px;
@@ -3676,8 +3676,8 @@ p.checkout-coupon input[type="text"] {
 }
 .f-insta ul li a:before {
     color: #fff;
-    content: "";
-    font-family: Font Awesome\5 Pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     font-size: 24px;
     inset-inline-start: 50%;
     opacity: 0;
@@ -3899,9 +3899,10 @@ p.checkout-coupon input[type="text"] {
     background: var(--primary-color);
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     color: #fff;
-    content: "";
+    /*  arrow */
+    content: "\f107";
     display: flex;
-    font-family: Font Awesome\5 Pro;
+    font-family: "Font Awesome 5 Pro";
     font-size: 26px;
     font-weight: 600;
     height: 100%;
@@ -3917,7 +3918,7 @@ p.checkout-coupon input[type="text"] {
 .faq-wrap .card-header h2 button.collapsed:after {
     box-shadow: none;
     color: #fff;
-    content: "";
+    content: "\f107";
     font-size: 26px;
 }
 .load-more-option {
@@ -4424,8 +4425,8 @@ li.has-sub.has-mega-menu:hover > ul > li > ul {
 }
 .portfolio .col3 .grid-item .box a:before {
     color: #fff;
-    content: "";
-    font-family: Font Awesome\5 Pro !important;
+    content: "?";
+    font-family: "Font Awesome 5 Pro" !important;
     font-size: 24px;
     inset-inline-start: 50%;
     opacity: 0;
@@ -4474,8 +4475,8 @@ li.has-sub.has-mega-menu:hover > ul > li > ul {
 .gallery-image:before {
     background: var(--primary-color);
     color: #fff;
-    content: "";
-    font-family: Font Awesome\5 Pro !important;
+    content: "?";
+    font-family: "Font Awesome 5 Pro" !important;
     font-size: 24px;
     height: 50px;
     inset-inline-start: 50%;
@@ -6028,8 +6029,8 @@ ul.room-features li img {
     ul
     li:before {
     color: var(--primary-color);
-    content: "";
-    font-family: Font Awesome\5 Pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     font-weight: 300;
     left: 0;
     position: absolute;
@@ -6510,8 +6511,8 @@ button.btn-custom:hover {
 }
 .hotel-rules-box ul li:before {
     color: var(--primary-color);
-    content: "";
-    font-family: Font Awesome\5 Pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     font-weight: 300;
     left: 0;
     position: absolute;
@@ -6627,7 +6628,7 @@ select {
 }
 .rating-wrap {
     display: inline-block;
-    font-family: Font Awesome\5 Pro !important;
+    font-family: "Font Awesome 5 Pro" !important;
     height: 20px;
     overflow: hidden;
     position: relative;
@@ -6636,7 +6637,7 @@ select {
 }
 .rating-wrap:before {
     color: #d2d2d2;
-    content: "";
+    content: "?????";
     float: left;
     font-size: 12px;
     font-weight: 600;
@@ -6647,7 +6648,7 @@ select {
 }
 .rating-wrap .review-rate {
     color: #edb867;
-    font-family: Font Awesome\5 Pro !important;
+    font-family: "Font Awesome 5 Pro" !important;
     left: 0;
     overflow: hidden;
     padding-top: 1.5em;
@@ -6655,7 +6656,7 @@ select {
     top: 0;
 }
 .rating-wrap .review-rate:before {
-    content: "";
+    content: "?????";
     font-size: 12px;
     font-weight: 600;
     left: 0;
@@ -7587,8 +7588,8 @@ button.remove-coupon-code i {
 }
 .services-two ul li:before {
     color: var(--primary-color);
-    content: "ï€Œ";
-    font-family: Font Awesome\5 Pro;
+    content: "";
+    font-family: "Font Awesome 5 Pro";
     margin-inline-end: 10px;
 }
 .services-icon .glyph-icon:before {
@@ -7639,8 +7640,8 @@ button.remove-coupon-code i {
 }
 .services-three ul li:before {
     color: var(--primary-color);
-    content: "ï€Œ";
-    font-family: Font Awesome\5 Pro;
+    content: "";
+    font-family: "Font Awesome 5 Pro";
     margin-inline-end: 10px;
 }
 .services-three .second-services-content {
@@ -7979,8 +7980,8 @@ button.remove-coupon-code i {
 }
 .services-box-04 .services-content-02 li:before {
     color: var(--primary-color);
-    content: "ï€Œ";
-    font-family: Font Awesome\5 Pro;
+    content: "";
+    font-family: "Font Awesome 5 Pro";
     margin-inline-end: 10px;
 }
 .services-box-04 .services-content-02 .blue li:before {
@@ -8837,28 +8838,28 @@ button.remove-coupon-code i {
     width: 100%;
 }
 .contact-field.c-name:after {
-    content: "";
+    content: "?";
 }
 .contact-field:after {
     bottom: 22px;
     color: var(--primary-color);
     display: inline-block;
     display: none;
-    font-family: Font Awesome\5 Pro;
+    font-family: "Font Awesome 5 Pro";
     font-size: 14px;
     inset-inline-end: 25px;
     position: absolute;
     text-align: center;
 }
 .contact-field.c-email:after {
-    content: "";
+    content: "?";
 }
 .contact-field.c-subject:after {
-    content: "";
+    content: "?";
 }
 .contact-field.c-message:after {
     bottom: unset;
-    content: "";
+    content: "?";
     font-weight: 600;
     top: 20px;
 }
@@ -10377,8 +10378,8 @@ blockquote cite {
 .services-categories li a:before {
     background: #e8eaec;
     color: #222;
-    content: "";
-    font-family: Font Awesome\5 pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     font-size: 12px;
     font-weight: 700;
     height: 50px;
@@ -10700,8 +10701,8 @@ blockquote cite {
 }
 .list-style-one li:before {
     color: var(--primary-color);
-    content: "";
-    font-family: Font Awesome\5 Pro;
+    content: "?";
+    font-family: "Font Awesome 5 Pro";
     font-size: 14px;
     font-weight: 700;
     left: 0;
@@ -10944,8 +10945,8 @@ img {
 }
 .pro-filter:before {
     color: #758799;
-    content: "";
-    font-family: Font Awesome\5 Free;
+    content: "?";
+    font-family: "Font Awesome 5 Free";
     font-weight: 600;
     inset-inline-end: 15px;
     position: absolute;
@@ -11914,4 +11915,13 @@ td.product-thumbnail img {
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
+}
+
+.availability-span{
+  /* border-radius: 8px; */
+  padding: 5px 10px 5px 10px;
+  background-color:#644222;
+  width:fit-content;
+  color:#fff;
+  font-size:14px;
 }

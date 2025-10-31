@@ -24,6 +24,7 @@ class User extends Authenticatable
         'address',
         'city',
         'wallets',
+        'wallet_points',
         'state',
         'country',
         'dob',
@@ -58,4 +59,57 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Check if user is in family and friends list
+     */
+    public function isInFamilyAndFriends()
+    {
+        return FamilyAndFriend::where(function($query) {
+            $query->where('email', $this->email)
+                  ->orWhere('phone', $this->phone);
+        })->where('is_active', true)->exists();
+    }
+
+    /**
+     * Get user's discount code
+     */
+    public function discountCode()
+    {
+        return $this->hasOne(DiscountCode::class);
+    }
+
+    /**
+     * Get user's bookings
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    /**
+     * Generate discount code if eligible
+     */
+    public function generateDiscountCodeIfEligible()
+    {
+        // Check if already has a discount code
+        if ($this->discountCode()->exists()) {
+            return $this->discountCode;
+        }
+
+        // Check if in family and friends list
+        if ($this->isInFamilyAndFriends()) {
+            $code = DiscountCode::generateUniqueCode();
+            
+            return DiscountCode::create([
+                'code' => $code,
+                'user_id' => $this->id,
+                'discount_percentage' => 60,
+                'is_active' => true,
+            ]);
+        }
+
+        return null;
+    }
 }
+

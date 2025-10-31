@@ -394,11 +394,11 @@
                             <ul>
                                 <li class="opening_hours">
                                     <i class="far fa-clock"></i>
-                                    <span>Open 24/7 - Check-in: 2:00 PM | Check-out: 12:00 AM</span>
+                                    <span>Open 24/7 - Check-in: 2:00 PM | Check-out: 12:00 Noon</span>
                                 </li>
                                 <li>
                                     <i class="far fa-mobile"></i>
-                                    <strong><a href="tel:+2348180000104">+2348180000104</a></strong>
+                                    <strong><a href="tel:+2348180000104" class="phone-link" data-contact-url="{{ route('contact') }}">+2348180000104</a></strong>
                                 </li>
                             </ul>
                         </div>
@@ -469,8 +469,11 @@
                                 <i class="fa fa-list"></i>
                             </button>
                         </div>
-                        <div class="d-none d-lg-block col-xl-2 col-lg-2"><a href="#booking-form"
-                                class="top-btn mt-10 mb-10">Reservation</a></div>
+                        <div class="d-none d-lg-block col-xl-2 col-lg-2">
+                            <a href="{{ auth()->check() ? route('rooms') : '#booking-form' }}" class="top-btn mt-10 mb-10">
+                                Reservation
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -508,7 +511,7 @@
                                     alt=""></div>
                             <div class="f-contact">
                                 <ul>
-                                    <li><i class="icon fal fa-phone"></i><span><a href="tel:2348180000104">+2348180000104</a></span></li>
+                                    <li><i class="icon fal fa-phone"></i><span><a href="tel:2348180000104" class="phone-link" data-contact-url="{{ route('contact') }}">+2348180000104</a></span></li>
                                     <li><i class="icon fal fa-envelope"></i><span><a href="#"
                                                 class="__cf_email__">Email</a> info@house7.com.ng</span>
                                     </li>
@@ -542,8 +545,8 @@
                             <div class="footer-link">
                                 <ul>
                                     <li><a target="_self" class="font-sm color-grey-200" href="/faq">FAQ</a></li>
-                                    <li><a target="_self" class="font-sm color-grey-200"
-                                            href="tel:2348180000104">Support</a>
+                                    <li><a target="_self" class="font-sm color-grey-200 phone-link"
+                                            href="tel:2348180000104" data-contact-url="{{ route('contact') }}">Support</a>
                                     </li>
                                     {{-- <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
                                     </li>
@@ -553,31 +556,6 @@
                             </div>
                         </div>
                     </div>
-                    {{--  <div class="col-xl-4 col-lg-4 col-sm-6">
-                      <div class="footer-widget mb-30">
-                            <div class="f-widget-title">
-                                <h2>Subscribe To Our Newsletter</h2>
-                            </div>
-                            <div class="footer-link" dir="ltr">
-                                <div class="subricbe p-relative form-newsletter" data-animation="fadeInDown"
-                                    data-delay=".4s">
-                                    <form method="POST" action=""
-                                        accept-charset="UTF-8" id="botble-newsletter-forms-fronts-newsletter-form"
-                                        class="subscribe-form dirty-check">
-                                        <div class="input-group mb-3"><input class="form-control"
-                                                placeholder="Enter Your Email" id="newsletter-email" required="required"
-                                                name="email" type="email"></div>
-                                        <div
-                                            class="newsletter-message newsletter-success-message page_speed_1985284762">
-                                        </div>
-                                        <div class="newsletter-message newsletter-error-message page_speed_1985284762">
-                                        </div><button class="btn header-btn" type="submit"><i
-                                                class="fas fa-location-arrow"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> 
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -620,8 +598,30 @@
     <script src="/themes/plugins/lightgallery/js/lightgallery.min.js"></script>
     <script src="/themes/riorelax/plugins/jquery-bar-rating/jquery.barrating.min.js"></script>
     <script src="{{ asset('themes/js/custom-slider.js') }}"></script>
+    <script src="{{ asset('themes/js/form-validation.js') }}"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Handle phone link behavior based on device type
+            $('.phone-link').on('click', function(e) {
+                // Check if device is mobile (screen width <= 768px)
+                if (window.innerWidth <= 768) {
+                    // On mobile: Allow default behavior (tel: link)
+                    return true;
+                } else {
+                    // On desktop: Redirect to contact page
+                    e.preventDefault();
+                    const contactUrl = $(this).data('contact-url');
+                    window.location.href = contactUrl;
+                }
+            });
+        });
+    </script>
+    
     @stack('scripts')
     @include('partials.message')
+    @include('sweetalert::alert')
+
 </body>
 
 </html>

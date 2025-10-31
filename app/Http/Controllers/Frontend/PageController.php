@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMail;
 use App\Models\Booking;
 use App\Models\ContactStore;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PageController extends Controller
 {
@@ -48,43 +50,47 @@ class PageController extends Controller
     public function checkAvailability(Request $request)
     {
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date|after:start_date',
+            'check_in_date' => 'required|date',
+            'check_out_date'   => 'required|date|after:check_in_date',
             'adults'     => 'sometimes|integer|min:1',
             'children'   => 'sometimes|integer|min:0',
             'rooms'      => 'sometimes|integer|min:1',
         ]);
 
         // Convert input dates from d-m-Y to Y-m-d for DB comparison
-        $startDate = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('start_date'))->format('Y-m-d');
-        $endDate   = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('end_date'))->format('Y-m-d');
+        $startDate = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_in_date'))->format('Y-m-d');
+        $endDate   = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_out_date'))->format('Y-m-d');
 
         // Check if there is an existing booking with same check_in and check_out
-        $exists = Booking::where('check_in', $startDate)
-            ->where('check_out', $endDate)
+        $exists = Booking::where('check_in_date', $startDate)
+            ->where('check_out_date', $endDate)
             ->exists();
 
-        if ($exists) {
-            return back()->with('error', 'Rooms are not available for the selected dates. Please choose different dates');
-        }
+        // if ($exists) {
+        //     Alert::error('Error', 'Rooms are not available for the selected dates. Please choose different dates.');
+        //     return back();
+        // }
 
-        $availabilityData = $request->only(['start_date', 'end_date', 'adults', 'children', 'rooms']);
+        $availabilityData = $request->only(['check_in_date', 'check_out_date', 'adults', 'children', 'rooms']);
         session(['availability_data' => $availabilityData]);
-
-        return redirect()->route('rooms')->with('success', 'Rooms are available for the selected dates.');
+        // Alert::success('Success', 'Rooms are available for the selected dates.');
+        return redirect()->route('rooms');
     }
 
 
 
-    public function contactStore(Request $request){
+    public function contactStore(ContactRequest $request){
         try {
-            $data = ContactStore::create($request->all());
-        // send mail to 
-        Mail::to('info@house7.com.ng')->send(new ContactMail($data));
-        return back()->with('success', 'Thank you for contacting us. We will get back to you soon.');
+            $data = ContactStore::create($request->validated());
+            // send mail to 
+            Mail::to('info@house7.com.ng')->send(new ContactMail($data));
+            
+            Alert::success('Success', 'Thank you for contacting us. We will get back to you soon.');
+            return back();
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            return back()->with('error', 'An error occurred while . Please try again later.');
+            Alert::error('Error', 'An error occurred while processing your request. Please try again later.');
+            return back();
         }
     }
 

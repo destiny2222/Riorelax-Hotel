@@ -19,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.logged_out'=> AdminLogged::class,
             'user.authenticated'=> Authenticate::class,
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             'dashboard/payment/callback',

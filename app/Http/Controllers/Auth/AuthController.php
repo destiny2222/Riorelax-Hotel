@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -59,6 +60,7 @@ class AuthController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable|string|unique:users,phone',
             'password' => Password::min(6)->mixedCase()->numbers()->symbols(),
         ]);
 
@@ -75,14 +77,18 @@ class AuthController extends Controller
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'phone' => $data['phone'] ?? null,
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
         // = $this->create($data);
 
+        // Check if user is in family and friends list and generate discount code
+        $user->generateDiscountCodeIfEligible();
+
         Auth::login($user); 
-        return redirect()->route('dashboard.home')->with('success', 'Great! You have Successfully registered');
-        // return redirect("dashboard")->with('success', 'Great! You have Successfully registered');
+        Alert::success('Registration Successful', 'Welcome aboard, ' . $user->first_name . '!');
+        return redirect()->route('dashboard.home');
     }
 
     /**

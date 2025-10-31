@@ -32,10 +32,10 @@
                 <div class="col-lg-12 col-12">
                     <div class="services-area pt-20 pb-40">
                         {{-- <h3 class="mb-20">8 rooms available</h3> --}}
-                        <div class="row">
+                        <div class="row p-0">
                            @foreach($roomListings as $roomListing)
-                            <div class="col-xl-4 col-md-6">
-                                <div class="single-services shadow-block mb-30">
+                            <div class="col-12 col-xl-4 col-md-6">
+                                <div class="single-services shadow-block mb-30 position-relative">
                                     <div class="services-thumb hover-zoomin wow fadeInUp animated">
                                         <a href="{{ route('room.show', $roomListing->slug) }}">
                                             <img src="{{ $roomListing->room_image   }}" alt="Pendora Fame">
@@ -45,34 +45,23 @@
                                         <div class="day-book">
                                             <ul>
                                                 <li>
-                                                    {{-- <form action="" method="POST">
-                                                        <input type="hidden" name="room_id"  value="2">
-                                                        <input type="hidden" name="start_date" value="10-09-2025">
-                                                        <input type="hidden" name="end_date" value="11-09-2025">
-                                                        <input type="hidden" name="adults"   value="1">
-                                                        <input name="children" type="hidden" value="0">
-                                                        <input  name="rooms" type="hidden" value="1"> --}}
-                                                        <a href="{{ route('room.show', $roomListing->slug) }}"  class="book-button-custom" type="submit"
-                                                            data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR ₦{{ number_format($roomListing->price, 2) }}
-                                                        </a>
-                                                    {{-- </form> --}}
+                                                    <a href="{{ route('room.show', $roomListing->slug) }}"  class="book-button-custom" type="submit"
+                                                        data-animation="fadeInRight" data-delay=".8s"> BOOK NOW FOR ₦{{ number_format($roomListing->price, 2) }}
+                                                    </a>
                                                 </li>
                                             </ul>
+                                        </div>
+                                        <div class="mb-2 ">
+                                            @if ($roomListing->availability_status == 'available')
+                                               <p class="availability-span"> Available </p>
+                                            @else
+                                                <p class="availability-span"> {{ $roomListing->availability_status }} </p>
+                                            @endif
                                         </div>
                                         <h4><a href="{{ route('room.show', $roomListing->slug) }}">{{ $roomListing->room_title }}</a></h4>
                                         <p class="room-item-custom-truncate">
                                         {!!  \Str::limit($roomListing->description, 100) !!}
                                         </p>
-                                        <div class="icon">
-                                            <ul class="d-flex justify-content-evenly">
-                                                {{-- <li><img src="storage/amenities/icon-5.png" alt="Air conditioner"></li>
-                                                <li><img src="storage/amenities/icon-5.png" alt="High speed WiFi"></li>
-                                                <li><img src="storage/amenities/icon-3.png" alt="Strong Locker"></li>
-                                                <li><img src="storage/amenities/icon-2.png" alt="Breakfast"></li>
-                                                <li><img src="storage/amenities/icon-2.png" alt="Kitchen"></li>
-                                                <li><img src="storage/amenities/icon-6.png" alt="Smart Security"></li> --}}
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

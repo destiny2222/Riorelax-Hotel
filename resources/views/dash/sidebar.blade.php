@@ -30,6 +30,11 @@
             <a href="{{ route('dashboard.profile') }}" class="d-inline-block w-100 collection-item ">Profile</a>
         </li>
         <li class="list-group-item">
+            <a href="{{ route('dashboard.booking.history') }}" class="d-inline-block w-100 collection-item ">
+                <i class="fa fa-history"></i> Booking History
+            </a>
+        </li>
+        <li class="list-group-item">
             <a href="{{ route('dashboard.change.password') }}" class="d-inline-block w-100 collection-item ">Change password</a>
         </li>
         {{-- <li class="list-group-item">

@@ -52,7 +52,7 @@
                             <div class="form-group mb-0">
                                 <label class="font-weight-600 mb-1">Check In <span class="text-danger">*</span></label>
                                 <div class="icon-addon addon-md">
-                                    <input type="text" name="check_in" class="form-control datefilter" id="datefilter1"
+                                    <input type="date" name="check_in" class="form-control datefilter" id="datefilter1"
                                         placeholder="mm/dd/yyyy --:-- --" value="">
                                     <label class="fas fa-calendar-alt"></label>
                                 </div>
@@ -62,7 +62,7 @@
                             <div class="form-group mb-0">
                                 <label class="font-weight-600 mb-1">Check Out<span class="text-danger">*</span></label>
                                 <div class="icon-addon addon-md">
-                                    <input type="text" name="check_out" class="form-control datefilter" id="datefilter2"
+                                    <input type="date" name="check_out" class="form-control datefilter" id="datefilter2"
                                         placeholder="mm/dd/yyyy --:-- --" value="">
                                     <label class="fas fa-calendar-alt"></label>
                                 </div>

@@ -6,14 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomerController extends Controller
 {
     public function index(){
-        $user = User::all();
-        return view('admin.customer.index',[
-            'users' => $user
-        ]);
+        // Registered users have a proper password and email not starting with 'guest_'
+        $registeredUsers = User::where('email', 'not like', 'guest_%@%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+        
+        return view('admin.customer.registered', compact('registeredUsers'));
+    }
+
+    public function guests(){
+        // Guest users have email starting with 'guest_'
+        $guestUsers = User::where('email', 'like', 'guest_%@%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+        
+        return view('admin.customer.guests', compact('guestUsers'));
     }
 
     public function edit($id){
@@ -27,7 +39,8 @@ class CustomerController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->update($request->all());
-            return redirect()->route('admin.customer.index')->with('success','Customer updated successfully');
+            Alert::success('Success', 'Customer updated successfully');
+            return redirect()->route('admin.customer.index');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return back()->with('error','Something went wrong');
@@ -37,7 +50,8 @@ class CustomerController extends Controller
     public function delete($id){
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.customer.index')->with('success','Customer Deleted Successfully');
+        Alert::success('Success','Customer Deleted Successfully');
+        return redirect()->route('admin.customer.index');
     }
     
 }

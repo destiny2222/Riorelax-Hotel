@@ -14,8 +14,9 @@ return new class extends Migration
 
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->date('check_in');
-            $table->date('check_out');
+            $table->date('check_in_date');
+            $table->date('check_out_date');
+            $table->string('status')->default('pending'); // New status column
             $table->string('adults');
             $table->string('children');
             $table->foreignId('room_listing_id')->constrained('room_listings')->cascadeOnDelete();

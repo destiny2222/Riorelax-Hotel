@@ -157,8 +157,49 @@
                                         </div>
                                     </div>
 
+                                    @auth
+                                        @if($discountCode && $discountCode->is_active)
+                                        <div class="form-group mb-20">
+                                            <label for="discount_code">Family & Friends Discount Code</label>
+                                            <div class="input-group">
+                                                <input type="text" name="discount_code" id="discount_code" 
+                                                       class="form-control" value="{{ $discountCode->code }}" readonly>
+                                                <span class="input-group-text bg-success text-white">60% OFF</span>
+                                            </div>
+                                            <small class="text-muted">
+                                                @if($discountCode->canBeUsed())
+                                                    <span class="text-success">✓ Available to use</span>
+                                                @else
+                                                    <span class="text-danger">Can be used again on {{ $discountCode->last_used_at->addDays(7)->format('M d, Y') }}</span>
+                                                @endif
+                                            </small>
+                                        </div>
+                                        @endif
+
+                                        @if($walletPoints > 0)
+                                        <div class="form-group mb-20">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="use_wallet_points" 
+                                                       id="use_wallet_points" value="1">
+                                                <label class="form-check-label" for="use_wallet_points">
+                                                    Use Wallet Points (Available: ₦{{ number_format($walletPoints, 2) }})
+                                                </label>
+                                            </div>
+                                            <input type="number" name="wallet_points_to_use" id="wallet_points_to_use" 
+                                                   class="form-control mt-2" placeholder="Enter amount to use" 
+                                                   max="{{ $walletPoints }}" min="0" step="0.01" style="display: none;">
+                                        </div>
+                                        @endif
+                                    @endauth
+
                                     <div class="form-group mb-20">
-                                        <label for="requests">Payment Plan</label>
+                                        <label for="requests">Payment Plan 
+                                            <i class="fas fa-info-circle text-primary ms-2" 
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#policyModal" 
+                                               style="cursor: pointer;" 
+                                               title="View Policies"></i>
+                                        </label>
                                         <ul class="list-group list_payment_method" id="paymentPlanAccordion">
                                             <li class="list-group-item payment-method-item">
                                                 <input class="magic-radio js_payment_plan" id="payment-reservation"
@@ -168,21 +209,6 @@
                                                 <label for="payment-reservation" class="form-label fw-medium">
                                                     Pay 50% Now (Reservation)
                                                 </label>
-                                                <div id="collapse-reservation" class="collapse mt-1 show"
-                                                    data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted mb-2">
-                                                        Confirm your booking by paying 50% of the total amount. This payment
-                                                        is non-refundable and must be made at least 5–6 hours before
-                                                        check-in (2 PM).
-                                                    </p>
-
-                                                    <p class="fw-semibold mb-1">Unconfirmed Reservation</p>
-                                                    <p class="text-muted">
-                                                        If no payment has been made, your booking remains unconfirmed. The
-                                                        room may be reassigned, and you’ll need to visit in person within 48
-                                                        hours to complete your payment and secure your reservation.
-                                                    </p>
-                                                </div>
                                             </li>
 
                                             <li class="list-group-item payment-method-item">
@@ -192,11 +218,6 @@
                                                 <label for="payment-full" class="form-label fw-medium">
                                                     Pay in Full
                                                 </label>
-                                                <div id="collapse-full" class="collapse mt-1"
-                                                    data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted">Complete your payment now to fully confirm your
-                                                        booking.</p>
-                                                </div>
                                             </li>
                                             <li class="list-group-item payment-method-item">
                                                 <input class="magic-radio js_payment_plan" id="payment-no-payment"
@@ -205,11 +226,7 @@
                                                 <label for="payment-no-payment" class="form-label fw-medium">
                                                     Pay at Hotel
                                                 </label>
-                                                <div id="collapse-no-payment" class="collapse mt-1"
-                                                    data-bs-parent="#paymentPlanAccordion">
-                                                    <p class="text-muted">Reserve now and pay when you arrive. We'll hold
-                                                        your room for 6 hours.</p>
-                                                </div>
+                                                
                                             </li>
                                         </ul>
                                     </div>
@@ -218,7 +235,7 @@
                                             <small>
                                                 <strong>Guest Booking:</strong> You're booking as a guest. We'll send your
                                                 booking confirmation to the email or phone provided.
-                                                You can <a href="{{ route('register') }}">create an account</a> later to manage
+                                                You can <a style="color: #644222;font-size:15px;" href="{{ route('register') }}">sign up</a>  to manage
                                                 your bookings.
                                             </small>
                                         </div>
@@ -226,7 +243,7 @@
                                     <div class="form-group mb-0">
                                         <button type="submit" class="btn btn-filled payment-checkout-btn"
                                             data-processing-text="Processing. Please wait..."
-                                            data-error-header="Error">Checkout</button>
+                                            data-error-header="Error">Reservation</button>
                                     </div>
                                 </div>
                             </form>
@@ -244,8 +261,8 @@
                                 <div class="form-information">
                                     <p class="text-center">YOUR RESERVATION</p>
                                     <div>
-                                        <p>Check-In: {{ $booking->check_in }}</p>
-                                        <p>Check-Out: {{ $booking->check_out }}</p>
+                                        <p>Check-In: {{ $booking->check_in_date }}</p>
+                                        <p>Check-Out: {{ $booking->check_out_date }}</p>
                                         <p>Number of rooms: {{ $booking->rooms }}</p>
                                         <p>Number of adults: {{ $booking->adults }}</p>
                                         <p>Number of children: {{ $booking->children }}</p>
@@ -266,7 +283,124 @@
 
         </div>
     </section>
+
+    <!-- Policy Information Modal -->
+    <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="policyModalLabel">
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        Hotel Policies & Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Child Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-child me-2"></i>Child Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Children of all ages are welcome.</li>
+                                    <li>• Children 12 and above will be charged as adults at this property.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Check In Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-clock me-2"></i>Check In Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Guests are required to present a legal photo ID at check-in.</li>
+                                    <li>• You may need to let the property know what time you'll be arriving in advance.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Refund Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-money-bill-wave me-2"></i>Refund Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Guests are eligible for a <strong>90% refund</strong> if a refund request is submitted at least <strong>24 hours</strong> before the scheduled check-in time.</li>
+                                    <li>• If the notice is between <strong>12 and 23 hours</strong>, a <strong>50% refund</strong> will be applicable.</li>
+                                    <li>• If the notice is <strong>less than 12 hours</strong>, <strong>no refund</strong> will be applicable.</li>
+                                    <li>• All approved refunds will be processed within <strong>72 hours</strong>.</li>
+                                    <li>• Refund requests must be in writing and may be made both online and in person.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Discount Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-percentage me-2"></i>Discount Policy
+                                </h6>
+                                <p class="ps-3 mb-2">Guests are entitled to a <strong>10% discount</strong> when booking five room-days or more.</p>
+                                <p class="ps-3 mb-2">This means the discount applies if you:</p>
+                                <ul class="list-unstyled ps-4">
+                                    <li>• Stay in one room for 5 consecutive days, or</li>
+                                    <li>• Book 5 rooms for one day.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Pet Policy -->
+                            <div class="policy-section mb-3">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-paw me-2"></i>Pet Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• We value the privacy, comfort, and convenience of all our guests.</li>
+                                    <li>• At this time, pets are not allowed on the property, in order to maintain a peaceful and respectful environment for everyone.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('styles')
+    <style>
+        .policy-section {
+            border-left: 3px solid #007bff;
+            padding-left: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .policy-section h6 {
+            margin-bottom: 10px;
+        }
+        
+        .policy-section ul li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        
+        .fa-info-circle:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .modal-lg {
+            max-width: 800px;
+        }
+        
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+    </style>
+@endpush
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -280,6 +414,21 @@
                     if (selected) selected.classList.add("show"); // show only selected
                 });
             });
+
+            // Handle wallet points checkbox
+            const useWalletCheckbox = document.getElementById('use_wallet_points');
+            const walletPointsInput = document.getElementById('wallet_points_to_use');
+            
+            if (useWalletCheckbox && walletPointsInput) {
+                useWalletCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        walletPointsInput.style.display = 'block';
+                    } else {
+                        walletPointsInput.style.display = 'none';
+                        walletPointsInput.value = '';
+                    }
+                });
+            }
         });
     </script>
 @endpush

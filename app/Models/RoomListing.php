@@ -9,7 +9,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class RoomListing extends Model
 {
-    public $fillable = ['room_type', 'price','slug', 'description', 'room_title', 'room_image', 'room_images', 'room_number', 'is_available'];
+    public $fillable = ['room_type', 'price','slug', 'description', 'room_title', 'room_image', 'room_images', 'room_number', 'is_available', 'availability_status'];
 
     public function amenities(){
         return $this->hasMany(RoomAmenities::class);
