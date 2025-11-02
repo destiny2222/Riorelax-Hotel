@@ -105,23 +105,36 @@ class BookingController extends Controller
         try {
             $otp = rand(100000, 999999);
             // $otp = '000000'; 
-            $phone = $request->phone ?? Auth::user()->phone;
+            $phone = $request->phone ?? Auth::user()->phone ?? null;
+            $email = $request->email ?? Auth::user()->email ?? null;
 
-            if(!$phone){
-                Alert::error('Error', 'Please enter your phone number.');
+            // If both phone and email are available, prefer phone (default)
+            if ($phone) {
+                $this->formatPhone($phone);
+                $this->sendOtpWithTermii($phone, $otp);
+                $request->session()->put('otp', $otp);
+                $request->session()->put('otp_generated_at', now());
+                $request->session()->put('phone_for_otp', $phone);
+                $request->session()->put('otp_method', 'phone');
+
+                Alert::success('Success', 'OTP sent to your phone. Please verify.');
+                return redirect()->route('dashboard.booking.otp.form');
+            } elseif ($email) {
+                $this->sendOtpViaEmail($email, $otp);
+                $request->session()->put('otp', $otp);
+                $request->session()->put('otp_generated_at', now());
+                $request->session()->put('email_for_otp', $email);
+                $request->session()->put('otp_method', 'email');
+
+                Alert::success('Success', 'OTP sent to your email. Please verify.');
+                return redirect()->route('dashboard.booking.otp.form');
+            } else {
+                Alert::error('Error', 'Please provide either a phone number or email address.');
                 return back()->withInput();
             }
-            $this->formatPhone($phone); 
-            $this->sendOtpWithTermii($phone, $otp);
-            $request->session()->put('otp', $otp);
-            $request->session()->put('otp_generated_at', now());
-            $request->session()->put('phone_for_otp', $phone); 
-
-            Alert::success('Success', 'OTP sent to your phone. Please verify.');
-            return redirect()->route('dashboard.booking.otp.form');
         } catch (\Exception $e) {
-            Log::error('Error sending OTP via Termii: ' . $e->getMessage());
-            Alert::error('Error', 'Failed to send OTP. Please check your phone number and try again.');
+            Log::error('Error sending OTP: ' . $e->getMessage());
+            Alert::error('Error', 'Failed to send OTP. Please try again.');
             return back()->withInput();
         }
     }
@@ -144,18 +157,33 @@ class BookingController extends Controller
 
             $otp = rand(100000, 999999);
             
-            $phone = $request->phone ?? (Auth::check() ? Auth::user()->phone : session('phone_for_otp'));
+            // Check the original OTP method used
+            $otpMethod = session('otp_method', 'phone'); // default to phone for backward compatibility
+            
+            if ($otpMethod === 'phone') {
+                $phone = $request->phone ?? (Auth::check() ? Auth::user()->phone : session('phone_for_otp'));
 
-            if(!$phone){
-                Alert::error('Error', 'Phone number not found. Please provide a phone number.');
-                return back()->withInput();
+                if(!$phone){
+                    Alert::error('Error', 'Phone number not found. Please provide a phone number.');
+                    return back()->withInput();
+                }
+                 
+                $this->sendOtpWithTermii($phone, $otp);
+                Alert::success('Success', 'A new OTP has been sent to your phone.');
+            } else {
+                $email = $request->email ?? (Auth::check() ? Auth::user()->email : session('email_for_otp'));
+
+                if(!$email){
+                    Alert::error('Error', 'Email address not found. Please provide an email address.');
+                    return back()->withInput();
+                }
+                 
+                $this->sendOtpViaEmail($email, $otp);
+                Alert::success('Success', 'A new OTP has been sent to your email.');
             }
-             
-            $this->sendOtpWithTermii($phone, $otp);
             
             $request->session()->put('otp', $otp);
             $request->session()->put('otp_generated_at', now());
-            Alert::success('Success', 'A new OTP has been sent to your phone.');
             return back();
         } catch (\Exception $e) {
             Log::error('Error resending OTP: ' . $e->getMessage());
@@ -283,8 +311,8 @@ class BookingController extends Controller
             'country' => 'required|string',
             'postal_code' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|string',
-            'email' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'email' => 'nullable|email',
             'arrival_time'=>'required|string',  
             'first_name'=> 'required|string',
             'last_name'=> 'required|string',
@@ -299,6 +327,12 @@ class BookingController extends Controller
 
         // Get validated data
         $validatedData = $validator->validated();
+        
+        // Ensure at least one contact method is provided
+        if (empty($validatedData['phone']) && empty($validatedData['email'])) {
+            return back()->with('error', 'Please provide either a phone number or email address for OTP verification.');
+        }
+
         $paymentMethod = $validatedData['payment_plan'];
 
         
@@ -311,7 +345,9 @@ class BookingController extends Controller
         $user = $booking->user;
         
         // Always update user information associated with the booking
-        $user->phone = $validatedData['phone'];
+        if ($validatedData['phone']) {
+            $user->phone = $validatedData['phone'];
+        }
         $user->city = $validatedData['city'];
         $user->state = $validatedData['state'];
         $user->country = $validatedData['country'];
@@ -322,7 +358,7 @@ class BookingController extends Controller
         
         // Only update email if it's provided and not already taken by another user
         if ($validatedData['email'] && (!Auth::check() || Auth::user()->email !== $validatedData['email'])) {
-            if (!User::where('email', $validatedData['email'])->exists()) {
+            if (!User::where('email', $validatedData['email'])->where('id', '!=', $user->id)->exists()) {
                 $user->email = $validatedData['email'];
             } else {
                 Log::warning('Attempted to update user email to an already existing email: ' . $validatedData['email']);
@@ -700,5 +736,27 @@ private function confirmPaymentReturn($booking)
         }
 
         return $phone;
+    }
+
+    /**
+     * Send OTP via email
+     */
+    private function sendOtpViaEmail(string $email, string $otp)
+    {
+        $subject = 'Your House7 Booking OTP';
+        $message = "Your House7 booking OTP is: {$otp}. Valid for 10 minutes. Do not share this code with anyone.";
+
+        try {
+            Mail::raw($message, function ($mail) use ($email, $subject) {
+                $mail->to($email)
+                     ->subject($subject);
+            });
+
+            Log::info('Email OTP sent successfully', ['email' => $email]);
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Email OTP Error', ['error' => $e->getMessage(), 'email' => $email]);
+            throw new \Exception('Failed to send OTP via email: ' . $e->getMessage());
+        }
     }
 }

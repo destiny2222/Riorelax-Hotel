@@ -1,31 +1,31 @@
 @extends('layouts.main')
 @section('content')
-    <section class="breadcrumb-area d-flex align-items-center ">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="breadcrumb-wrap text-center">
-                        <div class="breadcrumb-title">
-                            <h2>{{ $roomListing->room_title }}</h2>
-                            <div class="breadcrumb-wrap">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item">
-                                            <a href="/">Home</a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">
-                                            {{ $roomListing->room_title }}
-                                        </li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="pt-40 pb-40">
+    <!--<section class="breadcrumb-area d-flex align-items-center ">-->
+    <!--    <div class="container">-->
+    <!--        <div class="row align-items-center">-->
+    <!--            <div class="col-xl-12 col-lg-12">-->
+    <!--                <div class="breadcrumb-wrap text-center">-->
+    <!--                    <div class="breadcrumb-title">-->
+    <!--                        <h2>{{ $roomListing->room_title }}</h2>-->
+    <!--                        <div class="breadcrumb-wrap">-->
+    <!--                            <nav aria-label="breadcrumb">-->
+    <!--                                <ol class="breadcrumb">-->
+    <!--                                    <li class="breadcrumb-item">-->
+    <!--                                        <a href="/">Home</a>-->
+    <!--                                    </li>-->
+    <!--                                    <li class="breadcrumb-item active" aria-current="page">-->
+    <!--                                        {{ $roomListing->room_title }}-->
+    <!--                                    </li>-->
+    <!--                                </ol>-->
+    <!--                            </nav>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</section>-->
+    <section class="pt-40 pb-40" style="padding-top:150px;">
         <div class="container">
             <div class="about-area5 about-p p-relative room-details">
                 <div class="container pt-60 pb-40">
@@ -194,8 +194,12 @@
                                     <div class="row align-items-center mb-50">
                                         <div class="col-12">
                                             <div class="price">
-                                                <h2>{{ $roomListing->room_title }}</h2>
-                                                <span>₦{{ number_format($roomListing->price, 2) }} <small>/
+                                                <h2>{{ $roomListing->room_title }} <span><i class="fas fa-info-circle text-primary ms-2" 
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#policyModal" 
+                                               style="cursor: pointer;" 
+                                               title="View Policies"></i></span></h2> 
+                                                <span>â‚¦{{ number_format($roomListing->price, 2) }} <small>/
                                                         night</small></span>
                                             </div>
                                         </div>
@@ -361,7 +365,7 @@
                                                 <div id="collapseSmoking" class="accordion-collapse collapse"
                                                     aria-labelledby="headingSmoking"
                                                     data-bs-parent="#hotelPolicyAccordion">
-                                                    <div class="accordion-body">🚭 Smoking is not allowed.</div>
+                                                    <div class="accordion-body">ðŸš­ Smoking is not allowed.</div>
                                                 </div>
                                             </div>
 
@@ -400,7 +404,7 @@
                                                                             class="book-button-custom" type="submit"
                                                                             data-animation="fadeInRight" data-delay=".8s">
                                                                             BOOK NOW FOR
-                                                                            ₦{{ number_format($relatedRoom->price, 2) }}
+                                                                            â‚¦{{ number_format($relatedRoom->price, 2) }}
                                                                         </a>
                                                                         {{-- </form> --}}
                                                                     </li>
@@ -435,7 +439,123 @@
             </div>
         </div>
     </section>
+    <!-- Policy Information Modal -->
+    <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="policyModalLabel">
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        Hotel Policies & Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Child Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-child me-2"></i>Child Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Children of all ages are welcome.</li>
+                                    <li>• Children 12 and above will be charged as adults at this property.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Check In Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-clock me-2"></i>Check In Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Guests are required to present a legal photo ID at check-in.</li>
+                                    <li>• You may need to let the property know what time you'll be arriving in advance.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Refund Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-money-bill-wave me-2"></i>Refund Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• Guests are eligible for a <strong>90% refund</strong> if a refund request is submitted at least <strong>24 hours</strong> before the scheduled check-in time.</li>
+                                    <li>• If the notice is between <strong>12 and 23 hours</strong>, a <strong>50% refund</strong> will be applicable.</li>
+                                    <li>• If the notice is <strong>less than 12 hours</strong>, <strong>no refund</strong> will be applicable.</li>
+                                    <li>• All approved refunds will be processed within <strong>72 hours</strong>.</li>
+                                    <li>• Refund requests must be in writing and may be made both online and in person.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Discount Policy -->
+                            <div class="policy-section mb-4">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-percentage me-2"></i>Discount Policy
+                                </h6>
+                                <p class="ps-3 mb-2">Guests are entitled to a <strong>10% discount</strong> when booking five room-days or more.</p>
+                                <p class="ps-3 mb-2">This means the discount applies if you:</p>
+                                <ul class="list-unstyled ps-4">
+                                    <li>• Stay in one room for 5 consecutive days, or</li>
+                                    <li>• Book 5 rooms for one day.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Pet Policy -->
+                            <div class="policy-section mb-3">
+                                <h6 class="fw-bold text-primary">
+                                    <i class="fas fa-paw me-2"></i>Pet Policy
+                                </h6>
+                                <ul class="list-unstyled ps-3">
+                                    <li>• We value the privacy, comfort, and convenience of all our guests.</li>
+                                    <li>• At this time, pets are not allowed on the property, in order to maintain a peaceful and respectful environment for everyone.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('styles')
+    <style>
+        .policy-section {
+            border-left: 3px solid #007bff;
+            padding-left: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .policy-section h6 {
+            margin-bottom: 10px;
+        }
+        
+        .policy-section ul li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        
+        .fa-info-circle:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .modal-lg {
+            max-width: 800px;
+        }
+        
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+    </style>
+@endpush
 @push('scripts')
     <script>
         $('.room-details-slider').slick({

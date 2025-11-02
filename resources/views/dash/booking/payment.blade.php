@@ -52,7 +52,7 @@
                                                 <label for="txt-first-name">First Name <span class="required"
                                                         aria-required="true">*</span></label>
                                                 <input type="text" name="first_name" id="txt-first-name"
-                                                    class="form-control" required="" value="" aria-required="true">
+                                                    class="form-control" required="" value="{{ auth()->user()->first_name ?? '' }}" aria-required="true">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -60,26 +60,34 @@
                                                 <label for="txt-last-name">Last Name <span class="required"
                                                         aria-required="true">*</span></label>
                                                 <input type="text" name="last_name" id="txt-last-name"
-                                                    class="form-control" required="" value="" aria-required="true">
+                                                    class="form-control" required="" value="{{ auth()->user()->last_name ?? '' }}" aria-required="true">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-20">
-                                                <label for="txt-email">Email <span class="required"
-                                                        aria-required="true"></span></label>
-                                                <input type="email" name="email" id="txt-email" class="form-control "
-                                                    value="">
+                                                <label for="txt-email">Email</label>
+                                                <input type="email" name="email" id="txt-email" class="form-control"
+                                                    value="{{ auth()->user()->email ?? '' }}">
 
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-20">
-                                                <label for="txt-phone">Phone <span class="required"
-                                                        aria-required="true"></span></label>
+                                                <label for="txt-phone">Phone</label>
                                                 <input type="text" name="phone" id="txt-phone" class="form-control"
-                                                    required="" value="" aria-required="true">
+                                                    value="{{ auth()->user()->phone ?? '' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="alert alert-info mb-20">
+                                                <small>
+                                                    <i class="fas fa-info-circle me-2"></i>
+                                                    <strong>Note:</strong> An OTP will be sent for verification. If both phone and email are provided, SMS will be used (phone is preferred). If only one is provided, that method will be used.
+                                                </small>
                                             </div>
                                         </div>
                                     </div>

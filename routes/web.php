@@ -21,8 +21,18 @@ Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.pos
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
 
+// Password Reset Routes
+Route::get('forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.update'); 
+
 Route::post('booking', [PageController::class, 'bookingStore'])->name('booking');
 Route::post('contact/store', [PageController::class, 'contactStore'])->name('contact.store');
+
+Route::get('terms', function () {
+    return view('frontend.terms');
+});
 
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');

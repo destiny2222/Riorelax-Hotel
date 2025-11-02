@@ -470,7 +470,7 @@
                             </button>
                         </div>
                         <div class="d-none d-lg-block col-xl-2 col-lg-2">
-                            <a href="{{ auth()->check() ? route('rooms') : '#booking-form' }}" class="top-btn mt-10 mb-10">
+                            <a href="{{ request()->is('/') ? '#booking-form' : route('rooms') }}" class="top-btn mt-10 mb-10">
                                 Reservation
                             </a>
                         </div>
@@ -548,10 +548,10 @@
                                     <li><a target="_self" class="font-sm color-grey-200 phone-link"
                                             href="tel:2348180000104" data-contact-url="{{ route('contact') }}">Support</a>
                                     </li>
-                                    {{-- <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a>
+                                    {{-- <li><a target="_self" class="font-sm color-grey-200" href="#">Privacy</a> --}}
                                     </li>
-                                    <li><a target="_self" class="font-sm color-grey-200"
-                                            href="#">Term &amp; Conditions</a></li> --}}
+                                    <li><a  target="_self" class="font-sm color-grey-200"
+                                            href="/terms">Term &amp; Conditions</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -621,6 +621,7 @@
     @stack('scripts')
     @include('partials.message')
     @include('sweetalert::alert')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 </body>
 

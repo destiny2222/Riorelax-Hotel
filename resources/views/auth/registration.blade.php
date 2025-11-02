@@ -169,7 +169,7 @@
                                         <div class="form-group mb-25">
                                             <label class="cb-container">
                                                 <input type="checkbox" name="agree_terms_and_policy"  id="agree-terms-and-policy" value="1" />
-                                                <span class="text-small">I agree to terms &amp; Policy.</span>
+                                                <span class="text-small">I agree to <a href="/terms" target="_blank">terms &amp; Policy</a>.</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>

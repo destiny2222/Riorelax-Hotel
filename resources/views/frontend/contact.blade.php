@@ -125,19 +125,6 @@
                                 <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        {{-- <div class="contact-form-group">
-                            <input type="hidden" name="agree_terms_and_policy" value="0">
-                            <label class="required form-check">
-                                <input type="checkbox" id="agree_terms_and_policy" 
-                                    name="agree_terms_and_policy" 
-                                    class="form-check-input contact-form-input @error('agree_terms_and_policy') is-invalid @enderror"
-                                    required value="1" {{ old('agree_terms_and_policy') ? 'checked' : '' }}>
-                                <span class="form-check-label"> I agree to the Terms and Privacy Policy </span>
-                                @error('agree_terms_and_policy')
-                                    <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
-                                @enderror
-                            </label>
-                        </div> --}}
                         <div class="contact-form-group">
                             <button class="contact-button text-white" type="submit">Send</button>
                         </div>
@@ -155,12 +142,6 @@ $(document).ready(function() {
     function validateEmail(email) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email);
-    }
-
-    // Enhanced phone validation
-    function validatePhone(phone) {
-        const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,20}$/;
-        return phoneRegex.test(phone) || phone === '';
     }
 
     // Real-time validation for email
@@ -185,95 +166,16 @@ $(document).ready(function() {
         }
     });
 
-    // Real-time validation for phone
-    $('#phone').on('input blur', function() {
-        const phone = $(this).val().trim();
-        const $field = $(this);
-        const $feedback = $field.siblings('.invalid-feedback');
-        
-        if (phone === '') {
-            $field.removeClass('is-invalid is-valid');
-            $feedback.hide();
-        } else if (!validatePhone(phone)) {
-            $field.removeClass('is-valid').addClass('is-invalid');
-            if ($feedback.length === 0) {
-                $field.after('<div class="invalid-feedback d-block text-danger">Please enter a valid phone number.</div>');
-            } else {
-                $feedback.text('Please enter a valid phone number.').show();
-            }
-        } else {
-            $field.removeClass('is-invalid').addClass('is-valid');
-            $feedback.hide();
-        }
-    });
 
-    // Real-time validation for name
-    $('#name').on('input blur', function() {
-        const name = $(this).val().trim();
-        const $field = $(this);
-        const $feedback = $field.siblings('.invalid-feedback');
-        
-        if (name.length < 2) {
-            $field.removeClass('is-valid').addClass('is-invalid');
-            if ($feedback.length === 0) {
-                $field.after('<div class="invalid-feedback d-block text-danger">Name must be at least 2 characters.</div>');
-            } else {
-                $feedback.text('Name must be at least 2 characters.').show();
-            }
-        } else if (name.length > 255) {
-            $field.removeClass('is-valid').addClass('is-invalid');
-            if ($feedback.length === 0) {
-                $field.after('<div class="invalid-feedback d-block text-danger">Name must not exceed 255 characters.</div>');
-            } else {
-                $feedback.text('Name must not exceed 255 characters.').show();
-            }
-        } else {
-            $field.removeClass('is-invalid').addClass('is-valid');
-            $feedback.hide();
-        }
-    });
 
-    // Real-time validation for message
-    $('#content').on('input blur', function() {
-        const message = $(this).val().trim();
-        const $field = $(this);
-        const $feedback = $field.siblings('.invalid-feedback');
-        
-        if (message.length < 10) {
-            $field.removeClass('is-valid').addClass('is-invalid');
-            if ($feedback.length === 0) {
-                $field.after('<div class="invalid-feedback d-block text-danger">Message must be at least 10 characters.</div>');
-            } else {
-                $feedback.text('Message must be at least 10 characters.').show();
-            }
-        } else if (message.length > 1000) {
-            $field.removeClass('is-valid').addClass('is-invalid');
-            if ($feedback.length === 0) {
-                $field.after('<div class="invalid-feedback d-block text-danger">Message must not exceed 1000 characters.</div>');
-            } else {
-                $feedback.text('Message must not exceed 1000 characters.').show();
-            }
-        } else {
-            $field.removeClass('is-invalid').addClass('is-valid');
-            $feedback.hide();
-        }
-    });
+
+
+
 
     // Form submission validation
     $('#contact-form').on('submit', function(e) {
         let isValid = true;
         
-        // Validate required fields
-        $('#name, #email, #content').each(function() {
-            const $field = $(this);
-            const value = $field.val().trim();
-            
-            if (value === '') {
-                $field.addClass('is-invalid');
-                isValid = false;
-            }
-        });
-
         // Validate email format
         const email = $('#email').val().trim();
         if (email && !validateEmail(email)) {
@@ -281,44 +183,10 @@ $(document).ready(function() {
             isValid = false;
         }
 
-        // Validate phone format if provided
-        const phone = $('#phone').val().trim();
-        if (phone && !validatePhone(phone)) {
-            $('#phone').addClass('is-invalid');
-            isValid = false;
-        }
-
-        // Validate terms and conditions
-        if (!$('#agree_terms_and_policy').is(':checked')) {
-            $('#agree_terms_and_policy').addClass('is-invalid');
-            isValid = false;
-        }
-
         if (!isValid) {
             e.preventDefault();
-            toastr.error('Please correct the errors in the form before submitting.');
+            swal('Please correct the errors in the form before submitting.');
             return false;
-        }
-    });
-
-    // Character counter for message
-    $('#content').on('input', function() {
-        const remaining = 1000 - $(this).val().length;
-        let $counter = $('#char-counter');
-        
-        if ($counter.length === 0) {
-            $(this).after('<small id="char-counter" class="text-muted">Characters remaining: <span id="remaining-count">1000</span></small>');
-            $counter = $('#char-counter');
-        }
-        
-        $('#remaining-count').text(remaining);
-        
-        if (remaining < 50) {
-            $counter.removeClass('text-muted').addClass('text-warning');
-        } else if (remaining < 0) {
-            $counter.removeClass('text-warning').addClass('text-danger');
-        } else {
-            $counter.removeClass('text-warning text-danger').addClass('text-muted');
         }
     });
 });

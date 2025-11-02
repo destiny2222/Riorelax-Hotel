@@ -36,7 +36,14 @@
                             <i class="fal fa-shield-check"></i>
                         </div>
                         <h3 class="otp-title">Verify Your Identity</h3>
-                        <p class="otp-subtitle">We've sent a 6-digit verification code to your registered phone number</p>
+                        @php
+                            $otpMethod = session('otp_method', 'phone');
+                        @endphp
+                        @if($otpMethod === 'email')
+                            <p class="otp-subtitle">We've sent a 6-digit verification code to your email address</p>
+                        @else
+                            <p class="otp-subtitle">We've sent a 6-digit verification code to your registered phone number</p>
+                        @endif
                     </div>
 
                     @if (session('success'))
@@ -80,7 +87,14 @@
                         </div>
 
                         <div class="otp-help-text text-center">
-                            <p class="mb-2">Didn't receive the code?</p>
+                            @php
+                                $otpMethod = session('otp_method', 'phone');
+                            @endphp
+                            @if($otpMethod === 'email')
+                                <p class="mb-2">Didn't receive the code in your email?</p>
+                            @else
+                                <p class="mb-2">Didn't receive the code on your phone?</p>
+                            @endif
                             <a href="{{ route('dashboard.booking.otp.resend') }}" class="otp-resend-link" id="resendLink">
                                 <i class="fal fa-redo me-1"></i>
                                 <span id="resendText">Resend Code</span>
