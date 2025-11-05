@@ -194,11 +194,7 @@
                                     <div class="row align-items-center mb-50">
                                         <div class="col-12">
                                             <div class="price">
-                                                <h2>{{ $roomListing->room_title }} <span><i class="fas fa-info-circle text-primary ms-2" 
-                                               data-bs-toggle="modal" 
-                                               data-bs-target="#policyModal" 
-                                               style="cursor: pointer;" 
-                                               title="View Policies"></i></span></h2> 
+                                                <h2>{{ $roomListing->room_title }} </h2> 
                                                 <span>â‚¦{{ number_format($roomListing->price, 2) }} <small>/
                                                         night</small></span>
                                             </div>
@@ -377,6 +373,13 @@
 
                                         </div>
                                     </div> --}}
+                                    <div class="room-block-content shadow-block mt-50">
+                                        <h5>Room Policy <span><i class="fas fa-info-circle text-primary ms-2" 
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#policyModal" 
+                                               style="cursor: pointer;" 
+                                               title="View Policies"></i></span></h5>
+                                    </div>
                                     <div class="content-box related-room">
                                         <h3>Related Rooms</h3>
                                         <div class="row">
@@ -446,7 +449,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="policyModalLabel">
                         <i class="fas fa-info-circle text-primary me-2"></i>
-                        Hotel Policies & Information
+                        Policies & Information
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

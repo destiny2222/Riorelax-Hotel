@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <section class="breadcrumb-area d-flex align-items-center">
+    {{-- <section class="breadcrumb-area d-flex align-items-center">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-12 col-lg-12">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="pt-40 pb-40">
         <div class="container">
@@ -85,8 +85,8 @@
                                         <div class="col-12">
                                             <div class="alert alert-info mb-20">
                                                 <small>
-                                                    <i class="fas fa-info-circle me-2"></i>
-                                                    <strong>Note:</strong> An OTP will be sent for verification. If both phone and email are provided, SMS will be used (phone is preferred). If only one is provided, that method will be used.
+                                                    <i class="fas fa-info-circle me-2" aria-hidden="true"></i>
+                                                    <strong>Note:</strong> An OTP will be sent to verify your booking. If both phone and email are provided, SMS to the phone number will be used. If only one contact method is provided, that method will be used.
                                                 </small>
                                             </div>
                                         </div>
@@ -274,14 +274,50 @@
                                         <p>Number of rooms: {{ $booking->rooms }}</p>
                                         <p>Number of adults: {{ $booking->adults }}</p>
                                         <p>Number of children: {{ $booking->children }}</p>
-                                        <p>Price: <span class="amount-text">₦{{ $booking->roomListing->price }}</span></p>
-                                        {{-- <p>Discount: <span class="discount-text">$0.00</span></p> --}}
-                                        {{-- <p>Tax: <span class="tax-text">$18.90</span></p> --}}
+                                        
+                                        <!-- Price Breakdown -->
+                                        <hr class="my-3">
+                                        @if($booking->subtotal)
+                                            <!-- Show detailed breakdown if discount calculations exist -->
+                                            @php
+                                                $checkIn = \Carbon\Carbon::parse($booking->check_in_date);
+                                                $checkOut = \Carbon\Carbon::parse($booking->check_out_date);
+                                                $nights = $checkIn->diffInDays($checkOut);
+                                                $roomDays = $booking->room_days ?? ($booking->rooms * $nights);
+                                            @endphp
+                                            
+                                            <p>Room Rate: <span class="amount-text">₦{{ number_format($booking->roomListing->price, 2) }} per night</span></p>
+                                            <p>Duration: <span class="amount-text">{{ $nights }} {{ $nights > 1 ? 'nights' : 'night' }} × {{ $booking->rooms }} {{ $booking->rooms > 1 ? 'rooms' : 'room' }} = {{ $roomDays }} room-days</span></p>
+                                            <p>Subtotal: <span class="amount-text">₦{{ number_format($booking->subtotal, 2) }}</span></p>
+                                            
+                                            @if($booking->discount_amount > 0)
+                                                <div class="discount-info">
+                                                    <p class="mb-1">
+                                                        <i class="fas fa-tag text-success"></i> 
+                                                        <strong class="text-success">{{ $booking->discount_percentage }}% Discount Applied!</strong>
+                                                    </p>
+                                                    <p class="mb-1 discount-text">
+                                                        Discount Amount: -₦{{ number_format($booking->discount_amount, 2) }}
+                                                    </p>
+                                                    <small class="text-white">
+                                                        <i class="fas fa-info-circle"></i> You qualify for {{ $booking->discount_percentage }}% discount for booking {{ $roomDays }} room-days (5+ required)
+                                                    </small>
+                                                </div>
+                                            @elseif($roomDays < 5)
+                                                <div class="alert alert-info" style="font-size: 0.85em; padding: 8px 12px; margin: 10px 0;">
+                                                    <i class="fas fa-lightbulb"></i> 
+                                                    <strong>Tip:</strong> Book {{ 5 - $roomDays }} more room-days to get 10% discount! 
+                                                    <small class="d-block">Current: {{ $roomDays }} room-days | Needed: 5+ room-days</small>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <!-- Fallback for simple price display -->
+                                            <p>Price: <span class="amount-text">₦{{ number_format($booking->roomListing->price, 2) }}</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="text-center footer">
-                                    <p>Total: <span class="total-amount-text">₦{{ $booking->roomListing->price }}</span>
-                                    </p>
+                                    <p>Total: <span class="total-amount-text">₦{{ number_format($booking->total_amount ?? $booking->roomListing->price, 2) }}</span></p>
                                 </div>
                             </aside>
                         </div>
@@ -406,6 +442,51 @@
         .modal-body {
             max-height: 70vh;
             overflow-y: auto;
+        }
+        
+        .discount-info {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        
+        .price-breakdown {
+            border-top: 1px solid #dee2e6;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .discount-text {
+            color: #28a745 !important;
+            font-weight: 600;
+        }
+        
+        .amount-text {
+            color: #007bff;
+            font-weight: 500;
+        }
+        
+        .total-amount-text {
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .alert-info {
+            background-color: #e7f3ff;
+            border-color: #b3d9ff;
+            color: #0c5460;
+        }
+        
+        .form-information p {
+            margin-bottom: 8px;
+        }
+        
+        .form-information hr {
+            margin: 15px 0;
+            border-color: #dee2e6;
         }
     </style>
 @endpush

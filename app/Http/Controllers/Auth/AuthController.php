@@ -36,7 +36,7 @@ class AuthController extends Controller
      *
      * @return response()
      */
-    public function postLogin(Request $request)
+    public function postLogin(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => 'required',
@@ -49,7 +49,8 @@ class AuthController extends Controller
                         ->withSuccess('You have Successfully login');
         }
 
-        return redirect("login")->withError('Oppes! You have entered invalid credentials');
+        Alert::error('Login Failed', 'Invalid credentials provided');
+        return redirect("login");
     }
 
     /**
@@ -73,7 +74,8 @@ class AuthController extends Controller
         // check if the password and password_confirmation
         // fields match
         if ($data['password'] !== $data['password_confirmation']) {
-            return back()->with('error', 'Passwords do not match');
+            Alert::error('Passwords do not match');
+            return back();
             // return redirect()->back()->withErrors(['password_confirmation' => 'Passwords do not match']);
         }
 

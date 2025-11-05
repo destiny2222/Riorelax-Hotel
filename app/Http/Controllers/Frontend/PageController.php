@@ -49,32 +49,54 @@ class PageController extends Controller
 
     public function checkAvailability(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'check_in_date' => 'required|date',
+        //     'check_out_date'   => 'required|date|after:check_in_date',
+        //     'adults'     => 'sometimes|integer|min:1',
+        //     'children'   => 'sometimes|integer|min:0',
+        //     'rooms'      => 'sometimes|integer|min:1',
+        // ]);
+
+        
+        $validator = Validator::make($request->all(), [
             'check_in_date' => 'required|date',
-            'check_out_date'   => 'required|date|after:check_in_date',
-            'adults'     => 'sometimes|integer|min:1',
-            'children'   => 'sometimes|integer|min:0',
-            'rooms'      => 'sometimes|integer|min:1',
+            'check_out_date' => 'required|date|after:check_in_date',
+            'adults' => 'sometimes|integer|min:1',
+            'children' => 'sometimes|integer|min:0',
+            'rooms' => 'sometimes|integer|min:1',
         ]);
 
-        // Convert input dates from d-m-Y to Y-m-d for DB comparison
-        $startDate = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_in_date'))->format('Y-m-d');
-        $endDate   = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_out_date'))->format('Y-m-d');
+        // return validation error
+        if ($validator->fails()) {
+            Alert::error('Error', $validator->errors()->first());
+            return back();
+        }
+        
 
-        // Check if there is an existing booking with same check_in and check_out
-        $exists = Booking::where('check_in_date', $startDate)
-            ->where('check_out_date', $endDate)
-            ->exists();
+       try{
+            // Convert input dates from d-m-Y to Y-m-d for DB comparison
+            $startDate = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_in_date'))->format('Y-m-d');
+            $endDate   = \Carbon\Carbon::createFromFormat('d-m-Y', $request->input('check_out_date'))->format('Y-m-d');
 
-        // if ($exists) {
-        //     Alert::error('Error', 'Rooms are not available for the selected dates. Please choose different dates.');
-        //     return back();
-        // }
+            // Check if there is an existing booking with same check_in and check_out
+            $exists = Booking::where('check_in_date', $startDate)
+                ->where('check_out_date', $endDate)
+                ->exists();
 
-        $availabilityData = $request->only(['check_in_date', 'check_out_date', 'adults', 'children', 'rooms']);
-        session(['availability_data' => $availabilityData]);
-        // Alert::success('Success', 'Rooms are available for the selected dates.');
-        return redirect()->route('rooms');
+            // if ($exists) {
+            //     Alert::error('Error', 'Rooms are not available for the selected dates. Please choose different dates.');
+            //     return back();
+            // }
+
+            $availabilityData = $request->only(['check_in_date', 'check_out_date', 'adults', 'children', 'rooms']);
+            session(['availability_data' => $availabilityData]);
+            // Alert::success('Success', 'Rooms are available for the selected dates.');
+            return redirect()->route('rooms');
+       }catch(\Exception $e){
+            Log::error('Error checking room availability: ' . $e->getMessage());
+            Alert::error('Error', 'An error occurred while checking availability. Please try again later.');
+            return back()->withInput();
+       }
     }
 
 

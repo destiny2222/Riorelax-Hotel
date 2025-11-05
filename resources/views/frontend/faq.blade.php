@@ -58,13 +58,19 @@
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                                <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo"
                                     data-bs-parent="#accordionExample" style="">
                                     <div class="card-body">
                                         Yes, we offer complimentary self-parking for all our guests.
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="faq-wrap">
+                        <div class="accordion" id="accordionExample">
                             <div class="card">
                                 <div class="card-header" id="headingThree">
                                     <h2 class="mb-0">
@@ -105,7 +111,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="faq-wrap">
-                        <div class="accordion" id="accordionExample1">
+                        <div class="accordion" id="accordionExample">
                             <div class="card">
                                 <div class="card-header" id="headingfive">
                                     <h2 class="mb-0">
@@ -123,6 +129,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="faq-wrap">
+                        <div class="accordion" id="accordionExample">
                             <div class="card">
                                 <div class="card-header" id="headingSix">
                                     <h2 class="mb-0">
@@ -132,7 +144,7 @@
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="collapseSix" class="collapse show" aria-labelledby="headingSix"
+                                <div id="collapseSix" class="collapse" aria-labelledby="headingSix"
                                     data-bs-parent="#accordionExample1" style="">
                                     <div class="card-body">
                                         <ul>

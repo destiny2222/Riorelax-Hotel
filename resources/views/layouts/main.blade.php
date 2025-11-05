@@ -598,7 +598,7 @@
     <script src="/themes/plugins/lightgallery/js/lightgallery.min.js"></script>
     <script src="/themes/riorelax/plugins/jquery-bar-rating/jquery.barrating.min.js"></script>
     <script src="{{ asset('themes/js/custom-slider.js') }}"></script>
-    <script src="{{ asset('themes/js/form-validation.js') }}"></script>
+    {{-- <script src="{{ asset('themes/js/form-validation.js') }}"></script> --}}
     
     <script>
         $(document).ready(function() {
@@ -622,6 +622,7 @@
     @include('partials.message')
     @include('sweetalert::alert')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

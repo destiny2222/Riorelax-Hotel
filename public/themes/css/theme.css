@@ -178,6 +178,11 @@ li {
 p {
     margin-bottom: 15px;
 }
+
+.fs-5{
+    font-size: 13px !important;
+}
+
 hr {
     border-bottom: 1px solid #eceff8;
     border-top: 0;

@@ -170,6 +170,7 @@ class Booking extends Model
     /**
      * Calculate wallet points to be earned from this booking
      * Formula: Room price ÷ 20
+     * Example: A ₦25,000 room earns ₦1,250 in wallet points
      */
     public function calculateWalletPoints()
     {
@@ -185,11 +186,17 @@ class Booking extends Model
 
     /**
      * Credit wallet points to user after checkout
+     * Only credits points if booking status is 'checked-out'
      */
     public function creditWalletPoints()
     {
         // Only credit if not already credited
         if ($this->wallet_points_credited) {
+            return false;
+        }
+
+        // Only credit points after checkout
+        if ($this->status !== 'checked-out') {
             return false;
         }
 

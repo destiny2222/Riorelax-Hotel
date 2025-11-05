@@ -603,11 +603,6 @@ private function confirmPayment($booking)
     }
 
     $booking->save();
-    
-    // Credit wallet points if not already credited
-    if (!$booking->wallet_points_credited) {
-        $booking->creditWalletPoints();
-    }
 
     Log::info("Payment confirmed for booking {$booking->id}");
 }
@@ -672,12 +667,6 @@ private function confirmPaymentReturn($booking)
     }
 
     $booking->save();
-    
-    // Credit wallet points if not already credited
-    if (!$booking->wallet_points_credited) {
-        $booking->creditWalletPoints();
-    }
-
 }
 
 
